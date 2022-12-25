@@ -93,6 +93,7 @@
     })
 
     document.body.addEventListener('pointerdown', function(e) {
+	    console.log('pointerdown',e.clientY,e.clientX,e)
         
         if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
             return false;
@@ -134,6 +135,7 @@
     })
 
     document.body.addEventListener('pointermove', function(e) {
+	    console.log('pointermove',e.clientY,e.clientX,e)
 
         // Assuming there is a current item to in the drawing layer
         if(document.querySelector('#drawing-layer .current-item') !== null) {
@@ -200,6 +202,7 @@
     // Whenever the user leaves the page with their mouse or lifts up their cursor
     [ 'mouseleave', 'pointerup' ].forEach(function(item) {
         document.body.addEventListener(item, function(e) {
+		console.log('stop?',e.clientY,e.clientX,e)
             // Remove current-item class from all elements, and give all SVG elements pointer-events
             document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
                 item.style.pointerEvent = 'all';
