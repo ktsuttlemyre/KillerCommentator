@@ -7,7 +7,7 @@
     // When a user clicks a color or tool, then we set it to our current config.color or config.tool respectively, and highlight it on the UI
     [ 'data-rColor', 'data-tool' ].forEach(function(i) {
         document.querySelectorAll(`[${i}]`).forEach(function(item) {
-            item.addEventListener('pointerdown', function(e) {
+            item.addEventListener('click', function(e) {
                 document.querySelectorAll(`[${i}]`).forEach(function(i) {
                     i.setAttribute('data-current', false);
                 });
@@ -148,8 +148,8 @@
                 // And a default direction of 'south east'
                 let arrowClass = arrow.arrowClasses[3];
                 // Calculate how far the user has moved their mouse from the original position
-                let endX = e.pageX - startX - window.scrollX;
-                let endY = e.pageY - startY - window.scrollY;
+                let endX = e.clientX - startX - window.scrollX;
+                let endY = e.clientY - startY - window.scrollY;
 
                 // And using that info, calculate the arrow's angle
                 helper.calculateArrowLineAngle(endX, endY);
@@ -166,8 +166,8 @@
             
             else if(config.drawing == true && config.tool == 'freeHand') {
                 // Similar to arrows, calculate the user's end position
-                let endX = e.pageX - freeHand.topX;
-                let endY = e.pageY - freeHand.topY;
+                let endX = e.clientX - freeHand.topX;
+                let endY = e.clientY - freeHand.topY;
                 
                 // And push these new coordinates to our config
                 let newCoordinates = [ endX, endY ];
