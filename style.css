@@ -1,8 +1,12 @@
 html {
   overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+  overflow: hidden;
 } 
 body {
   overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+  overflow: hidden;
 }
     #drawing-box {
         background: linear-gradient(360deg, #ebf3fd, white);
