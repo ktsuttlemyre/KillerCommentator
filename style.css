@@ -1,4 +1,9 @@
-
+html {
+  overscroll-behavior-x: none;
+} 
+body {
+  overscroll-behavior-x: none;
+}
     #drawing-box {
         background: linear-gradient(360deg, #ebf3fd, white);
         position: fixed;
