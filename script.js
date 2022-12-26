@@ -92,8 +92,6 @@
         config.drawing = false;
     })
     document.querySelector('#drawing-box .trash').addEventListener('click', function(e) {
-        document.body.setAttribute('data-drawing', false);
-        config.drawing = false;
 	(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
     })
 
