@@ -95,9 +95,9 @@
     document.body.addEventListener('pointerdown', function(e) {
 	    console.log('pointerdown',e.clientY,e.clientX,e)
         
-        if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
-            return false;
-        }
+//         if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+//             return false;
+//         }
 
         // Generate id for each element
         let id = helper.generateId();
