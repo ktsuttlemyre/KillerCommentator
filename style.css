@@ -24,6 +24,10 @@ html, body {
         border-radius: 100px;
     }
 
+    .drawing-el {
+	  animation: fade-out 5s cubic-bezier(0.770, 0.000, 0.175, 1.000) both;
+    }
+
     [data-drawing="true"] #drawing-box {
         bottom: 1rem;
         transform: scale(1);
