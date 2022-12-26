@@ -117,7 +117,7 @@
 			drawing_el.id=id;
 			drawing_el.classList.add('drawing-el');
 			drawing_el.innerHTML = svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
-			var drawing_layer = document.getElementById('drawing-layer')[0];
+			var drawing_layer = document.getElementById('drawing-layer');
 			drawing_layer.appendChild(drawing_el)
 			
 			
@@ -142,7 +142,7 @@
 			drawing_el.id=id;
 			drawing_el.classList.add('drawing-el');
 			drawing_el.innerHTML = svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
-			var drawing_layer = document.getElementById('drawing-layer')[0];
+			var drawing_layer = document.getElementById('drawing-layer');
 			drawing_layer.appendChild(drawing_el)
 			
 			(function(id){
