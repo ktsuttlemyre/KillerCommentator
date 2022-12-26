@@ -48,7 +48,7 @@
 
 	let svgEl = {
 		arrowPath: (start, dimensions, path, dummy, direction, end, angle, hyp, id) => 
-		`<div class="arrow drawing-el static current-item" data-id="${id}" id="${id}" data-direction="${direction}" 
+		`<div class="arrow static current-item" data-id="${id}" data-direction="${direction}" 
 			style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<div class="arrow-point arrow-point-one"></div>
 			<div class="arrow-point arrow-point-two" style="
@@ -65,7 +65,7 @@
 			</svg>
 		</div>`,
 		drawPath: (start, dimensions, path, id) => 
-		`<div class="free-hand drawing-el static current-item" data-id="${id}" id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
+		`<div class="free-hand static current-item" data-id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">           
 				<path d="${path}" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}"></path>
 			</svg>
@@ -113,8 +113,14 @@
 			arrow.topY = e.pageY;
 
 			// Add element to drawing layer
-			document.getElementById('drawing-layer').innerHTML = document.getElementById('drawing-layer').innerHTML + 
-			svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+			var drawing_el = document.createElement('div')
+			drawing_el.id=id;
+			drawing_el.classList.add('drawing-el');
+			drawing_el.innerHTML = svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+			var drawing_layer = document.getElementById('drawing-layer')[0];
+			drawing_layer.appendChild(drawing_el)
+			
+			
 			(function(id){
 				setTimeout(function(){
 					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
@@ -132,8 +138,13 @@
 			freeHand.lastMousePoints = [[ window.scrollX, window.scrollY ]];
 			
 			// Add element to the drawing layer
-			document.getElementById('drawing-layer').innerHTML = document.getElementById('drawing-layer').innerHTML + 
-			svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
+			var drawing_el = document.createElement('div')
+			drawing_el.id=id;
+			drawing_el.classList.add('drawing-el');
+			drawing_el.innerHTML = svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
+			var drawing_layer = document.getElementById('drawing-layer')[0];
+			drawing_layer.appendChild(drawing_el)
+			
 			(function(id){
 				setTimeout(function(){
 					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
