@@ -99,9 +99,10 @@
 	document.body.addEventListener('pointerdown', function(e) {
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
-		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
-			return false;
-		}
+// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+// 			return false;
+// 		}
+		
 		console.log("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
 
 		// Generate id for each element
