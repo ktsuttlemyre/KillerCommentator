@@ -11,7 +11,7 @@ html, body {
 }
     #drawing-box {
         background: #0d1117;
-	color:white;
+	color:#c9d1d9;
         position: fixed;
         left: 2rem;
         padding: 1rem;
@@ -44,7 +44,7 @@ html, body {
     }
 
     #drawing-box .tools svg {
-        color: white;
+        color: #c9d1d9;
         padding: 0;
         border-bottom: 2px solid transparent;
         font-size: 1.25rem;
@@ -57,7 +57,7 @@ html, body {
         align-items: center;
         font-size: 1.5rem;
         cursor: pointer;
-	color:white;
+	color:#c9d1d9;
     }
     #drawing-box .close svg, #drawing-box .trash svg  {
         padding: 0;
@@ -70,7 +70,7 @@ html, body {
 
     #drawing-box .tools > button {
         width: 32px;
-	color:white;
+	color:#c9d1d9;
         margin: 0 1rem 0 0;
         padding: 0;
         background: transparent;
@@ -157,12 +157,19 @@ html, body {
 	    pointer-events: visiblepainted;
         position: absolute;
     }
-    #drawing-box .colors [data-color="white"] { background: #FFFFFF; }
-    #drawing-box .colors [data-color="black"] { background: #544141; }
-    #drawing-box .colors [data-color="red"] { background: #d83030; }
+    #drawing-box .colors [data-color="white"] { background: #c9d1d9; }
+    #drawing-box .colors [data-color="black"] { background: #0d1117; }
+    #drawing-box .colors [data-color="red"] { background: #df0608; } /*original red d83030*/
+
+    /*new colors*/
+    #drawing-box .colors [data-color="fuchsia"] { background: #e66cd9; }
+    #drawing-box .colors [data-color="gold"] { background: #f8d44a; }
+    #drawing-box .colors [data-color="blue"] { background: #1f5ed0; }
+
     #drawing-box .colors [data-color="green"] { background: #30d97d; }
     #drawing-box .colors [data-color="orange"] { background: #ff9000; }
     #drawing-box .colors [data-color="yellow"] { background: #f3f326; }
+
 
     @media screen and (max-width: 700px) {
         body[data-drawing="true"] {
@@ -176,7 +183,8 @@ html, body {
         #drawing-box .colors [data-color="green"], 
         #drawing-box .colors [data-color="orange"],
         #drawing-box .colors [data-color="yellow"],
-        #drawing-box .colors [data-color="white"] {
+        #drawing-box .colors [data-color="white"],
+	#drawing-box .colors [data-color="black"]{
             display: none;
         }
     }
