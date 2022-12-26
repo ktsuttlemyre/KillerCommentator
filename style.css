@@ -2,11 +2,13 @@ html, body {
 	overscroll-behavior-x: none;
 	overscroll-behavior-y: none;
 	overflow: hidden;
-	touch-action none;
 	width:100%;
 	height:100%;
 	background:#0d1117;
 } 
+* {
+	touch-action none;
+}
     #drawing-box {
         background: linear-gradient(360deg, #ebf3fd, white);
         position: fixed;
