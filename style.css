@@ -24,7 +24,7 @@ html, body {
     }
 
     [data-drawing="true"] #drawing-box {
-        bottom: 3rem;
+        bottom: 1rem;
         transform: scale(1);
     }
 
