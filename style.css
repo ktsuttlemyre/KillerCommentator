@@ -10,7 +10,7 @@ html, body {
 	touch-action: none;
 }
     #drawing-box {
-        background: linear-gradient(360deg, #ebf3fd, white);
+        background: linear-gradient(360deg, #ebf3fd, black);
         position: fixed;
         left: 2rem;
         padding: 1rem;
@@ -42,8 +42,8 @@ html, body {
         pointer-events: all;
     }
 
-    #drawing-box .tools svg, #drawing-box .close svg, #drawing-box .trash svg {
-        color: black;
+    #drawing-box .tools svg {
+        color: white;
         padding: 0;
         border-bottom: 2px solid transparent;
         font-size: 1.25rem;
