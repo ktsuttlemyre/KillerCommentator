@@ -39,7 +39,7 @@ html, body {
         height: 100%;
     }
     [data-drawing="true"] #drawing-cover {
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0);
         pointer-events: all;
     }
 
