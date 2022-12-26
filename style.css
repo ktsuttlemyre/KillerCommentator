@@ -157,6 +157,7 @@ html, body {
 	    pointer-events: visiblepainted;
         position: absolute;
     }
+    #drawing-box .colors [data-color="white"] { background: #FFFFFF; }
     #drawing-box .colors [data-color="black"] { background: #544141; }
     #drawing-box .colors [data-color="red"] { background: #d83030; }
     #drawing-box .colors [data-color="green"] { background: #30d97d; }
