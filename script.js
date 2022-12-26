@@ -302,3 +302,9 @@
             }
         }
     }
+$(document).keyup(function(e) {
+     if (e.key === "Escape") { // escape key maps to keycode `27`
+        document.body.setAttribute('data-drawing', false);
+        config.drawing = false;
+    }
+});
