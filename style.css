@@ -7,7 +7,7 @@ html, body {
 	background:#0d1117;
 } 
 * {
-	touch-action none;
+	touch-action: none;
 }
     #drawing-box {
         background: linear-gradient(360deg, #ebf3fd, white);
