@@ -51,7 +51,7 @@ html, body {
     }
     #drawing-box .close, #drawing-box .trash {
         border-left: 1px solid #00000030;
-        padding: 0 0 0 1rem;
+        padding: 0 1rem 0 1rem;
         display: flex;
         align-items: center;
         font-size: 1.5rem;
