@@ -307,6 +307,6 @@ $(document).keyup(function(e) {
      if (e.key === "Escape") { // escape key maps to keycode `27`
         document.body.setAttribute('data-drawing', false);
         config.drawing = false;
-    }else if(e.key === ""){
+    }else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
 	     document.querySelector(".drawing-el").forEach(function (elem) {elem.remove()});
 });
