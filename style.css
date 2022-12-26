@@ -64,7 +64,7 @@ html, body {
     }
     #drawing-box .tools {
         display: flex;
-        border-right: 1px solid #00000030;
+        border-right: 1px solid white;
         margin: 0 1rem 0 0;
     }
 
