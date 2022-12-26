@@ -104,6 +104,18 @@ html, body {
     #drawing-box .colors > div:hover {
         transform: scale(1.05);
     }
+
+
+    #drawing-box .colors > div[data-color="black"]:after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        border-radius: 100px;
+        border: 2px solid #c9d1d9;
+    }
     #drawing-box .colors > div[data-current="true"]:after {
         content: '';
         position: absolute;
