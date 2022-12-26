@@ -115,13 +115,13 @@ html, body {
         border: 2px solid #0646ff;
     }
 
-    #drawing-box [data-tool][data-current="true"] svg {
+    #drawing-box [data-tool][data-current="true"] {
         color: #0646ff;
         border-bottom: 2px solid #0646ff;
     }
 
-    #drawing-box [data-tool]:not([data-current="true"]):hover svg {
-        color: rgba(0,0,0,0.5);
+    #drawing-box [data-tool]:not([data-current="true"]):hover {
+        color: rgba(0,100,150,1);
     }
 
     #drawing-layer svg {
