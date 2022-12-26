@@ -115,6 +115,7 @@
 			// Add element to drawing layer
 			document.getElementById('drawing-layer').innerHTML = document.getElementById('drawing-layer').innerHTML + 
 			svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+			setTimeout(function(){let elem=document.getElementById(id);elem.parentElement.removeChild(elem)},7000)
 		}
 		else if(config.tool == 'freeHand' && config.drawing == true) {
 
@@ -129,6 +130,7 @@
 			// Add element to the drawing layer
 			document.getElementById('drawing-layer').innerHTML = document.getElementById('drawing-layer').innerHTML + 
 			svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
+			setTimeout(function(){let elem=document.getElementById(id);elem.parentElement.removeChild(elem)},7000)
 		} 
 		else if(config.tool == 'eraser' && config.drawing == true) {
 			// Check if user has clicked on an svg
