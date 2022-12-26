@@ -122,7 +122,7 @@
 			(function(id){
 				setTimeout(function(){
 					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
-				},7000)
+				},10000)
 			})(id)
 		}
 		else if(config.tool == 'freeHand' && config.drawing == true) {
@@ -144,7 +144,7 @@
 			(function(id){
 				setTimeout(function(){
 					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
-				},7000)
+				},10000)
 			})(id)
 		} 
 		else if(config.tool == 'eraser' && config.drawing == true) {
