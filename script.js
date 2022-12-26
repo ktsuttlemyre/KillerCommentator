@@ -6,7 +6,7 @@
 	// When a user clicks a color or tool, then we set it to our current config.color or config.tool respectively, and highlight it on the UI
 	[ 'data-rColor', 'data-tool' ].forEach(function(i) {
 		document.querySelectorAll(`[${i}]`).forEach(function(item) {
-			item.addEventListener('click', function(e) {
+			item.addEventListener('pointerdown', function(e) {
 				document.querySelectorAll(`[${i}]`).forEach(function(i) {
 					i.setAttribute('data-current', false);
 				});
@@ -86,21 +86,21 @@
 
 	// Closes the drawing box and sets 'data-drawing' on the body element to false
 	// Along with cofig.drawing to false.
-	document.querySelector('#drawing-box .close').addEventListener('click', function(e) {
+	document.querySelector('#drawing-box .close').addEventListener('mousedown', function(e) {
 		document.body.setAttribute('data-drawing', false);
 		config.drawing = false;
 	})
-	document.querySelector('#drawing-box .trash').addEventListener('click', function(e) {
-	(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
+	document.querySelector('#drawing-box .trash').addEventListener('pointerdown', function(e) {
+		(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
 	})
 
 	document.body.addEventListener('pointerdown', function(e) {
 		
-	//filters out other div layers we dont want to draw on due to event bubbling 
+		//filters out other div layers we dont want to draw on due to event bubbling 
 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
 			return false;
 		}
-	console.log("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
+		console.log("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
 
 		// Generate id for each element
 		let id = helper.generateId();
