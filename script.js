@@ -94,7 +94,7 @@
     document.querySelector('#drawing-box .trash').addEventListener('click', function(e) {
         document.body.setAttribute('data-drawing', false);
         config.drawing = false;
-	(document.querySelector(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
+	(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
     })
 
     document.body.addEventListener('pointerdown', function(e) {
@@ -313,5 +313,5 @@ document.addEventListener('keydown',function(e) {
         document.body.setAttribute('data-drawing', false);
         config.drawing = false;
     }else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
-	     (document.querySelector(".drawing-el")||[]).forEach(function (elem){elem.remove()});
+	     (document.querySelectorAll(".drawing-el")||[]).forEach(function (elem){elem.remove()});
 }});
