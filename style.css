@@ -10,7 +10,8 @@ html, body {
 	touch-action: none;
 }
     #drawing-box {
-        background: linear-gradient(360deg, #ebf3fd, black);
+        background: #0d1117;
+	font-color:white;
         position: fixed;
         left: 2rem;
         padding: 1rem;
