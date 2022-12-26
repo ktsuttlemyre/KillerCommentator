@@ -7,6 +7,7 @@
 	[ 'data-rColor', 'data-tool' ].forEach(function(i) {
 		document.querySelectorAll(`[${i}]`).forEach(function(item) {
 			item.addEventListener('pointerdown', function(e) {
+				e.target.releasePointerCapture(e.pointerId);
 				document.querySelectorAll(`[${i}]`).forEach(function(i) {
 					i.setAttribute('data-current', false);
 				});
@@ -91,6 +92,7 @@
 		config.drawing = false;
 	})
 	document.querySelector('#drawing-box .trash').addEventListener('pointerdown', function(e) {
+		e.target.releasePointerCapture(e.pointerId);
 		(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
 	})
 
