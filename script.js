@@ -93,12 +93,12 @@
     })
 
     document.body.addEventListener('pointerdown', function(e) {
-	    console.log('pointerdown',e.pageY,e.pageX,e)
         
 	//filters out other div layers we dont want to draw on due to event bubbling 
         if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
             return false;
         }
+	console.log("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
 
         // Generate id for each element
         let id = helper.generateId();
@@ -136,10 +136,10 @@
     })
 
     document.body.addEventListener('pointermove', function(e) {
-	    console.log('pointermove',e.pageY,e.pageX,e)
 
         // Assuming there is a current item to in the drawing layer
         if(document.querySelector('#drawing-layer .current-item') !== null) {
+	    console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
             // If we are using the arrow tool
             if(config.drawing == true && config.tool == 'arrow') {
                 // Then get the original start position
@@ -203,7 +203,7 @@
     // Whenever the user leaves the page with their mouse or lifts up their cursor
     [ 'mouseleave', 'pointerup' ].forEach(function(item) {
         document.body.addEventListener(item, function(e) {
-		console.log('stop?',e.pageY,e.pageX,e)
+	    console.log("stop?",e.pageX,e.pageY,e.target,e)
             // Remove current-item class from all elements, and give all SVG elements pointer-events
             document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
                 item.style.pointerEvent = 'all';
