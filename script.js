@@ -106,7 +106,7 @@
 
 		// Generate id for each element
 		let id = helper.generateId();
-	
+		console.log('id',id)
 		if(config.tool == 'arrow' && config.drawing == true) {
 			// Set arrow start point
 			arrow.topX = e.pageX;
