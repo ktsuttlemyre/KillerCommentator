@@ -93,7 +93,7 @@
     })
 
     document.body.addEventListener('pointerdown', function(e) {
-	    console.log('pointerdown',e.clientY,e.clientX,e)
+	    console.log('pointerdown',e.pageY,e.pageX,e)
         
 //         if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
 //             return false;
@@ -104,18 +104,18 @@
     
         if(config.tool == 'arrow' && config.drawing == true) {
             // Set arrow start point
-            arrow.topX = e.clientX;
-            arrow.topY = e.clientY;
+            arrow.topX = e.pageX;
+            arrow.topY = e.pageY;
 
             // Add element to drawing layer
 			document.getElementById('drawing-layer').innerHTML = document.getElementById('drawing-layer').innerHTML + 
-            svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.clientX, e.clientX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+            svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
         }
         else if(config.tool == 'freeHand' && config.drawing == true) {
 
             // Set the drawing starting point
-            freeHand.topX = e.clientX;
-            freeHand.topY = e.clientY;
+            freeHand.topX = e.pageX;
+            freeHand.topY = e.pageY;
 
             // Set the current path and most recent mouse points to whereever we are scrolled on the page
             freeHand.currentPathText = `M${window.scrollX} ${window.scrollY} `;
@@ -123,7 +123,7 @@
             
             // Add element to the drawing layer
             document.getElementById('drawing-layer').innerHTML = document.getElementById('drawing-layer').innerHTML + 
-            svgEl.drawPath( [ e.clientX, e.clientY ], [ e.clientX, e.clientY ], ``, id);
+            svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
         } 
         else if(config.tool == 'eraser' && config.drawing == true) {
             // Check if user has clicked on an svg
@@ -135,7 +135,7 @@
     })
 
     document.body.addEventListener('pointermove', function(e) {
-	    console.log('pointermove',e.clientY,e.clientX,e)
+	    console.log('pointermove',e.pageY,e.pageX,e)
 
         // Assuming there is a current item to in the drawing layer
         if(document.querySelector('#drawing-layer .current-item') !== null) {
@@ -150,8 +150,8 @@
                 // And a default direction of 'south east'
                 let arrowClass = arrow.arrowClasses[3];
                 // Calculate how far the user has moved their mouse from the original position
-                let endX = e.clientX - startX - window.scrollX;
-                let endY = e.clientY - startY - window.scrollY;
+                let endX = e.pageX - startX - window.scrollX;
+                let endY = e.pageY - startY - window.scrollY;
 
                 // And using that info, calculate the arrow's angle
                 helper.calculateArrowLineAngle(endX, endY);
@@ -168,8 +168,8 @@
             
             else if(config.drawing == true && config.tool == 'freeHand') {
                 // Similar to arrows, calculate the user's end position
-                let endX = e.clientX - freeHand.topX;
-                let endY = e.clientY - freeHand.topY;
+                let endX = e.pageX - freeHand.topX;
+                let endY = e.pageY - freeHand.topY;
                 
                 // And push these new coordinates to our config
                 let newCoordinates = [ endX, endY ];
@@ -202,7 +202,7 @@
     // Whenever the user leaves the page with their mouse or lifts up their cursor
     [ 'mouseleave', 'pointerup' ].forEach(function(item) {
         document.body.addEventListener(item, function(e) {
-		console.log('stop?',e.clientY,e.clientX,e)
+		console.log('stop?',e.pageY,e.pageX,e)
             // Remove current-item class from all elements, and give all SVG elements pointer-events
             document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
                 item.style.pointerEvent = 'all';
