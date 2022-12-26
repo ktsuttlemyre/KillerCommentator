@@ -74,6 +74,7 @@ body {
         background: transparent;
         box-shadow: none;
         height: 32px;
+	border-width:0;
     }
 
     #drawing-box .tools > button span {
