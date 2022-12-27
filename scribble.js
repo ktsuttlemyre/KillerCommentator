@@ -1,6 +1,13 @@
-window.init_scribble=function(){
+SVGScribble={}
+SVGScribble.init=function(){
+	ajax("",function(toolbar){SVGScribble.main(toolbar)})
+}
+SVGScribble.main=function(html){
+	appendAfter(domParse(document.body,html))
 	// Ensure drawing layer is at root
-	document.body.appendChild(document.getElementById('drawing-layer'));
+	let drawing_layer = document.createElement('div')
+	drawing_layer.id="drawing_layer"
+	document.body.appendChild(drawing_layer);
 
 	// Manage Main UI
 	// Add a pointerdown event for each color and tool.
@@ -117,7 +124,6 @@ window.init_scribble=function(){
 			// Add element to drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
-			var drawing_layer= document.getElementById('drawing-layer');
 			drawing_layer.appendChild(wrapper.firstChild)
 			
 			
@@ -140,7 +146,6 @@ window.init_scribble=function(){
 			// Add element to the drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
-			var drawing_layer = document.getElementById('drawing-layer');
 			drawing_layer.appendChild(wrapper.firstChild)
 			
 			(function(id){
