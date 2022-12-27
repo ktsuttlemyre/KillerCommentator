@@ -1,3 +1,4 @@
+window.init_scribble=function(){
 	// Ensure drawing layer is at root
 	document.body.appendChild(document.getElementById('drawing-layer'));
 
@@ -332,3 +333,4 @@ document.addEventListener('keydown',function(e) {
 	}else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
 		 (document.querySelectorAll(".drawing-el")||[]).forEach(function (elem){elem.remove()});
 }});
+}
