@@ -1,6 +1,6 @@
 SVGScribble={}
 SVGScribble.init=function(){
-	ajax("",function(toolbar){SVGScribble.main(toolbar)})
+	ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(toolbar){SVGScribble.main(toolbar)})
 }
 SVGScribble.main=function(html){
 	appendAfter(domParse(document.body,html))
