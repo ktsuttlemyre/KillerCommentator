@@ -1,7 +1,7 @@
 //add bootstrap
-appendAfter('head',inject('meta',{name:"viewport", content:"width=device-width, initial-scale=1"}));
-appendAfter('head',inject('head','link',{href:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel:"stylesheet", integrity:"sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin:"anonymous"}))
-appendAfter(document.body,inject('body','script',{src:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js", integrity:"sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN", crossorigin:"anonymous"},function(){
+appendTo('head',inject('meta',{name:"viewport", content:"width=device-width, initial-scale=1"}));
+appendTo('head',inject('head','link',{href:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel:"stylesheet", integrity:"sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin:"anonymous"}))
+appendTo(document.body,inject('body','script',{src:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js", integrity:"sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN", crossorigin:"anonymous"},function(){
           // remote script has loaded
       }));
 ajax("https://ktsuttlemyre.github.io/vod-scribble/templates/video_source_modal.tmpl",function(data){
@@ -15,12 +15,12 @@ ajax("https://ktsuttlemyre.github.io/vod-scribble/templates/video_source_modal.t
 	navigator.mediaDevices.enumerateDevices().then(function(devices){
 		devices.forEach(function(device){
 			item.innerHTML=`${deviceId}${groupId}${kind}${label}`
-			appendAfter(modal,item)
+			appendTo(modal,item)
 		})
 	},console.error)
 	
 	
-	appendAfter(document.body,node)
+	appendTo(document.body,node)
 })
 
 var constraints = {
