@@ -1,4 +1,11 @@
 SVGScribble={}
+SVGScribble.toggle=function(){
+	// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
+	// Also sets config.drawing to true or false.
+	let drawing = config.drawing;
+	config.drawing = !drawing;
+	document.body.setAttribute('data-drawing', !drawing)
+}
 SVGScribble.init=function(){
 	// Ensure drawing layer is at root
 	let drawing_layer = document.createElement('div')
@@ -35,6 +42,7 @@ SVGScribble.init=function(){
 		strokeWidth: 4,         // The width of the lines we draw
 		configNormalisation: 12,// The average normalisation for pencil drawing
 	}
+	SVGSscribble.toggle()
 
 	let arrow = {
 		// topX, Y, and bottomX, Y store information on the arrows top and bottom ends
@@ -78,19 +86,6 @@ SVGScribble.init=function(){
 			</svg>
 		</div>`
 	}
-
-	// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
-	// Also sets config.drawing to true or false.
-	document.getElementById('start-drawing').addEventListener('click', function(e) {
-		if(config.drawing === true) {
-			config.drawing = false;
-			document.body.setAttribute('data-drawing', false)
-		} else {   
-			let drawingCover = document.getElementById('drawing-cover');
-			document.body.setAttribute('data-drawing', true)
-			config.drawing = true;
-		}
-	});
 
 	// Closes the drawing box and sets 'data-drawing' on the body element to false
 	// Along with cofig.drawing to false.
