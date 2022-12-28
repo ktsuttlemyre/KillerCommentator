@@ -20,8 +20,16 @@
           player.setVolume(0.5);
         </script>
         
-        <button class="animated hover-button" style="position:absolute;top:0;left:0" onclick="javascript:SVGScribble.init()"><span>✍️ Activate Drawing</span></button>
+        <button class="animated hover-button" style="position:absolute;top:0;left:0" id="init"><span>✍️ Activate Drawing</span></button>
 
+        <script>
+            document.getElementByID('init').onclick(function(){
+                ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(html){
+                appendAfter(document.body,domParse(html))
+                SVGScribble.init()
+                });
+            })
+        </script>
         
         <script src="https://kit.fontawesome.com/48764efa36.js" crossorigin="anonymous"></script>
         <script src="inject.js"></script>
