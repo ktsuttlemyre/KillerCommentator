@@ -1,13 +1,14 @@
 SVGScribble={}
 SVGScribble.state=false;
-SVGScribble.toggle=function(){
-	// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
-	// Also sets config.drawing to true or false.
-	let drawing = config.drawing;
-	config.drawing = !drawing;
-	document.body.setAttribute('data-drawing', !drawing)
-}
 SVGScribble.init=function(){
+	window.SVGScribble.toggle=function(){
+		// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
+		// Also sets config.drawing to true or false.
+		let drawing = config.drawing;
+		config.drawing = !drawing;
+		document.body.setAttribute('data-drawing', !drawing)
+	}
+	
 	SVGScribble.state='initializing'
 	// Ensure drawing layer is at root
 	let drawing_layer = document.createElement('div')
