@@ -24,10 +24,14 @@
 
         <script>
             document.getElementByID('init').onclick(function(){
-                ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(html){
-                appendAfter(document.body,domParse(html))
-                SVGScribble.init()
-                });
+                if(!SVGScribble.state){
+                    ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(html){
+                        appendAfter(document.body,domParse(html))
+                        SVGScribble.init();
+                        
+                    });
+                }
+                SVGScribble.toggle();
             })
         </script>
         
