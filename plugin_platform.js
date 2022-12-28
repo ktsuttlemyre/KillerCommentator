@@ -21,14 +21,14 @@ domParse=function(html){
 	return wrapper.firstChild
 }
 
-appendBefore=function(parent,tag){
+appendTo=function(parent,tag){
     if(typeof parent == 'string'){
 	parent = document.getElementsByTagName(parent)[0]
     }
     parent.insertBefore(tag, parent.firstChild);
 }
 
-appendAfter=function(parent,tag){
+prependTo=function(parent,tag){
     if(typeof parent == 'string'){
 	parent = document.getElementsByTagName(parent)[0]
     }
