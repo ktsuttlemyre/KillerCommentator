@@ -1,4 +1,5 @@
 SVGScribble={}
+SVGScribble.state=false;
 SVGScribble.toggle=function(){
 	// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
 	// Also sets config.drawing to true or false.
@@ -7,6 +8,7 @@ SVGScribble.toggle=function(){
 	document.body.setAttribute('data-drawing', !drawing)
 }
 SVGScribble.init=function(){
+	SVGScribble.state='initializing'
 	// Ensure drawing layer is at root
 	let drawing_layer = document.createElement('div')
 	drawing_layer.id="drawing-layer"
@@ -324,11 +326,12 @@ SVGScribble.init=function(){
 			}
 		}
 	}
-document.addEventListener('keydown',function(e) {
-	 if (e.key === "Escape") { // escape key maps to keycode `27`
-		document.body.setAttribute('data-drawing', false);
-		config.drawing = false;
-	}else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
-		 (document.querySelectorAll(".drawing-el")||[]).forEach(function (elem){elem.remove()});
-}});
+	document.addEventListener('keydown',function(e) {
+		 if (e.key === "Escape") { // escape key maps to keycode `27`
+			document.body.setAttribute('data-drawing', false);
+			config.drawing = false;
+		}else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
+			 (document.querySelectorAll(".drawing-el")||[]).forEach(function (elem){elem.remove()});
+	}});
+	SVGScribble.state='init'
 }
