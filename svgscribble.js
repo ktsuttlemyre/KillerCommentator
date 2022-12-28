@@ -3,7 +3,7 @@ SVGScribble.init=function(){
 	ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(toolbar){SVGScribble.main(toolbar)})
 }
 SVGScribble.main=function(html){
-	appendAfter(domParse(document.body,html))
+	appendAfter(document.body,domParse(document.body,html))
 	// Ensure drawing layer is at root
 	let drawing_layer = document.createElement('div')
 	drawing_layer.id="drawing-layer"
