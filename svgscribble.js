@@ -6,8 +6,11 @@ SVGScribble.main=function(html){
 	appendAfter(domParse(document.body,html))
 	// Ensure drawing layer is at root
 	let drawing_layer = document.createElement('div')
-	drawing_layer.id="drawing_layer"
+	drawing_layer.id="drawing-layer"
 	document.body.appendChild(drawing_layer);
+	let drawing_cover = document.createElement('div')
+	drawing_cover.id="drawing-cover"
+	document.body.appendChild(drawing_cover);
 
 	// Manage Main UI
 	// Add a pointerdown event for each color and tool.
