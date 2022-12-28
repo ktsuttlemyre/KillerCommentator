@@ -38,7 +38,7 @@ prependTo=function(parent,tag){
 let inject=(function(d){return function(t,src,callback){
     //simplistic way to check if we have already injected this tag
     //we protect ourselves from this function but not from native tags
-    let id=btoa((typeof src == 'string')?src:JSON.stringify(src))
+    let id=btoa((typeof src == 'string')?src:JSON.stringify(src)).replace(/\=/g,'') //trim off '=' chars
     //crunch down to minimum of 32 characters
     let l = Math.floor(id.length/32) 
     id=id.split('').filter((k,i) => !(i % l))
