@@ -28,10 +28,10 @@
                     ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(html){
                         appendAfter(document.body,domParse(html))
                         SVGScribble.init();
-                        
+                        SVGScribble.toggle();
                     });
                 }
-                SVGScribble.toggle();
+                SVGScribble && SVGScribble.toggle && SVGScribble.toggle();
             }
         </script>
         
