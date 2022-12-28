@@ -42,7 +42,6 @@ SVGScribble.init=function(){
 		strokeWidth: 4,         // The width of the lines we draw
 		configNormalisation: 12,// The average normalisation for pencil drawing
 	}
-	SVGSscribble.toggle()
 
 	let arrow = {
 		// topX, Y, and bottomX, Y store information on the arrows top and bottom ends
