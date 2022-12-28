@@ -23,7 +23,7 @@
         <button class="animated hover-button" style="position:absolute;top:0;left:0" id="init"><span>✍️ Activate Drawing</span></button>
 
         <script>
-            document.getElementByID('init').onclick(function(){
+            document.getElementById('init').onclick(function(){
                 if(!SVGScribble.state){
                     ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(html){
                         appendAfter(document.body,domParse(html))
