@@ -10,8 +10,10 @@ let commands = []
 
 //create a cmdSpace array with all possible commands we are looking for
 let cmdSpaceList=commands.concat(Object.keys(aliases))
+let aliasSpace={}
 Object.keys(aliases).forEach(function(key){
   cmdSpaceList.concat(aliases[key])
+  aliases[key].forEach(function(al){aliasSpace[al]=key})
 })
 
 //remove duplicates
@@ -85,7 +87,7 @@ var voice = {
         //remove any extra filler words
         let recognize = said.match(cmdSpaceRegex)
         console.log("I recognize: ["+recognize+ "]")
-        let alias = aliases[recognize]
+        let alias = aliasSpace[recognize]
         alias && console.log("It has an alias of: ["+alias+"]")
         SourceManager.load(alias||recognize);
         //if (cmd[said]) { cmd[said](); }
