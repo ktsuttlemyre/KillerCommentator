@@ -1,3 +1,5 @@
+//based off the code
+// https://code-boxx.com/voice-commands-javascript-speech-recognition/
 let initSpeechCommands=function(){
   var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
   var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
