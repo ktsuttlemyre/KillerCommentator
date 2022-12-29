@@ -4,7 +4,7 @@ SourceManager.sources={
 	//https://challonge.com/module/instructions
 	challonge:{
 		interactive:function(){
-			return `https://challonge.com/${arguments[0]}/module?scale_to_fit=1&show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
+			return `https://challonge.com/${arguments[0]}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
 		}
 	},
 	urls:{
