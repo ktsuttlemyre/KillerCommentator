@@ -84,7 +84,7 @@ SVGScribble.init=function(){
 					</marker>
 					<marker id="arrow-head-${id}" class="arrow-resizer" markerWidth="16" markerHeight="10" refX="0" refY="3" 
 					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20"  stroke-opacity="0" opacity="0">
-						<path d="M0 0 L0 6 L9 3 z" fill="${config.color}" />
+						<path d="M0 0 L0 6 L9 3 z" fill="#FF00FF" />
 					</marker>
 				</defs>
 				<path marker-start="url(#bottom-marker)" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}" marker-end="url(#arrow-head-${id})" class="arrow-line" d="${path}"></path>
