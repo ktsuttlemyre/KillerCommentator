@@ -2,11 +2,27 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
-
-aliases = {
+//add any special cases here
+let aliases = {
   bracket:'challonge',
   solange:'challonge',
 }
+let commands = []
+
+//create a cmdSpace array with all possible commands we are looking for
+let cmdSpaceList=Array.concat(commands,Object.keys(aliases))
+Object.keys(aliases).forEach(function(key){
+  cmdSpaceList.push(aliases[key])
+})
+
+//remove duplicates
+cmdSpaceList = cmdSpaceList.filter(function(value, index, self) {
+  return self.indexOf(value) === index;
+});
+
+//create regex to search for our cmdspace
+let cmdSpaceRegex = new RegExp(cmdSpaceList.join('|'),'g')
+
 
 // (D) COMMANDS LIST
 var cmd = {
@@ -63,6 +79,8 @@ var voice = {
       voice.recog.onresult = (evt) => {
         let said = evt.results[0][0].transcript.toLowerCase();
         voice.wrap.innerHTML = said;
+        //remove any extra filler words
+        said = said.match(cmdSpaceRegex)
         let alias = aliases[said]
         console.log("I heard you say: "+said,"I know an alias of: "+alias)
         SourceManager.load(alias||said);
