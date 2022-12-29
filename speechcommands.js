@@ -26,7 +26,7 @@ let initSpeechCommands=function(){
   let cmdSpaceRegex = new RegExp(cmdSpaceList.join('|'),'g')
 
 
-  let stopWordsRegex=new RegExp('\\s*\\b('+stopWords.stopWords.join('|')+')\\b\\s*', 'g')
+  let stopWordsRegex=new RegExp('\\b('+stopWords.stopWords.join('|')+')\\b', 'g')
 
 
   // (D) COMMANDS LIST
@@ -93,7 +93,12 @@ let initSpeechCommands=function(){
           console.log("I heard you say: ["+said+"]")
           //remove any extra filler words
           let strongWords = said.replace(stopWordsRegex, '');
-          console.log("I removed the stop words and now understand: ["+strongWords+"]")
+          //removing stop words leaves mutli spaces so clean those up
+          //we have to do this in 2 steps because if you have a hanging ' due to stop words being removed you will get extra words that dont exact match
+          // example: "let's check the challonge" turns to "checkchallonge" if you try to remove spaces as you remove words
+          //this regex looks for word characters only
+          strongWords=strongWords.replace(/\W+\B/g,'')
+          console.log("I removed the stop words and trimmed. Now I understand: ["+strongWords+"]")
           //see if we recognize anything
           let recognize = strongWords.match(cmdSpaceRegex)
           console.log("I recognize: ["+recognize+ "]")
