@@ -74,7 +74,7 @@ SVGScribble.init=function(){
 			"></div>
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">
 				<defs>
-					<marker id="arrow-head-${id}-1" class="arrow-resizer" markerWidth="12" markerHeight="10" refX="0" refY="3" 
+					<marker id="arrow-head-${id}-1" class="arrow-resizer" markerWidth="11" markerHeight="10" refX="0" refY="3" 
 					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
 						<path d="M0 0 L0 6 L9 3 z" fill="${config.colorAlt}" />
 					</marker>
@@ -82,7 +82,7 @@ SVGScribble.init=function(){
 					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
 						<path d="M0 0 L0 6 L9 3 z" fill="${config.color}" />
 					</marker>
-					<marker id="arrow-head-${id}-3" class="arrow-resizer" markerWidth="16" markerHeight="10" refX="0" refY="3" 
+					<marker id="arrow-head-${id}-3" class="arrow-resizer" markerWidth="14" markerHeight="10" refX="0" refY="3" 
 					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20" stroke-opacity="0" opacity="0">
 						<path d="M0 0 L0 6 L9 3 z" fill="#FF00FF" />
 					</marker>
@@ -95,7 +95,7 @@ SVGScribble.init=function(){
 		drawPath: (start, dimensions, path, id) => 
 		`<div class="free-hand drawing-el static" data-id="${id}" id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">          
-				<path d="${path}" style="stroke: ${config.colorAlt}; stroke-width: ${config.strokeWidth+2} stroke-opacity:0.7; opacity:0.7"></path>
+				<path d="${path}" style="stroke: ${config.colorAlt}; stroke-width: ${config.strokeWidth+2}; stroke-opacity:0.7; opacity:0.7"></path>
 				<path d="${path}" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}"></path>	
 				<path d="${path}" style="stroke: #FF00FF; stroke-width: ${config.strokeWidth+6}; stroke-opacity:0; opacity:0"></path>	
 			</svg>
