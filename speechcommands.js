@@ -98,7 +98,7 @@ let initSpeechCommands=function(){
           strongWords=strongWords.replace(/\W+\B/g,'').trim()
           console.log("After trimming up a bit I Now understand: ["+strongWords+"]")
           //see if we recognize anything
-          let recognize = strongWords.match(cmdSpaceRegex) || strongWords
+          let recognize = strongWords.match(cmdSpaceRegex)[0] || strongWords
           console.log("I recognize: ["+recognize+ "]")
           let alias = aliasSpace[recognize||said]
           alias && console.log("It has an alias of: ["+alias+"]")
