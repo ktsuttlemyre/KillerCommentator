@@ -11,10 +11,10 @@ SVGScribble.init=function(){
 	
 	SVGScribble.state='initializing'
 	// Ensure drawing layer is at root
-	let drawing_layer = document.createElement('div')
+	var drawing_layer = document.createElement('div')
 	drawing_layer.id="drawing-layer"
 	document.body.appendChild(drawing_layer);
-	let drawing_cover = document.createElement('div')
+	var drawing_cover = document.createElement('div')
 	drawing_cover.id="drawing-cover"
 	document.body.appendChild(drawing_cover);
 
@@ -38,7 +38,7 @@ SVGScribble.init=function(){
 		});
 	});
 
-	let config = {
+	var config = {
 		drawing: false,         // Set to true if we are drawing, false if we aren't
 		tool: 'freeHand',       // The currently selected tool
 		color : 'white',        // The currently selected colour
