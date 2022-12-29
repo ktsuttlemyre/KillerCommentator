@@ -195,7 +195,7 @@ SVGScribble.init=function(){
 				document.querySelector('#drawing-layer .arrow.current-item').classList.remove('static');
 				document.querySelector('#drawing-layer .arrow.current-item').setAttribute('data-direction', arrow.activeDirection);
 				document.querySelector('#drawing-layer .arrow.current-item svg').setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
-				document.querySelector('#drawing-layer .arrow.current-item path.arrow-line').forEach(function(path){
+				document.querySelectorAll('#drawing-layer .arrow.current-item path.arrow-line').forEach(function(path){
 					path.setAttribute('d', `M0 0 L${endX} ${endY}`);
 				})
 			}
