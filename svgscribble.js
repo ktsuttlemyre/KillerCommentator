@@ -123,10 +123,10 @@ SVGScribble.init=function(){
 			// Add element to drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
-			drawing_layer.appendChild(wrapper.firstChild)
+			drawing_layer.appendChild(wrapper.firstChild);
 			
 			
-			(function(id){
+			!(function(id){
 				setTimeout(function(){
 					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
 				},10000)
@@ -145,9 +145,9 @@ SVGScribble.init=function(){
 			// Add element to the drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
-			drawing_layer.appendChild(wrapper.firstChild)
+			drawing_layer.appendChild(wrapper.firstChild);
 			
-			(function(id){
+			!(function(id){
 				setTimeout(function(){
 					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
 				},10000)
