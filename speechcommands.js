@@ -82,7 +82,7 @@ var voice = {
       console.error(err);
       voice.wrap.innerHTML = "Please enable access and attach a microphone.";
       console.log("Please enable access and attach a microphone.")
-      voice.listening=false
+      voice.stop()
     });
   },
  
