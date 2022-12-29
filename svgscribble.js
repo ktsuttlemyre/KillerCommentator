@@ -158,6 +158,7 @@ SVGScribble.init=function(){
 		} 
 		else if(config.tool == 'eraser' && config.drawing == true) {
 			// Check if user has clicked on an svg
+			console.log('eraser clicked ',e.target,e)
 			if(helper.parent(e.target, '.drawing-el', 1) !== null && helper.parent(e.target, '.drawing-el', 1).matches('.drawing-el')) {
 				// If they have, delete it
 				helper.parent(e.target, '.drawing-el', 1).remove();
