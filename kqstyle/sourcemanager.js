@@ -85,9 +85,10 @@ SourceManager.load=function(source,stage,player){
 }
 SourceManager.cmd=function(source){
 	if(!source){return}
+	var tmp = source;
 	switch(source){
 		case "whiteboard":
-		return SourceManager.load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.twitch);	
+		return SourceManager.load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.iframe);	
 		case "twitch":
 		return SourceManager.load(config.twitch,SourceManager.stages.mediaStage,SourceManager.players.twitch);
 		default:
@@ -95,6 +96,7 @@ SourceManager.cmd=function(source){
 			source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
 			
 			if(!SourceManager.sources.urls[source]){
+				let tmp = source
 				if(source.indexOf('google') >=0 || source.indexOf('search') >=0){
 					source='https://www.google.com/webhp?igu=1' //or http://www.google.com/custom?q=&btnG=Search
 				}else if(source.indexOf('.') >= 0){
@@ -105,6 +107,9 @@ SourceManager.cmd=function(source){
 				//source is in https://github.com/Kikobeats/top-sites/blob/master/top-sites.json
 				//	source='http://'+source
 				//}
+				if(source===tmp){
+					return 1
+				}
 			}else{
 				source = SourceManager.sources.urls[source]
 			}
