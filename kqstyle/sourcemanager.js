@@ -21,37 +21,58 @@ var whiteboards = {
 	},
 }
 
+
+
+
 SourceManager={}
-SourceManager.loadRawHoney=function(){
-	let mediaStage=document.getElementById('media_stage')
-	mediaStage.innerHTML = "";
-	var ifrm = document.createElement("iframe");
-        ifrm.setAttribute("src", "https://rawhoney.neonexus.co/strategy/whiteboard");
-        ifrm.style.width = "100%";
-        ifrm.style.height = "80%";
-        mediaStage.appendChild(ifrm);
+SourceManager.sources={
+	urls:{
+		rawhoney:"https://rawhoney.neonexus.co/strategy/whiteboard",
+		kqwhiteboard:"https://kqwhiteboard.surge.sh"
+	}
 }
-SourceManager.loadKQWhiteboard=function(){
-	let mediaStage=document.getElementById('media_stage')
-	mediaStage.innerHTML = "";
-	var ifrm = document.createElement("iframe");
-        ifrm.setAttribute("src", "https://kqwhiteboard.surge.sh");
-        ifrm.style.width = "100%";
-        ifrm.style.height = "80%";
-        mediaStage.appendChild(ifrm);
-}
-SourceManager.loadTwitch=function(options){
-	options=Object.assign({
+SourceManager.players={
+	iframe:function(src){
+		var ifrm = document.createElement("iframe");
+		ifrm.setAttribute("src", src);
+		ifrm.style.width = "100%";
+		ifrm.style.height = "80%";
+		ifrm.frameBorder = "0";
+		return ifrm;
+	},
+	twitch:function(options){
+		options=Object.assign({
 			width: "100%",
 			height: "80%",
 			// only needed if your site is also embedded on embed.example.com and othersite.example.com
 			parent: [location.host,"kq.style","ktsuttlemyre.github.io"]
-		},options)
-	SourceManager.twitchPlayer;
-	appendTo(document.body,inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},function(){
-		SourceManager.twitchPlayer = new Twitch.Player("media_stage", options);
-		//twitchPlayer.setVolume(0.5);
-	}))
+			},options)
+		appendTo(document.body,inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},function(){
+			SourceManager.twitchPlayer = new Twitch.Player("media_stage", options);
+			//twitchPlayer.setVolume(0.5);
+		}))
+	}
+}
+SourceManager.stages={
+	mediaStage:document.getElementById('media_stage');
+}
+SourceManager._load=function(source,stage,player){
+	player=player||SourceManager.players.iframe;
+	stage=stage||SourceManager.stages.mediaStage;
+	
+	stage.innerHTML = "";
+
+	let domElem=player(source);
+        domElem && stage.appendChild(player);
+	return 
+}
+SourceManager.load=function(source){
+	switch(source){
+		case "twitch":
+		return SourceManager._load({video:'1686476519'},SourceManager.stages.mediaStage,SourceManager.player.twitch);
+		default:
+		return SourceManager._load((SourceManager.sources.url[source]||source))
+	}
 }
 
 SourceManager.loadComponents=function(options){
@@ -128,4 +149,4 @@ SourceManager.loadComponents=function(options){
 	navigator.mediaDevices.enumerateDevices().then((data) => console.log(data),console.error)
 }
 
-SourceManager.loadTwitch({video:'1686476519'})
+SourceManager.load("twitch"))
