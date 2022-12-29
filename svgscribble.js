@@ -1,5 +1,5 @@
-appendTo('head',inject('head','link',{href:"style.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
-appendTo(document.body,inject('body','script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){
+appendTo('head',inject('link',{href:"style.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
+appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){
 	  // remote script has loaded
       }));
 
