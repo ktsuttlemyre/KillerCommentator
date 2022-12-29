@@ -104,7 +104,7 @@ let initSpeechCommands=function(){
           console.log("I recognize: ["+recognize+ "]")
           let alias = aliasSpace[recognize||strongWords||said]
           alias && console.log("It has an alias of: ["+alias+"]")
-          SourceManager.load(alias||recognize||strongWords||said);
+          SourceManager.cmd(alias||recognize||strongWords||said);
           //if (cmd[said]) { cmd[said](); }
           //else { said += " (command not found)"; }
           voice.stop();
