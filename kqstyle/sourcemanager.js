@@ -22,6 +22,24 @@ var whiteboards = {
 }
 
 SourceManager={}
+SourceManager.loadRawHoney=function(){
+	let mediaStage=document.getElementById('media_stage')
+	mediaStage.innerHTML = "";
+	var ifrm = document.createElement("iframe");
+        ifrm.setAttribute("src", "https://rawhoney.neonexus.co/strategy/whiteboard");
+        ifrm.style.width = "100%";
+        ifrm.style.height = "80%";
+        mediaStage.appendChild(ifrm);
+}
+SourceManager.loadKQWhiteboard=function(){
+	let mediaStage=document.getElementById('media_stage')
+	mediaStage.innerHTML = "";
+	var ifrm = document.createElement("iframe");
+        ifrm.setAttribute("src", "https://kqwhiteboard.surge.sh");
+        ifrm.style.width = "100%";
+        ifrm.style.height = "80%";
+        mediaStage.appendChild(ifrm);
+}
 SourceManager.loadTwitch=function(options){
 	options=Object.assign({
 			width: "100%",
