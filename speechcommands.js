@@ -6,6 +6,7 @@ var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEv
 let aliases = {
   bracket:'challonge',
   solange:'challonge',
+  challenge:'challonge',
 }
 let commands = []
 
