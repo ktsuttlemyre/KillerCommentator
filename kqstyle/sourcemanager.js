@@ -1,6 +1,6 @@
 
 SourceManager={}
-SourceManager.source={
+SourceManager.sources={
 	urls:{
 		rawhoney:"https://rawhoney.neonexus.co/strategy/whiteboard",
 		kqwhiteboard:"https://kqwhiteboard.surge.sh"
@@ -28,7 +28,7 @@ SourceManager.source={
 		}
 	}
 }
-SourceManager.player={
+SourceManager.players={
 	iframe:function(src){
 		var ifrm = document.createElement("iframe");
 		ifrm.setAttribute("src", src);
@@ -50,12 +50,12 @@ SourceManager.player={
 		}))
 	}
 }
-SourceManager.stage={
+SourceManager.stages={
 	mediaStage:document.getElementById('media_stage')
 }
 SourceManager._load=function(source,stage,player){
-	player=player||SourceManager.player.iframe;
-	stage=stage||SourceManager.stage.mediaStage;
+	player=player||SourceManager.players.iframe;
+	stage=stage||SourceManager.stages.mediaStage;
 	
 	stage.innerHTML = "";
 
@@ -66,11 +66,11 @@ SourceManager._load=function(source,stage,player){
 SourceManager.load=function(source){
 	switch(source){
 		case "twitch":
-		return SourceManager._load({video:'1686476519'},SourceManager.stage.mediaStage,SourceManager.player.twitch);
+		return SourceManager._load({video:'1686476519'},SourceManager.stages.mediaStage,SourceManager.players.twitch);
 		default:
 			//is it a whiteboard?
-			source = (SourceManager.source.whiteboard[source] && SourceManager.sources.whiteboard[source].src) || source
-		return SourceManager._load(SourceManager.source.url[source]||source)
+			source = (SourceManager.sources.whiteboard[source] && SourceManager.sources.whiteboard[source].src) || source
+		return SourceManager._load(SourceManager.sources.urls[source]||source)
 	}
 }
 
