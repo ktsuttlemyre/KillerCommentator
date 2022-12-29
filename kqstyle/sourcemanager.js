@@ -1,16 +1,20 @@
-
+let confg={
+	url:{
+		challonge:['HCC_2022'],
+	},
+	twitch:{video:'1686476519'}
+}
 SourceManager={}
 SourceManager.sources={
 	//https://challonge.com/module/instructions
-	challonge:{
-		interactive:function(){
-			return `https://challonge.com/${arguments[0]}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
-		}
-	},
 	urls:{
 		rawhoney:"https://rawhoney.neonexus.co/strategy/whiteboard",
 		kqwhiteboard:"https://kqwhiteboard.surge.sh",
-		whiteboard:"about:blank"
+		whiteboard:"about:blank",
+		challonge:function(){
+			let arg = arguments[0]||confg.urls.challonge[0];
+			return `https://challonge.com/${arg}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
+		}
 	},
 	whiteboards: {
 		kqday:{
@@ -62,7 +66,7 @@ SourceManager.players={
 SourceManager.stages={
 	mediaStage:document.getElementById('media_stage')
 }
-SourceManager._load=function(source,stage,player){
+SourceManager.load=function(source,stage,player){
 	if(!source){return}
 	player=player||SourceManager.players.iframe;
 	stage=stage||SourceManager.stages.mediaStage;
@@ -70,23 +74,24 @@ SourceManager._load=function(source,stage,player){
 	stage.innerHTML = "";
 
 	if(source.call){
-		source=souce() //todo custom defaults? get them from kqstyle? idk
+		source=souce()
 	}
 	let domElem=player(source);
         domElem && stage.appendChild(domElem);
 	return 
 }
-SourceManager.load=function(source){
+SourceManager.cmd=function(source){
 	if(!source){return}
 	switch(source){
 		case "whiteboard":
-		return SourceManager._load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.twitch);	
+		return SourceManager.load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.twitch);	
 		case "twitch":
-		return SourceManager._load({video:'1686476519'},SourceManager.stages.mediaStage,SourceManager.players.twitch);
+		return SourceManager.load(config.twitch,SourceManager.stages.mediaStage,SourceManager.players.twitch);
 		default:
 			//is it a whiteboard?
 			source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
-		return SourceManager._load(SourceManager.sources.urls[source]||source)
+			
+		return SourceManager.load(SourceManager.sources.urls[source]||source)
 	}
 }
 
@@ -164,4 +169,4 @@ SourceManager.loadComponents=function(options){
 	navigator.mediaDevices.enumerateDevices().then((data) => console.log(data),console.error)
 }
 
-SourceManager.load("twitch")
+SourceManager.cmd("twitch")
