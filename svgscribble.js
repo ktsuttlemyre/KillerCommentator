@@ -160,7 +160,8 @@ SVGScribble.init=function(){
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
 			wrapper.firstChild.classList.add('current-item')
 			drawing_layer.appendChild(wrapper.firstChild);
-			freehand.pathElems=document.querySelectorAll('#drawing-layer .free-hand.current-item svg path');
+			freeHand.pathElems=document.querySelectorAll('#drawing-layer .free-hand.current-item svg path');
+			freeHand.domElem=document.querySelector('#drawing-layer .free-hand.current-item');
 			
 			//should this be perminant or fade away
 			if (!e.shiftKey || !e.ctrlKey) { //|| e.altKey 
@@ -238,8 +239,8 @@ SVGScribble.init=function(){
 					}
 
 					// Set the complete current path coordinates
-					document.querySelector('#drawing-layer .free-hand.current-item').classList.remove('static');
-					freehand.pathElems.forEach(function(path){path.setAttribute('d', freeHand.currentPathText + tmpPath)});
+					freeHand.domElem.classList.remove('static');
+					freeHand.pathElems.forEach(function(path){path.setAttribute('d', freeHand.currentPathText + tmpPath)});
 				}
 
 			}
