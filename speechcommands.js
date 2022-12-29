@@ -12,7 +12,7 @@ let commands = []
 let cmdSpaceList=commands.concat(Object.keys(aliases))
 let aliasSpace={}
 Object.keys(aliases).forEach(function(key){
-  cmdSpaceList.concat(aliases[key])
+  cmdSpaceList=cmdSpaceList.concat(aliases[key])
   aliases[key].forEach(function(al){aliasSpace[al]=key})
 })
 
