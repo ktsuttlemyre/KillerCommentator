@@ -26,7 +26,7 @@ let initSpeechCommands=function(){
   let cmdSpaceRegex = new RegExp(cmdSpaceList.join('|'),'g')
 
 
-  let stopWordsRegex=new RegExp('\\b('+stopWords.stopWords.join('|')+')\\b', 'g')
+  let stopWordsRegex=new RegExp('\\s*\\b('+stopWords.stopWords.join('|')+')\\b\\s*', 'g')
 
 
   // (D) COMMANDS LIST
