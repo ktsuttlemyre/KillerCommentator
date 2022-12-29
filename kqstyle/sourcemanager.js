@@ -1,4 +1,4 @@
-let confg={
+let config={
 	url:{
 		challonge:['HCC_2022'],
 	},
@@ -12,7 +12,7 @@ SourceManager.sources={
 		kqwhiteboard:"https://kqwhiteboard.surge.sh",
 		whiteboard:"about:blank",
 		challonge:function(){
-			let arg = arguments[0]||confg.urls.challonge[0];
+			let arg = arguments[0]||config.urls.challonge[0];
 			return `https://challonge.com/${arg}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
 		}
 	},
