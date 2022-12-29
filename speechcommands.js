@@ -58,8 +58,9 @@ var voice = {
         let said = evt.results[0][0].transcript.toLowerCase();
         SourceManager.load(said);
         //if (cmd[said]) { cmd[said](); }
-        else { said += " (command not found)"; }
+        //else { said += " (command not found)"; }
         voice.wrap.innerHTML = said;
+        console.log("I heard you say: "+said)
         voice.stop();
       };
  
@@ -73,6 +74,7 @@ var voice = {
     .catch((err) => {
       console.error(err);
       voice.wrap.innerHTML = "Please enable access and attach a microphone.";
+      console.log("Please enable access and attach a microphone.")
     });
   },
  
@@ -81,6 +83,7 @@ var voice = {
     voice.recog.start();
     voice.btn.onclick = voice.stop;
     voice.btn.value = "Speak Now Or Click Again To Cancel";
+    console.log('Listening, Please Speak now')
   },
  
   // (C) STOP/CANCEL SPEECH RECOGNITION
