@@ -49,7 +49,7 @@ SourceManager.loadTwitch=function(options){
 		},options)
 	SourceManager.twitchPlayer;
 	appendTo(document.body,inject('body','script',{src:"https://player.twitch.tv/js/embed/v1.js", crossorigin:"anonymous"},function(){
-		SourceManager.twitchPlayer; = new Twitch.Player("media_stage", options);
+		SourceManager.twitchPlayer = new Twitch.Player("media_stage", options);
 		//twitchPlayer.setVolume(0.5);
 	})
 }
