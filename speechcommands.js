@@ -7,7 +7,12 @@ let initSpeechCommands=function(){
 
   //add any special cases here
   let aliases = {
-    challonge:'bracket,solange,challenge,standings,lunch'.split(/\s*,\s*/),
+    challonge:'bracket,solange,challenge,standings,lunch',
+    groups:'pool,pools,group',
+    twitch:'live,cab,feed,stream',
+    standings:'standing',
+    youtube:'replay',
+    roster:'teamsheet,teams'
   }
   let commands = []
 
@@ -15,6 +20,10 @@ let initSpeechCommands=function(){
   let cmdSpaceList=commands.concat(Object.keys(aliases))
   let aliasSpace={}
   Object.keys(aliases).forEach(function(key){
+    //fix aliases strings to arrays
+    if(aliases[key].split){
+      aliases[key]=aliases[key].split(/\s*,\s*/);
+    }
     cmdSpaceList=cmdSpaceList.concat(aliases[key])
     aliases[key].forEach(function(al){aliasSpace[al]=key})
   })
@@ -27,26 +36,12 @@ let initSpeechCommands=function(){
   //create regex to search for our cmdspace
   let cmdSpaceRegex = new RegExp(cmdSpaceList.join('|'),'g')
 
-
+  //if we are using a stopWord as a command then remove it from the stopwords list
+  stopWords.stopWords = stopWords.stopWords.filter(function(item) {
+    return cmdSpaceList.indexOf(item.id) !== -1;
+  });
   let stopWordsRegex=new RegExp('\\b('+stopWords.stopWords.join('|')+')\\b', 'g')
-
-
-  // (D) COMMANDS LIST
-  var cmd = {
-    "day" : () => {
-      voice.wrap.style.backgroundColor = "yellow";
-      voice.wrap.style.color = "black";
-    },
-
-    "night" : () => {
-      voice.wrap.style.backgroundColor = "black";
-      voice.wrap.style.color = "white";
-    },
-
-    "challonge" : () => {
-      alert("Hello World!");
-    }
-  };
+  
 
   // event = keyup or keydown
   let isSpaceDown;
