@@ -1,6 +1,11 @@
 
 SourceManager={}
 SourceManager.sources={
+	challonge:{
+		interactive:function(){
+			return `https://challonge.com/${arguments[0]}/module?scale_to_fit=1&show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
+		}
+	},
 	urls:{
 		rawhoney:"https://rawhoney.neonexus.co/strategy/whiteboard",
 		kqwhiteboard:"https://kqwhiteboard.surge.sh",
@@ -33,6 +38,8 @@ SourceManager.players={
 	iframe:function(src){
 		var ifrm = document.createElement("iframe");
 		ifrm.setAttribute("src", src);
+		ifrm.scrolling="auto"
+		ifrm.allowtransparency="true"
 		ifrm.style.width = "100%";
 		ifrm.style.height = "80%";
 		ifrm.frameBorder = "0";
@@ -60,6 +67,9 @@ SourceManager._load=function(source,stage,player){
 	
 	stage.innerHTML = "";
 
+	if(source.call){
+		source=souce() //todo custom defaults? get them from kqstyle? idk
+	}
 	let domElem=player(source);
         domElem && stage.appendChild(player);
 	return 
