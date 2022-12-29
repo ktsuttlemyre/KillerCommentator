@@ -48,7 +48,7 @@ SourceManager.loadTwitch=function(options){
 			parent: [location.host,"kq.style","ktsuttlemyre.github.io"]
 		},options)
 	SourceManager.twitchPlayer;
-	appendTo(document.body,inject('script',{src:"https://player.twitch.tv/js/embed/v1.js", crossorigin:"anonymous"},function(){
+	appendTo(document.body,inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},function(){
 		SourceManager.twitchPlayer = new Twitch.Player("media_stage", options);
 		//twitchPlayer.setVolume(0.5);
 	}))
