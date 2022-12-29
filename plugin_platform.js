@@ -41,7 +41,7 @@ let inject=(function(d){return function(t,src,callback){
     let id=btoa((typeof src == 'string')?src:JSON.stringify(src)).replace(/\=/g,'') //trim off '=' chars
     //crunch down to minimum of 32 characters
     let l = Math.floor(id.length/32) 
-    id=id.split('').filter((k,i) => !(i % l))
+    id=id.split('').filter((k,i) => !(i % l)).join('')
     if (d.getElementById(id)){ return; }
     let js = d.createElement(t);
     js.id = id;
