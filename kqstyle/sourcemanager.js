@@ -51,7 +51,7 @@ SourceManager.players={
 	}
 }
 SourceManager.stages={
-	mediaStage:document.getElementById('media_stage');
+	mediaStage:document.getElementById('media_stage')
 }
 SourceManager._load=function(source,stage,player){
 	player=player||SourceManager.players.iframe;
