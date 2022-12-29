@@ -191,11 +191,8 @@ html, body {
     @media screen and (max-width: 700px) {
         body[data-drawing="true"] {
             overflow: hidden;
-            position: fixed;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
         }
         #drawing-box .colors [data-color="green"], 
         #drawing-box .colors [data-color="orange"],
