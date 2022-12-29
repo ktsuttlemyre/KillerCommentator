@@ -79,11 +79,13 @@ var voice = {
       voice.recog.onresult = (evt) => {
         let said = evt.results[0][0].transcript.toLowerCase();
         voice.wrap.innerHTML = said;
+        console.log("I heard you say: ["+said+"]")
         //remove any extra filler words
-        said = said.match(cmdSpaceRegex)
-        let alias = aliases[said]
-        console.log("I heard you say: "+said,"I know an alias of: "+alias)
-        SourceManager.load(alias||said);
+        let recognize = said.match(cmdSpaceRegex)
+        console.log("I recognize: ["+recognize+ "]")
+        let alias = aliases[recognize]
+        alias && console.log("It has an alias of: ["+alias+"]")
+        SourceManager.load(alias||recognize);
         //if (cmd[said]) { cmd[said](); }
         //else { said += " (command not found)"; }
         voice.stop();
