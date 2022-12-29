@@ -3,7 +3,8 @@ SourceManager={}
 SourceManager.sources={
 	urls:{
 		rawhoney:"https://rawhoney.neonexus.co/strategy/whiteboard",
-		kqwhiteboard:"https://kqwhiteboard.surge.sh"
+		kqwhiteboard:"https://kqwhiteboard.surge.sh",
+		whiteboard:"about:blank"
 	},
 	whiteboards: {
 		kqday:{
@@ -48,7 +49,7 @@ SourceManager.players={
 			SourceManager.twitchPlayer = new Twitch.Player("media_stage", options);
 			//twitchPlayer.setVolume(0.5);
 		}))
-	}
+	},
 }
 SourceManager.stages={
 	mediaStage:document.getElementById('media_stage')
@@ -65,11 +66,13 @@ SourceManager._load=function(source,stage,player){
 }
 SourceManager.load=function(source){
 	switch(source){
+		case "whiteboard:
+		return SourceManager._load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.twitch);	
 		case "twitch":
 		return SourceManager._load({video:'1686476519'},SourceManager.stages.mediaStage,SourceManager.players.twitch);
 		default:
 			//is it a whiteboard?
-			source = (SourceManager.sources.whiteboard[source] && SourceManager.sources.whiteboard[source].src) || source
+			source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
 		return SourceManager._load(SourceManager.sources.urls[source]||source)
 	}
 }
