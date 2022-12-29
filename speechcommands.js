@@ -3,6 +3,11 @@ var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
 
+aliases = {
+  bracket:'challonge',
+  solange:'challonge',
+}
+
 // (D) COMMANDS LIST
 var cmd = {
   "day" : () => {
@@ -57,11 +62,12 @@ var voice = {
       // (A4) ON SPEECH RECOGNITION - RUN CORRESPONDING COMMAND
       voice.recog.onresult = (evt) => {
         let said = evt.results[0][0].transcript.toLowerCase();
-        SourceManager.load(said);
+        voice.wrap.innerHTML = said;
+        let alias = aliases[said]
+        console.log("I heard you say: "+said,"I know an alias of: "+alias)
+        SourceManager.load(alias||said);
         //if (cmd[said]) { cmd[said](); }
         //else { said += " (command not found)"; }
-        voice.wrap.innerHTML = said;
-        console.log("I heard you say: "+said)
         voice.stop();
       };
  
