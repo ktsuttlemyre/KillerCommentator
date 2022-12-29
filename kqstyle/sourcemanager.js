@@ -148,4 +148,4 @@ SourceManager.loadComponents=function(options){
 	navigator.mediaDevices.enumerateDevices().then((data) => console.log(data),console.error)
 }
 
-SourceManager.load("twitch"))
+SourceManager.load("twitch")
