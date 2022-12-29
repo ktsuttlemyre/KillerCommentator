@@ -42,6 +42,16 @@ SourceManager.sources={
 SourceManager.players={
 	iframe:function(src){
 		var ifrm = document.createElement("iframe");
+		
+		if(src.indexOf('.') >= 0){
+			src='http://'+src
+		}
+		//TODO recognize google, bing, yahoo and other websites as websites
+		//else if(source ){
+		//source is in https://github.com/Kikobeats/top-sites/blob/master/top-sites.json
+		//	source='http://'+source
+		//}
+		
 		ifrm.setAttribute("src", src);
 		ifrm.scrolling="auto"
 		ifrm.allowtransparency="true"
@@ -76,14 +86,7 @@ SourceManager.load=function(source,stage,player){
 	if(source.call){
 		source=source()
 	}
-	if(source.indexOf('.') >= 0){
-		source='http://'+source
-	}
-	//TODO recognize google, bing, yahoo and other websites as websites
-	//else if(source ){
-	//source is in https://github.com/Kikobeats/top-sites/blob/master/top-sites.json
-	//	source='http://'+source
-	//}
+
 	let domElem=player(source);
         domElem && stage.appendChild(domElem);
 	return 
