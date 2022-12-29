@@ -1,34 +1,31 @@
-var whiteboards = {
-	kqday:{
-		src:'https://kqsfl.com/wp-content/uploads/2022/09/Copy-of-Day.png',
-		stamps:[
-			{src:"queen_gold",x:0,y:0},{src:"queen_blue",x:0,y:0},
-			{src:"drone_gold",x:0,y:0},{src:"drone_gold",x:0,y:0},
-			{src:"drone_gold",x:0,y:0},{src:"drone_gold",x:0,y:0},
-			{src:"drone_blue",x:0,y:0},{src:"drone_blue",x:0,y:0},
-			{src:"drone_blue",x:0,y:0},{src:"drone_blue",x:0,y:0},
-			{src:"snail",x:0,y:0}
-		]
-	},
-	kqnight:{
-		src:'https://kqsfl.com/wp-content/uploads/2022/09/Night.png'
-	},
-	kqdusk:{
-		src:'https://kqsfl.com/wp-content/uploads/2022/09/Copy-of-Dusk.png'
-	},
-	kqmeat:{
-		src:'https://kqsfl.com/wp-content/uploads/2022/09/twilight.png'
-	},
-}
-
-
-
 
 SourceManager={}
 SourceManager.sources={
 	urls:{
 		rawhoney:"https://rawhoney.neonexus.co/strategy/whiteboard",
 		kqwhiteboard:"https://kqwhiteboard.surge.sh"
+	},
+	whiteboards: {
+		kqday:{
+			src:'https://kqsfl.com/wp-content/uploads/2022/09/Copy-of-Day.png',
+			stamps:[
+				{src:"queen_gold",x:0,y:0},{src:"queen_blue",x:0,y:0},
+				{src:"drone_gold",x:0,y:0},{src:"drone_gold",x:0,y:0},
+				{src:"drone_gold",x:0,y:0},{src:"drone_gold",x:0,y:0},
+				{src:"drone_blue",x:0,y:0},{src:"drone_blue",x:0,y:0},
+				{src:"drone_blue",x:0,y:0},{src:"drone_blue",x:0,y:0},
+				{src:"snail",x:0,y:0}
+			]
+		},
+		kqnight:{
+			src:'https://kqsfl.com/wp-content/uploads/2022/09/Night.png'
+		},
+		kqdusk:{
+			src:'https://kqsfl.com/wp-content/uploads/2022/09/Copy-of-Dusk.png'
+		},
+		kqmeat:{
+			src:'https://kqsfl.com/wp-content/uploads/2022/09/twilight.png'
+		}
 	}
 }
 SourceManager.players={
@@ -71,7 +68,9 @@ SourceManager.load=function(source){
 		case "twitch":
 		return SourceManager._load({video:'1686476519'},SourceManager.stages.mediaStage,SourceManager.player.twitch);
 		default:
-		return SourceManager._load((SourceManager.sources.url[source]||source))
+			//is it a whiteboard?
+			source = (SourceManager.sources.whiteboard[source] && SourceManager.sources.whiteboard[source].src) || source
+		return SourceManager._load(SourceManager.sources.url[source]||source)
 	}
 }
 
