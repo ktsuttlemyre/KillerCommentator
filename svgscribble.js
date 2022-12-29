@@ -132,7 +132,6 @@ SVGScribble.init=function(){
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
 			wrapper.firstChild.classList.add('current-item')
-			drawing_layer.appendChild(wrapper.firstChild);
 			
 			//should this be perminant or fade away
 			if (!e.shiftKey || !e.ctrlKey) { //|| e.altKey 
@@ -144,6 +143,7 @@ SVGScribble.init=function(){
 					},10000)
 				})(id)
 			}
+			drawing_layer.appendChild(wrapper.firstChild);
 		}
 		else if(config.tool == 'freeHand' && config.drawing == true) {
 
@@ -159,9 +159,6 @@ SVGScribble.init=function(){
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
 			wrapper.firstChild.classList.add('current-item')
-			drawing_layer.appendChild(wrapper.firstChild);
-			freeHand.pathElems=document.querySelectorAll('#drawing-layer .free-hand.current-item svg path');
-			freeHand.domElem=document.querySelector('#drawing-layer .free-hand.current-item');
 			
 			//should this be perminant or fade away
 			if (!e.shiftKey || !e.ctrlKey) { //|| e.altKey 
@@ -173,6 +170,10 @@ SVGScribble.init=function(){
 					},10000)
 				})(id)
 			}
+			
+			drawing_layer.appendChild(wrapper.firstChild);
+			freeHand.pathElems=document.querySelectorAll('#drawing-layer .free-hand.current-item svg path');
+			freeHand.domElem=document.querySelector('#drawing-layer .free-hand.current-item');
 		} 
 		else if(config.tool == 'eraser' && config.drawing == true) {
 			// Check if user has clicked on an svg
