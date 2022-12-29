@@ -85,8 +85,8 @@ SVGScribble.init=function(){
 		drawPath: (start, dimensions, path, id) => 
 		`<div class="free-hand drawing-el static current-item" data-id="${id}" id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">           
-				<path d="${path}" style="stroke: ${config.altColor}; stroke-width: ${config.strokeWidth+4}"></path>
 				<path d="${path}" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}"></path>
+				<path d="${path}" style="stroke: ${config.altColor}; stroke-width: ${config.strokeWidth+2}"></path>
 			</svg>
 		</div>`
 	}
