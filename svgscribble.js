@@ -74,7 +74,7 @@ SVGScribble.init=function(){
 			"></div>
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">
 				<defs>
-					<marker id="arrow-head-${id}-1" class="arrow-resizer" markerWidth="10" markerHeight="11" refX="0" refY="3" 
+					<marker id="arrow-head-${id}-1" class="arrow-resizer" markerWidth="10" markerHeight="10" refX="0" refY="3" 
 					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20" stroke-opacity="0.7" opacity="0.7">
 						<path d="M0 0 L0 6 L9 3 z" fill="${config.colorAlt}" />
 					</marker>
