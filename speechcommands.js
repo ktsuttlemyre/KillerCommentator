@@ -101,11 +101,11 @@ let initSpeechCommands=function(){
           strongWords=strongWords.replace(/\W+\B/g,'').trim()
           console.log("After trimming up a bit I Now understand: ["+strongWords+"]")
           //see if we recognize anything
-          let recognize = strongWords.match(cmdSpaceRegex)
+          let recognize = strongWords.match(cmdSpaceRegex) || strongWords
           console.log("I recognize: ["+recognize+ "]")
-          let alias = aliasSpace[recognize||strongWords||said]
+          let alias = aliasSpace[recognize||said]
           alias && console.log("It has an alias of: ["+alias+"]")
-          SourceManager.cmd(alias||recognize||strongWords||said);
+          SourceManager.cmd(alias||recognize||said);
           //if (cmd[said]) { cmd[said](); }
           //else { said += " (command not found)"; }
           voice.stop();
