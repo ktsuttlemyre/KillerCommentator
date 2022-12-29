@@ -199,3 +199,10 @@ ajax("https://ktsuttlemyre.github.io/vod-scribble/templates/video_source_modal.t
 	appendTo(document.body,node)
 })
 
+//force the iframe to lose focus anytime we get an oppertunity 
+setInterval(_ => {
+    if (document.activeElement.tagName == "IFRAME") {
+        document.activeElement.blur();
+	document.body.focus();
+    }
+}, 500);
