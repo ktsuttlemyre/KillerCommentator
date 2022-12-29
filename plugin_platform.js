@@ -48,6 +48,7 @@ let inject=(function(d){return function(t,src,callback){
     Object.keys(src).forEach(function(key){
       js.setAttribute(key,src[key])
     })
+    callback && js.onload=callback
     return js;
   }
 })(document)
