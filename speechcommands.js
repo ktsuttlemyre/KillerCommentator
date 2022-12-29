@@ -4,16 +4,14 @@ var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEv
 
 //add any special cases here
 let aliases = {
-  bracket:'challonge',
-  solange:'challonge',
-  challenge:'challonge',
+  challonge:'bracket,solange,challenge,standings'.split(''),
 }
 let commands = []
 
 //create a cmdSpace array with all possible commands we are looking for
 let cmdSpaceList=commands.concat(Object.keys(aliases))
 Object.keys(aliases).forEach(function(key){
-  cmdSpaceList.push(aliases[key])
+  cmdSpaceList.concat(aliases[key])
 })
 
 //remove duplicates
@@ -43,14 +41,17 @@ var cmd = {
 };
 
 // event = keyup or keydown
+let isSpaceDown;
 document.addEventListener('keydown', event => {
-  if(voice.listening){return}
+  if(isSpaceDown){return}
   if (event.code === 'Space') {
+    isSpaceDown=true;
     voice.start()
   }
 })
 document.addEventListener('keyup', event => {
   if (event.code === 'Space') {
+    isSpaceDown=false;
     voice.stop()
   }
 })
