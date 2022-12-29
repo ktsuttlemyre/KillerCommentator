@@ -227,7 +227,7 @@ SVGScribble.init=function(){
 
 					// Set the complete current path coordinates
 					document.querySelector('#drawing-layer .free-hand.current-item').classList.remove('static');
-					document.querySelector('#drawing-layer .free-hand.current-item svg path').setAttribute('d', freeHand.currentPathText + tmpPath);
+					document.querySelectorAll('#drawing-layer .free-hand.current-item svg path').setAttribute('d', freeHand.currentPathText + tmpPath);
 				}
 
 			}
