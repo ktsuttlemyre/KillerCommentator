@@ -46,6 +46,9 @@ SourceManager.players={
 		if(src.indexOf('.') >= 0){
 			src='https://'+src
 		}
+		if(src.indexOf('google') >=0){
+			src='https://www.google.com/webhp?igu=1' //or http://www.google.com/custom?q=&btnG=Search
+		}
 		//TODO recognize google, bing, yahoo and other websites as websites
 		//else if(source ){
 		//source is in https://github.com/Kikobeats/top-sites/blob/master/top-sites.json
@@ -54,7 +57,7 @@ SourceManager.players={
 		
 		ifrm.setAttribute("src", src);
 		ifrm.scrolling="auto"
-		ifrm.is="x-frame-bypass" //https://github.com/niutech/x-frame-bypass
+		ifrm.setAttribute("is","x-frame-bypass") //https://github.com/niutech/x-frame-bypass
 		ifrm.allowtransparency="true"
 		ifrm.style.width = "100%";
 		ifrm.style.height = "80%";
