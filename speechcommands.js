@@ -4,7 +4,7 @@ var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEv
 
 //add any special cases here
 let aliases = {
-  challonge:'bracket,solange,challenge,standings'.split(''),
+  challonge:'bracket,solange,challenge,standings'.split(/\s*,\s*/),
 }
 let commands = []
 
