@@ -1,5 +1,5 @@
 let config={
-	url:{
+	urls:{
 		challonge:['HCC_2022'],
 	},
 	twitch:{video:'1686476519'}
