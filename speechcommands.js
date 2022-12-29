@@ -22,6 +22,7 @@ var cmd = {
 
 // event = keyup or keydown
 document.addEventListener('keydown', event => {
+  if(voice.listening){return}
   if (event.code === 'Space') {
     voice.start()
   }
@@ -36,7 +37,7 @@ var voice = {
   // (A) INIT VOICE COMMAND
   wrap : null, // HTML DEMO <DIV> WRAPPER
   btn : null, // HTML DEMO BUTTON
-  
+  listening:false
   recog : null, // SPEECH RECOGNITION OBJECT
   init : () => {
     // (A1) GET HTML ELEMENTS
@@ -65,7 +66,7 @@ var voice = {
       };
  
       // (A5) ON SPEECH RECOGNITION ERROR
-      voice.recog.onerror = (err) => { console.error(evt); };
+      voice.recog.onerror = (err) => { voice.stop();console.error(evt); };
  
       // (A6) READY!
       voice.btn.disabled = false;
@@ -75,6 +76,7 @@ var voice = {
       console.error(err);
       voice.wrap.innerHTML = "Please enable access and attach a microphone.";
       console.log("Please enable access and attach a microphone.")
+      voice.listening=false
     });
   },
  
@@ -83,6 +85,7 @@ var voice = {
     voice.recog.start();
     voice.btn.onclick = voice.stop;
     voice.btn.value = "Speak Now Or Click Again To Cancel";
+    voice.listening=true
     console.log('Listening, Please Speak now')
   },
  
@@ -90,6 +93,7 @@ var voice = {
   stop : () => {
     voice.recog.stop();
     voice.btn.onclick = voice.start;
+    voice.listening=false
     voice.btn.value = "Press To Speak";
   }
 };
