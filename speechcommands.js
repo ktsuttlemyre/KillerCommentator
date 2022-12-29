@@ -97,8 +97,9 @@ let initSpeechCommands=function(){
           //we have to do this in 2 steps because if you have a hanging ' due to stop words being removed you will get extra words that dont exact match
           // example: "let's check the challonge" turns to "checkchallonge" if you try to remove spaces as you remove words
           //this regex looks for word characters only
+          console.log("I removed the stop words and have: "+strongWords+"]");
           strongWords=strongWords.replace(/\W+\B/g,'').trim()
-          console.log("I removed the stop words and trimmed. Now I understand: ["+strongWords+"]")
+          console.log("After trimming up a bit I Now understand: ["+strongWords+"]")
           //see if we recognize anything
           let recognize = strongWords.match(cmdSpaceRegex)
           console.log("I recognize: ["+recognize+ "]")
@@ -285,9 +286,9 @@ let stopWords =
       "certainly",
       "changes",
       "clearly",
-      "co",
-      "co.",
-      "com",
+//      "co",
+//      "co.",
+//      "com",
       "come",
       "comes",
       "computer",
@@ -474,8 +475,8 @@ let stopWords =
       "important",
       "in",
       "inasmuch",
-      "inc",
-      "inc.",
+//      "inc",
+ //     "inc.",
       "indeed",
       "index",
       "indicate",
