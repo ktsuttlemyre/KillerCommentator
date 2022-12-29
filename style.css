@@ -25,7 +25,7 @@ html, body {
     }
 
     @keyframes fade-out{0%{opacity:1}100%{opacity:0}}
-    .drawing-el {
+    .ephemeral {
 	  animation:fade-out 8s cubic-bezier(.95,.05,.795,.035) both
     }
 
