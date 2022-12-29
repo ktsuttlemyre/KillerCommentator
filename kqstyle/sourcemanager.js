@@ -63,6 +63,7 @@ SourceManager.stages={
 	mediaStage:document.getElementById('media_stage')
 }
 SourceManager._load=function(source,stage,player){
+	if(!source){return}
 	player=player||SourceManager.players.iframe;
 	stage=stage||SourceManager.stages.mediaStage;
 	
@@ -76,6 +77,7 @@ SourceManager._load=function(source,stage,player){
 	return 
 }
 SourceManager.load=function(source){
+	if(!source){return}
 	switch(source){
 		case "whiteboard":
 		return SourceManager._load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.twitch);	
