@@ -42,6 +42,7 @@ SVGScribble.init=function(){
 		drawing: false,         // Set to true if we are drawing, false if we aren't
 		tool: 'freeHand',       // The currently selected tool
 		color : 'white',        // The currently selected colour
+		altColor : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
 		configNormalisation: 12,// The average normalisation for pencil drawing
 	}
@@ -84,6 +85,7 @@ SVGScribble.init=function(){
 		drawPath: (start, dimensions, path, id) => 
 		`<div class="free-hand drawing-el static current-item" data-id="${id}" id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">           
+				<path d="${path}" style="stroke: ${config.altColor}; stroke-width: ${config.strokeWidth+4}"></path>
 				<path d="${path}" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}"></path>
 			</svg>
 		</div>`
