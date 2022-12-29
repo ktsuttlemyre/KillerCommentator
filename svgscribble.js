@@ -135,16 +135,6 @@ SVGScribble.init=function(){
 			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
 			wrapper.firstChild.classList.add('current-item')
 			
-			//should this be perminant or fade away
-			if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
-				//make ephemerial
-				wrapper.firstChild.classList.add('ephemeral');
-				!(function(id){
-					setTimeout(function(){
-						let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
-					},10000)
-				})(id)
-			}
 			drawing_layer.appendChild(wrapper.firstChild);
 		}
 		else if(config.tool == 'freeHand' && config.drawing == true) {
@@ -161,17 +151,6 @@ SVGScribble.init=function(){
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
 			wrapper.firstChild.classList.add('current-item')
-			
-			//should this be perminant or fade away
-			if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
-				//make ephemerial
-				wrapper.firstChild.classList.add('ephemeral');
-				!(function(id){
-					setTimeout(function(){
-						let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
-					},10000)
-				})(id)
-			}
 			
 			drawing_layer.appendChild(wrapper.firstChild);
 			freeHand.pathElems=document.querySelectorAll('#drawing-layer .free-hand.current-item svg path');
@@ -257,11 +236,24 @@ SVGScribble.init=function(){
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
 	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
 		document.body.addEventListener(item, function(e) {
-		console.log("stop?",e.pageX,e.pageY,e.target,e)
+			console.log("stop?",e.pageX,e.pageY,e.target,e)
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
-				item.classList.remove('current-item');
+				if(item.classList.contains('current-item')){
+					//should this be perminant or fade away
+					if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
+						//make ephemerial
+						item.classList.add('ephemeral');
+						!(function(id){
+							setTimeout(function(){
+								let elem=document.getElementById(id);
+								elem.parentElement.removeChild(elem);
+							},10000)
+						})(item.id)
+					}
+					item.classList.remove('current-item');
+				}
 				// Delete any 'static' elements
 				if(item.classList.contains('static')) {
 					item.remove();
