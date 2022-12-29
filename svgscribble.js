@@ -93,7 +93,7 @@ SVGScribble.init=function(){
 		drawPath: (start, dimensions, path, id) => 
 		`<div class="free-hand drawing-el static" data-id="${id}" id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">          
-				<path d="${path}" style="stroke: ${config.colorAlt}; stroke-width: ${config.strokeWidth+2}"></path>
+				<path d="${path}" style="stroke: ${config.colorAlt}; stroke-width: ${config.strokeWidth+2} stroke-opacity:0.7; opacity:0.7"></path>
 				<path d="${path}" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}"></path>	
 				<path d="${path}" style="stroke: #FF00FF; stroke-width: ${config.strokeWidth+6}; stroke-opacity:0; opacity:0"></path>	
 			</svg>
@@ -134,7 +134,7 @@ SVGScribble.init=function(){
 			wrapper.firstChild.classList.add('current-item')
 			
 			//should this be perminant or fade away
-			if (!e.shiftKey || !e.ctrlKey) { //|| e.altKey 
+			if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
 				//make ephemerial
 				wrapper.firstChild.classList.add('ephemeral');
 				!(function(id){
@@ -161,7 +161,7 @@ SVGScribble.init=function(){
 			wrapper.firstChild.classList.add('current-item')
 			
 			//should this be perminant or fade away
-			if (!e.shiftKey || !e.ctrlKey) { //|| e.altKey 
+			if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
 				//make ephemerial
 				wrapper.firstChild.classList.add('ephemeral');
 				!(function(id){
