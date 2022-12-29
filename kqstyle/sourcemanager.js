@@ -44,7 +44,7 @@ SourceManager.players={
 		var ifrm = document.createElement("iframe");
 		
 		if(src.indexOf('.') >= 0){
-			src='http://'+src
+			src='https://'+src
 		}
 		//TODO recognize google, bing, yahoo and other websites as websites
 		//else if(source ){
