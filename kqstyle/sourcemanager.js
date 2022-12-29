@@ -54,6 +54,7 @@ SourceManager.players={
 		
 		ifrm.setAttribute("src", src);
 		ifrm.scrolling="auto"
+		ifrm.is="x-frame-bypass" //https://github.com/niutech/x-frame-bypass
 		ifrm.allowtransparency="true"
 		ifrm.style.width = "100%";
 		ifrm.style.height = "80%";
@@ -108,32 +109,6 @@ SourceManager.cmd=function(source){
 
 SourceManager.loadComponents=function(options){
 
-
-	//add bootstrap
-	appendTo('head',inject('meta',{name:"viewport", content:"width=device-width, initial-scale=1"}));
-	appendTo('head',inject('link',{href:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel:"stylesheet", integrity:"sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin:"anonymous"}))
-	appendTo(document.body,inject('script',{src:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js", integrity:"sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN", crossorigin:"anonymous"},function(){
-		  // remote script has loaded
-	      }));
-	ajax("https://ktsuttlemyre.github.io/vod-scribble/templates/video_source_modal.tmpl",function(data){
-		data=data.split(/\r?\n---/);
-		let modalSRC = data[0]
-		let itemSRC = data[1]
-
-		let modal=domParse(modal)
-		let item=domParse(item)
-
-		navigator.mediaDevices.enumerateDevices().then(function(devices){
-			devices.forEach(function(device){
-				item.innerHTML=`${deviceId}${groupId}${kind}${label}`
-				appendTo(modal,item)
-			})
-		},console.error)
-
-
-		appendTo(document.body,node)
-	})
-
 	var constraints = {
 	  audio: true,
 	  video: {
@@ -180,4 +155,36 @@ SourceManager.loadComponents=function(options){
 	navigator.mediaDevices.enumerateDevices().then((data) => console.log(data),console.error)
 }
 
-SourceManager.cmd("twitch")
+//init
+appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
+	appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
+		SourceManager.cmd("twitch")
+	}));
+}));
+
+
+//add bootstrap
+appendTo('head',inject('meta',{name:"viewport", content:"width=device-width, initial-scale=1"}));
+appendTo('head',inject('link',{href:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel:"stylesheet", integrity:"sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin:"anonymous"}))
+appendTo(document.body,inject('script',{src:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js", integrity:"sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN", crossorigin:"anonymous"},function(){
+	  // remote script has loaded
+      }));
+ajax("https://ktsuttlemyre.github.io/vod-scribble/templates/video_source_modal.tmpl",function(data){
+	data=data.split(/\r?\n---/);
+	let modalSRC = data[0]
+	let itemSRC = data[1]
+
+	let modal=domParse(modal)
+	let item=domParse(item)
+
+	navigator.mediaDevices.enumerateDevices().then(function(devices){
+		devices.forEach(function(device){
+			item.innerHTML=`${deviceId}${groupId}${kind}${label}`
+			appendTo(modal,item)
+		})
+	},console.error)
+
+
+	appendTo(document.body,node)
+})
+
