@@ -20,16 +20,28 @@ var cmd = {
   }
 };
 
+// event = keyup or keydown
+document.addEventListener('keydown', event => {
+  if (event.code === 'Space') {
+    voice.start()
+  }
+})
+document.addEventListener('keyup', event => {
+  if (event.code === 'Space') {
+    voice.stop()
+  }
+})
 
 var voice = {
   // (A) INIT VOICE COMMAND
   wrap : null, // HTML DEMO <DIV> WRAPPER
   btn : null, // HTML DEMO BUTTON
+  
   recog : null, // SPEECH RECOGNITION OBJECT
   init : () => {
     // (A1) GET HTML ELEMENTS
-    voice.wrap = document.getElementById("vwrap");
-    voice.btn = document.getElementById("vbtn");
+    voice.wrap = document.createElement("div");
+    voice.btn = document.createElement("button");
  
     // (A2) GET MIC ACCESS PERMISSION
     navigator.mediaDevices.getUserMedia({ audio: true })
