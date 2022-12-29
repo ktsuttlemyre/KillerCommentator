@@ -37,7 +37,7 @@ var voice = {
   // (A) INIT VOICE COMMAND
   wrap : null, // HTML DEMO <DIV> WRAPPER
   btn : null, // HTML DEMO BUTTON
-  listening:false
+  listening:false,
   recog : null, // SPEECH RECOGNITION OBJECT
   init : () => {
     // (A1) GET HTML ELEMENTS
