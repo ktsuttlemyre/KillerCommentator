@@ -10,7 +10,7 @@ let aliases = {
 let commands = []
 
 //create a cmdSpace array with all possible commands we are looking for
-let cmdSpaceList=Array.concat(commands,Object.keys(aliases))
+let cmdSpaceList=commands.concat(Object.keys(aliases))
 Object.keys(aliases).forEach(function(key){
   cmdSpaceList.push(aliases[key])
 })
