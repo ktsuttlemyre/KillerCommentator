@@ -42,19 +42,6 @@ SourceManager.sources={
 SourceManager.players={
 	iframe:function(src){
 		var ifrm = document.createElement("iframe");
-		
-		if(src.indexOf('.') >= 0){
-			src='https://'+src
-		}
-		if(src.indexOf('google') >=0){
-			src='https://www.google.com/webhp?igu=1' //or http://www.google.com/custom?q=&btnG=Search
-		}
-		//TODO recognize google, bing, yahoo and other websites as websites
-		//else if(source ){
-		//source is in https://github.com/Kikobeats/top-sites/blob/master/top-sites.json
-		//	source='http://'+source
-		//}
-		
 		ifrm.setAttribute("src", src);
 		ifrm.scrolling="auto"
 		ifrm.setAttribute("is","x-frame-bypass") //https://github.com/niutech/x-frame-bypass
@@ -106,7 +93,22 @@ SourceManager.cmd=function(source){
 			//is it a whiteboard?
 			source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
 			
-		return SourceManager.load(SourceManager.sources.urls[source]||source)
+			if(!SourceManager.sources.urls[source]){
+				if(source.indexOf('google') >=0 || source.indexOf('search') >=0){
+					source='https://www.google.com/webhp?igu=1' //or http://www.google.com/custom?q=&btnG=Search
+				}else if(source.indexOf('.') >= 0){
+					source='https://'+source
+				}
+				//TODO recognize google, bing, yahoo and other websites as websites
+				//else if(source ){
+				//source is in https://github.com/Kikobeats/top-sites/blob/master/top-sites.json
+				//	source='http://'+source
+				//}
+			}else{
+				source = SourceManager.sources.urls[source]
+			}
+				
+		return SourceManager.load(source)
 	}
 }
 
