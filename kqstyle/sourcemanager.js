@@ -1,6 +1,7 @@
 
 SourceManager={}
 SourceManager.sources={
+	//https://challonge.com/module/instructions
 	challonge:{
 		interactive:function(){
 			return `https://challonge.com/${arguments[0]}/module?scale_to_fit=1&show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
@@ -71,7 +72,7 @@ SourceManager._load=function(source,stage,player){
 		source=souce() //todo custom defaults? get them from kqstyle? idk
 	}
 	let domElem=player(source);
-        domElem && stage.appendChild(player);
+        domElem && stage.appendChild(domElem);
 	return 
 }
 SourceManager.load=function(source){
