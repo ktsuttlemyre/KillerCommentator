@@ -120,6 +120,7 @@ html, body {
         height: calc(100% + 4px);
         border-radius: 100px;
         border: 2px solid #c9d1d9;
+	box-sizing: content-box;
     }
     #drawing-box .colors > div[data-current="true"]:after {
         content: '';
@@ -130,6 +131,7 @@ html, body {
         height: calc(100% + 4px);
         border-radius: 100px;
         border: 2px solid #0646ff;
+	box-sizing: content-box;
     }
 
     #drawing-box [data-tool][data-current="true"] {
