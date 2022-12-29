@@ -66,7 +66,7 @@ SourceManager._load=function(source,stage,player){
 }
 SourceManager.load=function(source){
 	switch(source){
-		case "whiteboard:
+		case "whiteboard":
 		return SourceManager._load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.twitch);	
 		case "twitch":
 		return SourceManager._load({video:'1686476519'},SourceManager.stages.mediaStage,SourceManager.players.twitch);
