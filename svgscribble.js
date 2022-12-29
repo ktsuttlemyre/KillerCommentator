@@ -66,7 +66,7 @@ SVGScribble.init=function(){
 
 	let svgEl = {
 		arrowPath: (start, dimensions, path, dummy, direction, end, angle, hyp, id) => 
-		`<div class="arrow drawing-el static current-item" data-id="${id}" id="${id}" data-direction="${direction}" 
+		`<div class="arrow drawing-el static" data-id="${id}" id="${id}" data-direction="${direction}" 
 			style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<div class="arrow-point arrow-point-one"></div>
 			<div class="arrow-point arrow-point-two" style="
@@ -91,7 +91,7 @@ SVGScribble.init=function(){
 			</svg>
 		</div>`,
 		drawPath: (start, dimensions, path, id) => 
-		`<div class="free-hand drawing-el static current-item" data-id="${id}" id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
+		`<div class="free-hand drawing-el static" data-id="${id}" id="${id}" style="left: ${start[0]}px; top: ${start[1]}px; height: ${dimensions[1]}px; width: ${dimensions[0]}px;">
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">          
 				<path d="${path}" style="stroke: ${config.colorAlt}; stroke-width: ${config.strokeWidth+2}"></path>
 				<path d="${path}" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}"></path>	
@@ -131,14 +131,19 @@ SVGScribble.init=function(){
 			// Add element to drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+			wrapper.firstChild.classList.add('current-item')
 			drawing_layer.appendChild(wrapper.firstChild);
 			
-			
-			!(function(id){
-				setTimeout(function(){
-					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
-				},10000)
-			})(id)
+			//should this be perminant or fade away
+			if (!e.shiftKey || !e.ctrlKey) { //|| e.altKey 
+				//make ephemerial
+				wrapper.firstChild.classList.add('ephemeral');
+				!(function(id){
+					setTimeout(function(){
+						let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
+					},10000)
+				})(id)
+			}
 		}
 		else if(config.tool == 'freeHand' && config.drawing == true) {
 
@@ -153,13 +158,20 @@ SVGScribble.init=function(){
 			// Add element to the drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
+			wrapper.firstChild.classList.add('current-item')
 			drawing_layer.appendChild(wrapper.firstChild);
+			freehand.pathElems=document.querySelectorAll('#drawing-layer .free-hand.current-item svg path');
 			
-			!(function(id){
-				setTimeout(function(){
-					let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
-				},10000)
-			})(id)
+			//should this be perminant or fade away
+			if (!e.shiftKey || !e.ctrlKey) { //|| e.altKey 
+				//make ephemerial
+				wrapper.firstChild.classList.add('ephemeral');
+				!(function(id){
+					setTimeout(function(){
+						let elem=document.getElementById(id);elem.parentElement.removeChild(elem)
+					},10000)
+				})(id)
+			}
 		} 
 		else if(config.tool == 'eraser' && config.drawing == true) {
 			// Check if user has clicked on an svg
@@ -227,7 +239,7 @@ SVGScribble.init=function(){
 
 					// Set the complete current path coordinates
 					document.querySelector('#drawing-layer .free-hand.current-item').classList.remove('static');
-					document.querySelectorAll('#drawing-layer .free-hand.current-item svg path').setAttribute('d', freeHand.currentPathText + tmpPath);
+					freehand.pathElems.forEach(function(path){path.setAttribute('d', freeHand.currentPathText + tmpPath)});
 				}
 
 			}
