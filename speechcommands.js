@@ -7,7 +7,7 @@ let initSpeechCommands=function(){
 
   //add any special cases here
   let aliases = {
-    challonge:'bracket,solange,challenge,standings'.split(/\s*,\s*/),
+    challonge:'bracket,solange,challenge,standings,lunch'.split(/\s*,\s*/),
   }
   let commands = []
 
