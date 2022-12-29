@@ -74,7 +74,7 @@ SourceManager.load=function(source,stage,player){
 	stage.innerHTML = "";
 
 	if(source.call){
-		source=souce()
+		source=source()
 	}
 	let domElem=player(source);
         domElem && stage.appendChild(domElem);
