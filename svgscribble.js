@@ -74,20 +74,22 @@ SVGScribble.init=function(){
 			"></div>
 			<svg viewbox="0 0 ${dimensions[0]} ${dimensions[1]}">
 				<defs>
-					<marker id="arrow-head-${id}" class="arrow-resizer" markerWidth="12" markerHeight="10" refX="0" refY="3" 
+					<marker id="arrow-head-${id}-1" class="arrow-resizer" markerWidth="12" markerHeight="10" refX="0" refY="3" 
 					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
 						<path d="M0 0 L0 6 L9 3 z" fill="${config.colorAlt}" />
 					</marker>
-					<marker id="arrow-head-${id}" class="arrow-resizer" markerWidth="10" markerHeight="10" refX="0" refY="3" 
+					<marker id="arrow-head-${id}-2" class="arrow-resizer" markerWidth="10" markerHeight="10" refX="0" refY="3" 
 					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
 						<path d="M0 0 L0 6 L9 3 z" fill="${config.color}" />
 					</marker>
-					<marker id="arrow-head-${id}" class="arrow-resizer" markerWidth="16" markerHeight="10" refX="0" refY="3" 
-					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20"  stroke-opacity="0" opacity="0">
+					<marker id="arrow-head-${id}-3" class="arrow-resizer" markerWidth="16" markerHeight="10" refX="0" refY="3" 
+					orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20" stroke-opacity="0" opacity="0">
 						<path d="M0 0 L0 6 L9 3 z" fill="#FF00FF" />
 					</marker>
 				</defs>
-				<path marker-start="url(#bottom-marker)" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}" marker-end="url(#arrow-head-${id})" class="arrow-line" d="${path}"></path>
+				<path marker-start="url(#bottom-marker)" style="stroke: ${config.colorAlt}; stroke-width: ${config.strokeWidth+2}" marker-end="url(#arrow-head-${id}-1)" class="arrow-line" d="${path}"></path>
+				<path marker-start="url(#bottom-marker)" style="stroke: ${config.color}; stroke-width: ${config.strokeWidth}" marker-end="url(#arrow-head-${id}-2)" class="arrow-line" d="${path}"></path>
+				<path marker-start="url(#bottom-marker)" style="stroke: #FF00FF; stroke-width: ${config.strokeWidth+6}" marker-end="url(#arrow-head-${id}-3)" class="arrow-line" d="${path}" stroke-opacity="0" opacity="0"></path>
 			</svg>
 		</div>`,
 		drawPath: (start, dimensions, path, id) => 
@@ -210,10 +212,13 @@ SVGScribble.init=function(){
 				arrow.bottomY = endY;
 				
 				// And update the HTML to show the new arrow to the user
+				//todo update this to be cached instead of dom queried like freeHand.pathElems
 				document.querySelector('#drawing-layer .arrow.current-item').classList.remove('static');
 				document.querySelector('#drawing-layer .arrow.current-item').setAttribute('data-direction', arrow.activeDirection);
 				document.querySelector('#drawing-layer .arrow.current-item svg').setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
-				document.querySelector('#drawing-layer .arrow.current-item path.arrow-line').setAttribute('d', `M0 0 L${endX} ${endY}`);
+				document.querySelector('#drawing-layer .arrow.current-item path.arrow-line').forEach(function(path){
+					path.setAttribute('d', `M0 0 L${endX} ${endY}`);
+				})
 			}
 			
 			else if(config.drawing == true && config.tool == 'freeHand') {
