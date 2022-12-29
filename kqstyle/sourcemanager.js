@@ -10,7 +10,8 @@ SourceManager.sources={
 	urls:{
 		rawhoney:"https://rawhoney.neonexus.co/strategy/whiteboard",
 		kqwhiteboard:"https://kqwhiteboard.surge.sh",
-		whiteboard:"about:blank",
+		whiteboard:"https://docs.google.com/drawings/d/1PZrZUx18R4Xp7XG6jRjD3DCQJy2SpOD_z-bhJaIZOPk/edit?usp=sharing",
+		blank:"about:blank"
 		challonge:function(){
 			let arg = arguments[0]||config.urls.challonge[0];
 			return `https://challonge.com/${arg}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
