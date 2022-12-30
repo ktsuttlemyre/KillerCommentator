@@ -203,6 +203,6 @@ ajax("./templates/video_source_modal.tmpl",function(data){
 setInterval(_ => {
     if (document.activeElement.tagName == "IFRAME") {
         document.activeElement.blur();
-	document.body.focus();
+	window.focus(); //forcing document.body.focus interupts iframe interactions
     }
 }, 500);
