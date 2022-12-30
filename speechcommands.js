@@ -8,6 +8,7 @@ let initSpeechCommands=function(){
   //add any special cases here
   let aliases = {
     challonge:'bracket,solange,challenge,standings,lunch',
+    whiteboard:'white boy,white,write,writeboard,write board',
     groups:'pool,pools,group',
     twitch:'live,cab,feed,stream',
     standings:'standing',
