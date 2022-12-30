@@ -81,7 +81,7 @@ let initSpeechCommands=function(){
         voice.recog = new SpeechRecognition();
         voice.recog.lang = "en-US";
         voice.recog.continuous = false;
-        voice.recog.interimResults = false;
+        voice.recog.interimResults = true;
 
         // (A4) ON SPEECH RECOGNITION - RUN CORRESPONDING COMMAND
         voice.recog.onresult = (evt) => {
