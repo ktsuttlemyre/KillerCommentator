@@ -203,6 +203,6 @@ ajax("./templates/video_source_modal.tmpl",function(data){
 setInterval(_ => {
     if (document.activeElement.tagName == "IFRAME") {
         document.activeElement.blur();
-	window.focus(); //forcing document.body.focus interupts iframe interactions
+	//forcing focus on document.body or window objects interupts iframe interactions so just blur
     }
 }, 500);
