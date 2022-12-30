@@ -85,7 +85,17 @@ let initSpeechCommands=function(){
 
         // (A4) ON SPEECH RECOGNITION - RUN CORRESPONDING COMMAND
         voice.recog.onresult = (evt) => {
+          // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
+          // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
+          // It has a getter so it can be accessed like an array
+          // The first [0] returns the SpeechRecognitionResult at position 0.
+          // Each SpeechRecognitionResult object contains SpeechRecognitionAlternative objects
+          // that contain individual results.
+          // These also have getters so they can be accessed like arrays.
+          // The second [0] returns the SpeechRecognitionAlternative at position 0.
+          // We then return the transcript property of the SpeechRecognitionAlternative object
           let said = evt.results[0][0].transcript.toLowerCase();
+          console.log('all possible responses I heard you say',evt.results)
           voice.wrap.innerHTML = said;
           console.log("I heard you say: ["+said+"]")
           //remove any extra filler words
