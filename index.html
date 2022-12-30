@@ -13,7 +13,7 @@
         <script>
             document.getElementById('init').onclick=function(){
                 if(!SVGScribble.state){
-                    ajax("https://ktsuttlemyre.github.io/svgscribble/toolbar.html",function(html){
+                    ajax("toolbar.html",function(html){
                         appendTo(document.body,domParse(html))
                         SVGScribble.init();
                         SVGScribble.toggle();
