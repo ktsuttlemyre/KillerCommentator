@@ -69,10 +69,14 @@ main = function(){
 	    listeners: {
 	      // call this function on every dragmove event
 	      move: dragMoveListener,
-
+	      start (event) {
+	        console.log(event.type, event.target)
+		SVGScribble.hide()
+		SVGScribble.clear()
+	      },
 	      // call this function on every dragend event
 	      end (event) {
-
+		SVGScribble.show()
 	      }
 	    }
 	  })
