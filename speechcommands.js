@@ -63,20 +63,20 @@ let initSpeechCommands=function(){
   
 
   // event = keyup or keydown
-  let isSpaceDown;
-  document.addEventListener('keydown', event => {
-    if(isSpaceDown){return}
-    if (event.code === 'Space') {
-      isSpaceDown=true;
-      voice.start()
-    }
-  })
-  document.addEventListener('keyup', event => {
-    if (event.code === 'Space') {
-      isSpaceDown=false;
-      voice.stop()
-    }
-  })
+//   let isSpaceDown;
+//   document.addEventListener('keydown', event => {
+//     if(isSpaceDown){return}
+//     if (event.code === 'Space') {
+//       isSpaceDown=true;
+//       voice.start()
+//     }
+//   })
+//   document.addEventListener('keyup', event => {
+//     if (event.code === 'Space') {
+//       isSpaceDown=false;
+//       voice.stop()
+//     }
+//   })
 
 
 
