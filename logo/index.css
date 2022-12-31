@@ -1,0 +1,32 @@
+.killer-commentator {
+  position: relative;
+  height: 100px;
+  min-width: 100px;
+  padding: 12px 24px;
+  margin: 4px;
+  float: left;
+  font-weight: bold;
+  text-align: center;
+}
+.killer-commentator {
+  color: white;
+}
+.killer-commentator svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: -1;
+}
+.killer-commentator path {
+  stroke: #00ff00;
+  stroke-width: 7; /* border width */
+}
+
+.killer-commentator span {
+  display: block;
+  margin-top: 50px;
+  padding: 8px;
+  transform: translateY(-50%);
+}
