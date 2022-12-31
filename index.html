@@ -10,23 +10,6 @@
 
         <button class="animated hover-button" style="position:absolute;top:0;left:0" id="init"><span>✍️ Activate Drawing</span></button>
 
-        <script>
-            document.getElementById('init').onclick=function(){
-                if(!SVGScribble.state){
-                    ajax("toolbar.html",function(html){
-                        appendTo(document.body,domParse(html))
-                        SVGScribble.init();
-                        SVGScribble.toggle();
-                    });
-                }
-                SVGScribble && SVGScribble.toggle && SVGScribble.toggle();
-            }
-        </script>
-        
-        <script src="plugin_platform.js"></script>
-        <script src="./kqstyle/sourcemanager.js"></script>
-        <script src="svgscribble.js"></script>
-        <script src="speechcommands.js"></script>
-       
+        <script src="killer-commentator.js"></script>
     </body>
 </html>
