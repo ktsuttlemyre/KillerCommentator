@@ -1,48 +1,24 @@
-(function(d, s, id, cb){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)){ return; }
-    js = d.createElement(s); js.id = id;
-    js.onload = cb;
-    js.src = "https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js";
-    d.getElementsByTagName('head')[0].appendChild(js);
-}(document, 'script', 'killer-commentator',function(){
-  //inject fontawesome
-  //appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){}));
-  appendTo('head',inject('link',{href:"	https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
-  //inject logo
-  appendTo('head',inject('link',{href:"logo/index.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
-  ajax("logo/index.html",function(html){appendTo(document.body,domParse(html))});
-  
-  //start scribbler
-  appendTo(document.body,inject('script',{src:"svgscribble.js", crossorigin:"anonymous"},function(){
-	    ajax("toolbar.html",function(html){
-        appendTo(document.body,domParse(html))
-        SVGScribble.init();
-        SVGScribble.toggle();
-      });
-  }));
-  
-  //start sourcemanager
-  appendTo(document.body,inject('script',{src:"./kqstyle/sourcemanager.js", crossorigin:"anonymous"},function(){
+include=function(){function g(){var a=this.readyState;if(!a||/ded|te/.test(a))b--,!b&&e&&f()}var a=arguments,c=document,b=a.length,f=a[b-1],e=f.call;e&&b--;for(var d=0;d<b;d++)a=c.createElement("script"),a.src=arguments[d],a.async=!0,a.onload=a.onerror=a.onreadystatechange=g,(c.head||c.getElementsByTagName("head")[0]).appendChild(a)};
+include("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js",function(){
+	include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js","svgscribble.js","/kqstyle/sourcemanager.js","speechcommands.js",function(){
+		
+		//add logo and activate
+		ajax("logo/index.html",function(html){
+			appendTo(document.body,domParse(html));
+			//add speech commands  
+		});
+		
+		//add scribble toolbar
+		ajax("toolbar.html",function(html){
+			appendTo(document.body,domParse(html))
+			SVGScribble.init();
+			SVGScribble.toggle();
+		});
+	})
+});
 
-  }));
-  
-  //add speech commands
-  appendTo(document.body,inject('script',{src:"speechcommands.js", crossorigin:"anonymous"},function(){
-
-  }));
-  
-  
-}));
-
-
-//             document.getElementById('init').onclick=function(){
-//                 if(!SVGScribble.state){
-
-//                 }
-//                 SVGScribble && SVGScribble.toggle && SVGScribble.toggle();
-//             }
-
-
-
-
+//inject fontawesome
+//appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){}));
+appendTo('head',inject('link',{href:"	https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
+//inject logo
+appendTo('head',inject('link',{href:"logo/index.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))  
