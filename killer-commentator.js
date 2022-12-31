@@ -4,6 +4,8 @@ include=function(){function g(){var a=this.readyState;if(!a||/ded|te/.test(a))b-
 include("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js",function(){
 	//platform plguin ready to use
 	include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",
+		"https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js",
+
 		base_site+"svgscribble.js",
 		base_site+"kqstyle/sourcemanager.js",
 		base_site+"speechcommands.js",function(){
