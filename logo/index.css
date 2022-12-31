@@ -1,11 +1,11 @@
 .killer-commentator {
   position: absolute;
-  botom:0;
-  right:0;
+  bottom:2rem;
+  right:2rem;
   height: 3rem;
   min-width: 3rem;
-  padding: 12px 24px;
-  margin: 4px;
+  padding: 0;
+  margin: 0;
   text-align: center;
 }
 .killer-commentator {
