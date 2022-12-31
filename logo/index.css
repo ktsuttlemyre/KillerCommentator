@@ -14,7 +14,6 @@
   width: 100%;
   top: 0px;
   left: 0px;
-  z-index: -1;
 }
 .killer-commentator path {
   stroke: #00ff00;
