@@ -4,13 +4,13 @@ include("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js",fu
 	//platform plguin ready to use
 	include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",base_site+"svgscribble.js",base_site+"kqstyle/sourcemanager.js",base_site+"speechcommands.js",function(){
 		//add logo and activate
-		ajax("logo/index.html",function(html){
+		ajax(base_site+"logo/index.html",function(html){
 			appendTo(document.body,domParse(html));
 			//add speech commands  
 		});
 		
 		//add scribble toolbar
-		ajax("toolbar.html",function(html){
+		ajax(base_site+"toolbar.html",function(html){
 			appendTo(document.body,domParse(html))
 			SVGScribble.init();
 			SVGScribble.toggle();
@@ -19,8 +19,8 @@ include("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js",fu
 
 	//inject fontawesome
 	//appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){}));
-	appendTo('head',inject('link',{href:"	https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
+	appendTo('head',inject('link',{href:"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
 	//inject logo
-	appendTo('head',inject('link',{href:"logo/index.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
+	appendTo('head',inject('link',{href:base_site+"logo/index.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
 });
  
