@@ -7,7 +7,8 @@
     d.getElementsByTagName('head')[0].appendChild(js);
 }(document, 'script', 'killer-commentator',function(){
   //inject fontawesome
-  appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){}));
+  //appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){}));
+  appendTo('head',inject('link',{href:"	https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
   //inject logo
   appendTo('head',inject('link',{href:"logo/index.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
   ajax("logo/index.html",function(html){appendTo(document.body,domParse(html))});
