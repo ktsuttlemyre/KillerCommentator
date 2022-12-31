@@ -5,6 +5,17 @@ appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764ef
 
 
 SVGScribble={}
+SVGScribble.clear=function(){
+	(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
+}
+SVGScribble.hide=function(){
+		document.body.setAttribute('data-drawing', false);
+		config.drawing = false;
+}
+SVGScribble.show=function(){
+		document.body.setAttribute('data-drawing', true);
+		config.drawing = true;
+}
 SVGScribble.state=false;
 SVGScribble.init=function(){
 	window.SVGScribble.toggle=function(){
@@ -111,12 +122,11 @@ SVGScribble.init=function(){
 	// Closes the drawing box and sets 'data-drawing' on the body element to false
 	// Along with cofig.drawing to false.
 	document.querySelector('#drawing-box .close').addEventListener('mousedown', function(e) {
-		document.body.setAttribute('data-drawing', false);
-		config.drawing = false;
+		SVGScribble.hide()
 	})
 	document.querySelector('#drawing-box .trash').addEventListener('pointerdown', function(e) {
 		e.target.releasePointerCapture(e.pointerId);
-		(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
+		SVGScribble.clear();
 	})
 
 	document.body.addEventListener('pointerdown', function(e) {
@@ -361,7 +371,7 @@ SVGScribble.init=function(){
 			document.body.setAttribute('data-drawing', false);
 			config.drawing = false;
 		}else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
-			 (document.querySelectorAll(".drawing-el")||[]).forEach(function (elem){elem.remove()});
+			 SVGScribble.clear()
 	}});
 	SVGScribble.state='init'
 }
