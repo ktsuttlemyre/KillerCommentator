@@ -15,6 +15,11 @@ let initSpeechCommands=function(){
     gold:0,
     commentator:0,
     chat:0,
+    rewind:"previous",
+    sustain:0,
+    forward:0,
+    clip:0,
+    play:0
   }
   
   var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
