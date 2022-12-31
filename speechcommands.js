@@ -1,45 +1,58 @@
 //based off the code
 // https://code-boxx.com/voice-commands-javascript-speech-recognition/
 let initSpeechCommands=function(){
-  var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-  var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
-  var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
-
-  //add any special cases here
-  let aliases = {
+  //add commands and aliases here
+  //if you don't have any aliases then use 0 or false
+  let command_alias = {
     challonge:'bracket,solange,challenge,standings,lunch,chillum',
     whiteboard:'white boy,white,write,writeboard,write board',
     groups:'pool,pools,group',
     twitch:'live,cab,feed,stream',
     standings:'standing',
     youtube:'replay',
-    roster:'teamsheet,teams'
+    roster:'teamsheet,teams',
+    blue:0,
+    gold:0,
+    commentator:0,
+    chat:0,
   }
-  let commands = []
+  
+  var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+  var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
+  var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
   //create a cmdSpace array with all possible commands we are looking for
-  let cmdSpaceList=commands.concat(Object.keys(aliases))
+  let commands=[]
   let aliasSpace={}
-  Object.keys(aliases).forEach(function(key){
-    //fix aliases strings to arrays
-    if(aliases[key].split){
-      aliases[key]=aliases[key].split(/\s*,\s*/);
+  Object.keys(command_alias).forEach(function(cmd){
+    commands.push(cmd)
+    let aliases=command_alias[cmd];
+    
+    if(aliases.split){ //fix aliases strings to arrays
+      aliases=aliases.split(/\s*,\s*/);
     }
-    cmdSpaceList=cmdSpaceList.concat(aliases[key])
-    aliases[key].forEach(function(al){aliasSpace[al]=key})
+    if(!aliases || aliases.length <= 0){
+      return
+    }
+    command_alias[cmd]=aliases
+    
+    commands=commands.concat(aliases)
+    aliases.forEach(function(al){
+      aliasSpace[al]=cmd;
+    })
   })
 
   //remove duplicates
-  cmdSpaceList = cmdSpaceList.filter(function(value, index, self) {
+  commands = commands.filter(function(value, index, self) {
     return self.indexOf(value) === index;
   });
 
   //create regex to search for our cmdspace
-  let cmdSpaceRegex = new RegExp(cmdSpaceList.join('|'),'g')
+  let cmdSpaceRegex = new RegExp(commands.join('|'),'g')
 
   //if we are using a stopWord as a command then remove it from the stopwords list
   stopWords.stopWords = stopWords.stopWords.filter(function(item) {
-    return cmdSpaceList.indexOf(item.id) !== -1;
+    return commands.indexOf(item.id) !== -1;
   });
   let stopWordsRegex=new RegExp('\\b('+stopWords.stopWords.join('|')+')\\b', 'g')
   
