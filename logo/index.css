@@ -1,15 +1,12 @@
 .killer-commentator {
   position: absolute;
-  bottom:2rem;
-  right:2rem;
-  height: 3rem;
-  min-width: 3rem;
-  padding: 0;
+  bottom:.25rem;
+  right:.25rem;
+  height: 6.5rem;
+  width: 6.5rem;
+  padding: .5rem .25rem 0 .25rem;
   margin: 0;
   text-align: center;
-}
-.killer-commentator {
-  color: white;
 }
 .killer-commentator svg {
   position: absolute;
