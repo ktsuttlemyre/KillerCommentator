@@ -1,7 +1,8 @@
 var base_site="https://ktsuttlemyre.github.io/KillerCommentator/"
 //https://github.com/EvanHahn/ScriptInclude
 include=function(){function g(){var a=this.readyState;if(!a||/ded|te/.test(a))b--,!b&&e&&f()}var a=arguments,c=document,b=a.length,f=a[b-1],e=f.call;e&&b--;for(var d=0;d<b;d++)a=c.createElement("script"),a.src=arguments[d],a.async=!0,a.onload=a.onerror=a.onreadystatechange=g,(c.head||c.getElementsByTagName("head")[0]).appendChild(a)};
-include("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js",function(){
+include("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js",
+	"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js",function(){
 	//platform plguin ready to use
 	include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",
 		"https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js",
