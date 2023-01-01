@@ -178,7 +178,7 @@ SVGScribble.init=function(){
 			
 			drawing_layer.appendChild(wrapper.firstChild);
 			
-			arrow.pathElems=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
+			arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
 			arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
 			arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
 			arrow.pointerIds.push(e.pointerId)
