@@ -181,7 +181,7 @@ SVGScribble.init=function(){
 			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
 			wrapper.firstChild.classList.add('current-item');
 			if(config.tool=='commentator'){
-				wrapper.firstChild.classList.add('display-none');
+				wrapper.firstChild.classList.add('d-none');
 			}
 			wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
 			
@@ -262,7 +262,7 @@ SVGScribble.init=function(){
 				
 				
 				if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>10){
-					arrow.domElem.classList.remove('display-none');
+					arrow.domElem.classList.remove('d-none');
 				}
 				// And update the HTML to show the new arrow to the user
 				//todo update this to be cached instead of dom queried like freeHand.pathElems
