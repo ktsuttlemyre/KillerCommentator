@@ -139,6 +139,7 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointerdown', function(e) {
+		console.warn(e)
 		if(!e.isTrusted){return}
 		if(config.drawing == false){return}
 		if(!config.pointerTypes[e.pointerType]){ return }
@@ -225,6 +226,7 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointermove', function(e) {
+		console.warn(e)
 		if(!e.isTrusted){return}
 		if(config.drawing == false){return}
 		if(!config.pointerTypes[e.pointerType]){ return }
@@ -310,6 +312,7 @@ SVGScribble.init=function(){
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
 	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
 		document.body.addEventListener(item, function(e) {
+			console.warn(e)
 			if(!e.isTrusted){return}
 			//purposely dont check for drawing state in case it changed mid line draw
 			//if(config.drawing == false){return}
@@ -324,7 +327,7 @@ SVGScribble.init=function(){
 
 			setPoint(e)
 			
-			if(paths[e.pointerId] && paths[e.pointerId].length<5){
+			if(paths[e.pointerId] && paths[e.pointerId].length<20){
 				console.log('clicked')
 				document.getElementById('drawing-layer').click(e);
 				
