@@ -288,7 +288,7 @@ SVGScribble.init=function(){
 			// 			return false;
 			// 		}
 
-			console.log('pointerup/mouseleave",e.pageX,e.pageY,e.target,e)
+			console.log('pointerup/mouseleave",e.pageX,e.pageY,e.target,e')
 
 			setPoint(e)
 			
