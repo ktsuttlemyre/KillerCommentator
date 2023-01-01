@@ -311,6 +311,12 @@ SVGScribble.init=function(){
 
 			setPoint(e)
 			
+			if(path[e.pointerId].length<5){
+				console.log('clicked')
+				document.getElementById('drawing-layer').click(e);
+				
+			}
+			
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
