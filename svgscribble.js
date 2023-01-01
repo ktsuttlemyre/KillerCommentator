@@ -69,7 +69,7 @@ SVGScribble.init=function(){
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
 		configNormalisation: 12,// The average normalisation for pencil drawing
-		pointerTypes = {
+		pointerTypes: {
 			mouse:0,
 			pen:1,
 			touch:1,
