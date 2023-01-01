@@ -74,12 +74,7 @@ SVGScribble.init=function(){
 		arrowClasses: [ 'nw', 'ne', 'sw', 'se' ], // These are possible arrow directions
 		lineAngle: 0,                             // This is the angle the arrow point at about the starting point
 	}
-	let freeHand = {
-		currentPathText: 'M0 0 ',      // This is the current path of the pencil line, in text
-		topX: 0,                       // The starting X coordinate
-		topY: 0,                       // The starting Y coordinate
-		lastMousePoints: [ [0, 0] ],   // This is the current path of the pencil line, in array
-	}
+	let freeHand = {}
 
 	let svgEl = {
 		arrowPath: (start, dimensions, path, dummy, direction, end, angle, hyp, id) => 
@@ -141,7 +136,8 @@ SVGScribble.init=function(){
 		// Generate id for each element
 		let id = helper.generateId();
 		console.log('id',id)
-		if(config.tool == 'arrow' && config.drawing == true) {
+		if(config.drawing == false){return }
+		if(config.tool == 'arrow') {
 			// Set arrow start point
 			arrow.topX = e.pageX;
 			arrow.topY = e.pageY;
@@ -153,26 +149,28 @@ SVGScribble.init=function(){
 			
 			drawing_layer.appendChild(wrapper.firstChild);
 		}
-		else if(config.tool == 'freeHand' && config.drawing == true) {
+		else if(config.tool == 'freeHand') {
 
-			// Set the drawing starting point
-			freeHand.topX = e.pageX;
-			freeHand.topY = e.pageY;
-
-			// Set the current path and most recent mouse points to whereever we are scrolled on the page
-			freeHand.currentPathText = `M${window.scrollX} ${window.scrollY} `;
-			freeHand.lastMousePoints = [[ window.scrollX, window.scrollY ]];
+			freehand[e.pointerId]={
+				currentPathText: `M${window.scrollX} ${window.scrollY} `,      // This is the current path of the pencil line, in text
+				topX: e.pageX,                       // The starting X coordinate
+				topY: e.pageY,                       // The starting Y coordinate
+				lastMousePoints: [[ window.scrollX, window.scrollY ]],   // This is the current path of the pencil line, in array
+				domElem:null,
+				pathElem:null,
+			}
 			
 			// Add element to the drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
 			wrapper.firstChild.classList.add('current-item')
+			wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`)
 			
 			drawing_layer.appendChild(wrapper.firstChild);
-			freeHand.pathElems=document.querySelectorAll('#drawing-layer .free-hand.current-item svg path');
-			freeHand.domElem=document.querySelector('#drawing-layer .free-hand.current-item');
+			freeHand[e.pointerId].pathElems=document.querySelectorAll(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId} svg path`);
+			freeHand[e.pointerId].domElem=document.querySelector(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId}`);
 		} 
-		else if(config.tool == 'eraser' && config.drawing == true) {
+		else if(config.tool == 'eraser') {
 			// Check if user has clicked on an svg
 			console.log('eraser clicked ',e.target,e)
 			if(helper.parent(e.target, '.drawing-el', 1) !== null && helper.parent(e.target, '.drawing-el', 1).matches('.drawing-el')) {
@@ -186,9 +184,10 @@ SVGScribble.init=function(){
 
 		// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) {
-		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
+			console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
+			if(config.drawing == false){return} 
 			// If we are using the arrow tool
-			if(config.drawing == true && config.tool == 'arrow') {
+			if(config.tool == 'arrow') {
 				// Then get the original start position
 				let startX = arrow.topX;
 				let startY = arrow.topY;
@@ -217,32 +216,32 @@ SVGScribble.init=function(){
 				})
 			}
 			
-			else if(config.drawing == true && config.tool == 'freeHand') {
+			else if(config.tool == 'freeHand') {
 				// Similar to arrows, calculate the user's end position
-				let endX = e.pageX - freeHand.topX;
-				let endY = e.pageY - freeHand.topY;
+				let endX = e.pageX - freeHand[e.pointerId].topX;
+				let endY = e.pageY - freeHand[e.pointerId].topY;
 				
 				// And push these new coordinates to our config
 				let newCoordinates = [ endX, endY ];
-				freeHand.lastMousePoints.push([endX, endY]);
-				if(freeHand.lastMousePoints.length >= config.configNormalisation) {
-					freeHand.lastMousePoints.shift();
+				freeHand[e.pointerId].lastMousePoints.push([endX, endY]);
+				if(freeHand[e.pointerId].lastMousePoints.length >= config.configNormalisation) {
+					freeHand[e.pointerId].lastMousePoints.shift();
 				}
 				
 				// Then calculate the average points to display a line to the user
-				let avgPoint = helper.getAveragePoint(0);
+				let avgPoint = helper.getAveragePoint(0,e);
 				if (avgPoint) {
-					freeHand.currentPathText += " L" + avgPoint.x + " " + avgPoint.y;
+					freeHand[e.pointerId].currentPathText += " L" + avgPoint.x + " " + avgPoint.y;
 
 					let tmpPath = '';
-					for (let offset = 2; offset < freeHand.lastMousePoints.length; offset += 2) {
-						avgPoint = helper.getAveragePoint(offset);
+					for (let offset = 2; offset < freeHand[e.pointerId].lastMousePoints.length; offset += 2) {
+						avgPoint = helper.getAveragePoint(offset,e);
 						tmpPath += " L" + avgPoint.x + " " + avgPoint.y;
 					}
 
 					// Set the complete current path coordinates
-					freeHand.domElem.classList.remove('static');
-					freeHand.pathElems.forEach(function(path){path.setAttribute('d', freeHand.currentPathText + tmpPath)});
+					freeHand[e.pointerId].domElem.classList.remove('static');
+					freeHand[e.pointerId].pathElems.forEach(function(path){path.setAttribute('d', freeHand[e.pointerId].currentPathText + tmpPath)});
 				}
 
 			}
@@ -257,7 +256,7 @@ SVGScribble.init=function(){
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
-				if(item.classList.contains('current-item')){
+				if(item.classList.contains(`pointerId-${e.pointerId}`)){
 					//should this be perminant or fade away
 					if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
 						//make ephemerial
@@ -270,6 +269,7 @@ SVGScribble.init=function(){
 						})(item.id)
 					}
 					item.classList.remove('current-item');
+					item.classList.remove(`pointerId-${e.pointerId}`);
 				}
 				// Delete any 'static' elements
 				if(item.classList.contains('static')) {
@@ -277,8 +277,8 @@ SVGScribble.init=function(){
 				}
 			});
 			// Reset freeHand variables where needed
-			freeHand.currentPathText = 'M0 0 ';
-			freeHand.lastMousePoints = [ [0, 0] ];
+			freeHand[e.pointerId].currentPathText = 'M0 0 ';
+			freeHand[e.pointerId].lastMousePoints = [ [0, 0] ];
 		});
 	});
 
@@ -286,8 +286,8 @@ SVGScribble.init=function(){
 	let helper = {
 		// This averages out a certain number of mouse movements for free hand drawing
 		// To give our lines a smoother effect
-		getAveragePoint: function(offset) {
-			let len = freeHand.lastMousePoints.length;
+		getAveragePoint: function(offset,e) {
+			let len = freeHand[e.pointerId].lastMousePoints.length;
 			if (len % 2 === 1 || len >= 4) {
 				let totalX = 0;
 				let totalY = 0;
@@ -295,7 +295,7 @@ SVGScribble.init=function(){
 				let count = 0;
 				for (i = offset; i < len; i++) {
 					count++;
-					pt = freeHand.lastMousePoints[i];
+					pt = freeHand[e.pointerId].lastMousePoints[i];
 					totalX += pt[0];
 					totalY += pt[1];
 				}
