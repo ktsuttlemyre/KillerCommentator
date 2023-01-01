@@ -35,6 +35,12 @@ SVGScribble.init=function(){
 		paths[e.pointerId].push(obj)
 		events[e.pointerId].push(e)
 	}
+	function getDistance(x1, y1, x2, y2){
+	    let y = x2 - x1;
+	    let x = y2 - y1;
+
+	    return Math.sqrt(x * x + y * y);
+	}
 	
 	SVGScribble.state='initializing'
 	// Ensure drawing layer is at root
@@ -174,6 +180,9 @@ SVGScribble.init=function(){
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
 			wrapper.firstChild.classList.add('current-item');
+			if(config.tool=='commentator'){
+				wrapper.firstChild.classList.add('display-none');
+			}
 			wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
 			
 			drawing_layer.appendChild(wrapper.firstChild);
@@ -251,6 +260,10 @@ SVGScribble.init=function(){
 				arrow.stopX = endX;
 				arrow.stopY = endY;
 				
+				
+				if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>10){
+					arrow.domElem.classList.remove('display-none');
+				}
 				// And update the HTML to show the new arrow to the user
 				//todo update this to be cached instead of dom queried like freeHand.pathElems
 				arrow.domElem.classList.remove('static');
