@@ -133,7 +133,8 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointerdown', function(e) {
-		if(!e.isTrusted || config.drawing == false){return}
+		if(!e.isTrusted){return}
+		if(config.drawing == false){return}
 		if(!config.pointerTypes[e.pointerType]){ return }
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
@@ -215,7 +216,8 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointermove', function(e) {
-		if(!e.isTrusted || config.drawing == false){return}
+		if(!e.isTrusted){return}
+		if(config.drawing == false){return}
 		if(!config.pointerTypes[e.pointerType]){ return }
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
@@ -305,7 +307,7 @@ SVGScribble.init=function(){
 			// 			return false;
 			// 		}
 
-			console.log('pointerup/mouseleave",e.pageX,e.pageY,e.target,e')
+			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
 
 			setPoint(e)
 			
