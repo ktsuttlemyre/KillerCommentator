@@ -64,7 +64,7 @@ SVGScribble.init=function(){
 
 	var config = {
 		drawing: false,         // Set to true if we are drawing, false if we aren't
-		tool: 'freeHand',       // The currently selected tool
+		tool: 'commentator',       // The currently selected tool
 		color : 'white',        // The currently selected colour
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
@@ -76,16 +76,7 @@ SVGScribble.init=function(){
 		}
 	}
 
-	let arrow = {
-		// topX, Y, and bottomX, Y store information on the arrows top and bottom ends
-		topX: 0,
-		topY: 0,
-		bottomX: 0,      
-		bottomY: 0,          
-		activeDirection: 'se',                    // This is the current direction of the arrow, i.e. south-east
-		arrowClasses: [ 'nw', 'ne', 'sw', 'se' ], // These are possible arrow directions
-		lineAngle: 0,                             // This is the angle the arrow point at about the starting point
-	}
+	let arrow = {}
 	let paths = {}
 	let events = {}
 	let freeHand = {}
@@ -154,27 +145,49 @@ SVGScribble.init=function(){
 		paths[e.pointerId]={}
 		setPoint(e);
 		
-		if(config.tool == 'arrow') {
+		if(config.tool == 'arrow' || config.tool=='commentator') {
+			if(arrow.startX==null ){
+			
+			}
+			arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
+				startX: null,
+				startY: null,
+				stopX: null,      
+				stopY: null,          
+				activeDirection: 'se',                    // This is the current direction of the arrow, i.e. south-east
+				arrowClasses: [ 'nw', 'ne', 'sw', 'se' ], // These are possible arrow directions
+				lineAngle: 0,                             // This is the angle the arrow point at about the starting point
+				domElem:null,
+				pathElems:null,
+				svgElem:null,
+				pointerIds:[],
+			}
 			// Set arrow start point
-			arrow.topX = e.pageX;
-			arrow.topY = e.pageY;
+			arrow.startX = e.pageX;
+			arrow.startY = e.pageY;
 
 			// Add element to drawing layer
 			var wrapper= document.createElement('div');
-			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.topX + window.scrollX, arrow.topY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
-			wrapper.firstChild.classList.add('current-item')
+			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+			wrapper.firstChild.classList.add('current-item');
+			wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
 			
 			drawing_layer.appendChild(wrapper.firstChild);
+			
+			arrow.pathElems=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
+			arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
+			arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
+			arrow.pointerIds.push(e.pointerId)
 		}
-		else if(config.tool == 'freeHand') {
+		if(config.tool == 'freeHand' || config.tool=='commentator') {
 
 			freeHand[e.pointerId]={
 				currentPathText: `M${window.scrollX} ${window.scrollY} `,      // This is the current path of the pencil line, in text
-				topX: e.pageX,                       // The starting X coordinate
-				topY: e.pageY,                       // The starting Y coordinate
+				startX: e.pageX,                       // The starting X coordinate
+				startY: e.pageY,                       // The starting Y coordinate
 				lastMousePoints: [[ window.scrollX, window.scrollY ]],   // This is the current path of the pencil line, in array
 				domElem:null,
-				pathElem:null,
+				pathElems:null,
 			}
 			
 			
@@ -214,10 +227,10 @@ SVGScribble.init=function(){
 		// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
-			if(config.tool == 'arrow') {
+			if(config.tool == 'arrow' || config.tool=='commentator') {
 				// Then get the original start position
-				let startX = arrow.topX;
-				let startY = arrow.topY;
+				let startX = arrow.startX;
+				let startY = arrow.startY;
 				// Set a default angle of 90
 				let angleStart = 90;
 				
@@ -230,23 +243,23 @@ SVGScribble.init=function(){
 				// And using that info, calculate the arrow's angle
 				helper.calculateArrowLineAngle(endX, endY);
 				// Then update the config to this new end position
-				arrow.bottomX = endX;
-				arrow.bottomY = endY;
+				arrow.stopX = endX;
+				arrow.stopY = endY;
 				
 				// And update the HTML to show the new arrow to the user
 				//todo update this to be cached instead of dom queried like freeHand.pathElems
-				document.querySelector('#drawing-layer .arrow.current-item').classList.remove('static');
-				document.querySelector('#drawing-layer .arrow.current-item').setAttribute('data-direction', arrow.activeDirection);
-				document.querySelector('#drawing-layer .arrow.current-item svg').setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
-				document.querySelectorAll('#drawing-layer .arrow.current-item path.arrow-line').forEach(function(path){
+				arrow.domElem.classList.remove('static');
+				arrow.domElem.setAttribute('data-direction', arrow.activeDirection);
+				arrow.svgElem.setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
+				arrow.pathElems.forEach(function(path){
 					path.setAttribute('d', `M0 0 L${endX} ${endY}`);
 				})
 			}
 			
-			else if(config.tool == 'freeHand') {
+			if(config.tool == 'freeHand' || config.tool=='commentator') {
 				// Similar to arrows, calculate the user's end position
-				let endX = e.pageX - freeHand[e.pointerId].topX;
-				let endY = e.pageY - freeHand[e.pointerId].topY;
+				let endX = e.pageX - freeHand[e.pointerId].startX;
+				let endY = e.pageY - freeHand[e.pointerId].startY;
 				
 				// And push these new coordinates to our config
 				let newCoordinates = [ endX, endY ];
