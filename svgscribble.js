@@ -130,7 +130,7 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointerdown', function(e) {
-		if(config.drawing == false){return}
+		if(!e.isTrusted || config.drawing == false){return}
 		if(!config.pointerTypes[e.pointerType]){ return }
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
@@ -212,7 +212,7 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointermove', function(e) {
-		if(config.drawing == false){return}
+		if(!e.isTrusted || config.drawing == false){return}
 		if(!config.pointerTypes[e.pointerType]){ return }
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
@@ -292,6 +292,7 @@ SVGScribble.init=function(){
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
 	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
 		document.body.addEventListener(item, function(e) {
+			if(!e.isTrusted){return}
 			//purposely dont check for drawing state in case it changed mid line draw
 			//if(config.drawing == false){return}
 			if(e.type == 'pointerup' && !config.pointerTypes[e.pointerType]){ return }
