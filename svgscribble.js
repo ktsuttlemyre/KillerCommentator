@@ -27,7 +27,7 @@ SVGScribble.init=function(){
 	}
 	var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
 	setPoint=function(e){
-		if(!paths[e.pointerId){return}
+		if(!paths[e.pointerId]){return}
 		let obj={}
 		for(var i=0,l=pointAttrs.length;i<l;i++){
 			obj[pointAttrs[i]]=e[pointAttrs[i]]
