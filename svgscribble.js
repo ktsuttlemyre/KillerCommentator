@@ -27,9 +27,12 @@ SVGScribble.init=function(){
 	}
 	var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
 	setPoint=function(e){
+		if(!paths[e.pointerId){return}
+		let obj={}
 		for(var i=0,l=pointAttrs.length;i<l;i++){
-			paths[pointAttrs[i]]=e[pointAttrs[i]]
+			obj[pointAttrs[i]]=e[pointAttrs[i]]
 		}
+		paths[e.pointerId].push(obj)
 		events[e.pointerId].push(e)
 	}
 	
@@ -142,7 +145,7 @@ SVGScribble.init=function(){
 		let id = helper.generateId();
 		
 		events[e.pointerId]=[]
-		paths[e.pointerId]={}
+		paths[e.pointerId]=[]
 		setPoint(e);
 		
 		if(config.tool == 'arrow' || config.tool=='commentator') {
