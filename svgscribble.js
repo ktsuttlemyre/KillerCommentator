@@ -25,6 +25,13 @@ SVGScribble.init=function(){
 		config.drawing = !drawing;
 		document.body.setAttribute('data-drawing', !drawing)
 	}
+	var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
+	setPoint=function(e){
+		for(var i=0,l=pointAttrs.length;i<l;i++){
+			paths[pointAttrs[i]]=e[pointAttrs[i]]
+		}
+		events[e.pointerId].push(e)
+	}
 	
 	SVGScribble.state='initializing'
 	// Ensure drawing layer is at root
@@ -62,6 +69,11 @@ SVGScribble.init=function(){
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
 		configNormalisation: 12,// The average normalisation for pencil drawing
+		pointerTypes = {
+			mouse:0,
+			pen:1,
+			touch:1,
+		}
 	}
 
 	let arrow = {
@@ -74,6 +86,8 @@ SVGScribble.init=function(){
 		arrowClasses: [ 'nw', 'ne', 'sw', 'se' ], // These are possible arrow directions
 		lineAngle: 0,                             // This is the angle the arrow point at about the starting point
 	}
+	let paths = {}
+	let events = {}
 	let freeHand = {}
 
 	let svgEl = {
@@ -125,18 +139,21 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointerdown', function(e) {
+		if(config.drawing == false){return}
+		if(!config.pointerTypes[e.pointerType]){ return }
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
 // 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
 // 			return false;
 // 		}
-		
 		console.log("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
-
 		// Generate id for each element
 		let id = helper.generateId();
-		console.log('id',id)
-		if(config.drawing == false){return }
+		
+		events[e.pointerId]={}
+		paths[e.pointerId]={}
+		setPoint(e);
+		
 		if(config.tool == 'arrow') {
 			// Set arrow start point
 			arrow.topX = e.pageX;
@@ -160,6 +177,7 @@ SVGScribble.init=function(){
 				pathElem:null,
 			}
 			
+			
 			// Add element to the drawing layer
 			var wrapper= document.createElement('div');
 			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
@@ -181,11 +199,20 @@ SVGScribble.init=function(){
 	})
 
 	document.body.addEventListener('pointermove', function(e) {
+		if(config.drawing == false){return}
+		if(!config.pointerTypes[e.pointerType]){ return }
+		
+		//filters out other div layers we dont want to draw on due to event bubbling 
+// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+// 			return false;
+// 		}
+		
+		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
+		
+		setPoint(e)
 
 		// Assuming there is a current item to in the drawing layer
-		if(document.querySelector('#drawing-layer .current-item') !== null) {
-			console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
-			if(config.drawing == false){return} 
+		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
 			if(config.tool == 'arrow') {
 				// Then get the original start position
@@ -252,7 +279,19 @@ SVGScribble.init=function(){
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
 	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
 		document.body.addEventListener(item, function(e) {
-			console.log("stop?",e.pageX,e.pageY,e.target,e)
+			//purposely dont check for drawing state in case it changed mid line draw
+			//if(config.drawing == false){return}
+			if(e.type == 'pointerup' && !config.pointerTypes[e.pointerType]){ return }
+			
+			//filters out other div layers we dont want to draw on due to event bubbling 
+			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+			// 			return false;
+			// 		}
+
+			console.log('pointerup/mouseleave",e.pageX,e.pageY,e.target,e)
+
+			setPoint(e)
+			
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
@@ -276,9 +315,12 @@ SVGScribble.init=function(){
 					item.remove();
 				}
 			});
+			
 			// Reset freeHand variables where needed
-			freeHand[e.pointerId].currentPathText = 'M0 0 ';
-			freeHand[e.pointerId].lastMousePoints = [ [0, 0] ];
+			delete freeHand[e.pointerId]
+			//this is where you would send the path to the server
+			delete paths[e.pointerId]
+			
 		});
 	});
 
