@@ -151,7 +151,7 @@ SVGScribble.init=function(){
 		}
 		else if(config.tool == 'freeHand') {
 
-			freehand[e.pointerId]={
+			freeHand[e.pointerId]={
 				currentPathText: `M${window.scrollX} ${window.scrollY} `,      // This is the current path of the pencil line, in text
 				topX: e.pageX,                       // The starting X coordinate
 				topY: e.pageY,                       // The starting Y coordinate
