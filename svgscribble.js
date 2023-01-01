@@ -150,7 +150,7 @@ SVGScribble.init=function(){
 		// Generate id for each element
 		let id = helper.generateId();
 		
-		events[e.pointerId]={}
+		events[e.pointerId]=[]
 		paths[e.pointerId]={}
 		setPoint(e);
 		
