@@ -179,7 +179,7 @@ SourceManager.discoverComponents=function(){
 
 				// minimum size
 				interact.modifiers.restrictSize({
-					min: { width: width/4, height: height/4 }
+					min: { width: width/10, height: height/10 }
 				})
 				],
 			}),
