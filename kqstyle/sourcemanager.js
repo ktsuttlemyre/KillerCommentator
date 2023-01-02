@@ -190,6 +190,7 @@ SourceManager.discoverComponents=function(){
 		      })
 		    ]
 		  })
+	}
 	
 	navigator.mediaDevices.enumerateDevices().then(createDOM,console.error)
 
