@@ -78,6 +78,7 @@ SVGScribble.init=function(){
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
 		normalisation: 12,// The average normalisation for pencil drawing
+
 	}
 
 	var state = {
@@ -87,6 +88,7 @@ SVGScribble.init=function(){
 			pen:1,
 			touch:1,
 			}
+		deadZone:20,
 	}
 
 
@@ -194,7 +196,7 @@ SVGScribble.init=function(){
 
 			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
 			
-			if(paths[e.pointerId] && paths[e.pointerId].length<20){
+			if(paths[e.pointerId] && paths[e.pointerId].length<state.deadZone){
 				console.log('clicked')
 				//pass the original event
 				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
@@ -207,16 +209,66 @@ SVGScribble.init=function(){
 		});
 	});
 	
+	
+	paintArrowStart=function(arrow,config){
+		// Add element to drawing layer
+		var wrapper= document.createElement('div');
+		wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+		wrapper.firstChild.classList.add('current-item');
+// 		if(config.tool=='commentator'){
+// 		wrapper.firstChild.classList.add('d-none');
+// 		wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
+
+		drawing_layer.appendChild(wrapper.firstChild);
+
+		arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
+		arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
+		arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
+	}
+	paintArrowEnd=function(arrow,config){
+		let history = arrow.pointers[arrow.pointerIds[0]]
+		if(config.tool == 'commentator'){
+			history = arrow.pointers[arrow.pointerIds[1]]
+		}
+		let e = history[history.length-1]
+		// Then get the original start position
+		let startX = arrow.startX;
+		let startY = arrow.startY;
+		// Set a default angle of 90
+		let angleStart = 90;
+
+		// And a default direction of 'south east'
+		let arrowClass = arrow.arrowClasses[3];
+		// Calculate how far the user has moved their mouse from the original position
+		let endX = e.pageX - startX// - window.scrollX;
+		let endY = e.pageY - startY// - window.scrollY;
+
+		// And using that info, calculate the arrow's angle
+		helper.calculateArrowLineAngle(endX, endY);
+		// Then update the config to this new end position
+		arrow.stopX = endX;
+		arrow.stopY = endY;
+
+
+		if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>20){
+			arrow.domElem.classList.remove('d-none');
+		}
+		// And update the HTML to show the new arrow to the user
+		//todo update this to be cached instead of dom queried like freeHand.pathElems
+		arrow.domElem.classList.remove('static');
+		arrow.domElem.setAttribute('data-direction', arrow.activeDirection);
+		arrow.svgElem.setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
+		arrow.pathElems.forEach(function(path){
+			path.setAttribute('d', `M0 0 L${endX} ${endY}`);
+		})
+	}
+	
 	let paintStart = function(e,config,id){
 		if(config.tool == 'arrow' || config.tool=='commentator') {
-			if(arrow.stopX === null ){
-				paintMove(e,config)
-				paintEnd(e,config)
-				return
-			}else{
+			if(!arrow.pointerIds){
 				arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
-					startX: null,
-					startY: null,
+					startX: e.pageX,
+					startY: e.pageY,
 					stopX: null,      
 					stopY: null,          
 					activeDirection: 'se',                    // This is the current direction of the arrow, i.e. south-east
@@ -225,28 +277,18 @@ SVGScribble.init=function(){
 					domElem:null,
 					pathElems:null,
 					svgElem:null,
-					pointerIds:[],
+					pointers:{},
+					pointerIds:[e.pointerId]
 				}
-				// Set arrow start point
-				arrow.startX = e.pageX;
-				arrow.startY = e.pageY;
-
-				// Add element to drawing layer
-				var wrapper= document.createElement('div');
-				wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
-				wrapper.firstChild.classList.add('current-item');
-				if(config.tool=='commentator'){
-					wrapper.firstChild.classList.add('d-none');
+				arrow.pointers[e.pointerId]=[e];
+				if(config.tool=='arrow'){
+					paintArrowStart(arrow,config)
 				}
-				wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
-
-				drawing_layer.appendChild(wrapper.firstChild);
-
-				arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
-				arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
-				arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
+			}else if(arrow.pointerIds.length>=1){
 				arrow.pointerIds.push(e.pointerId)
+				arrow.pointers[e.pointerId]=[e];
 			}
+
 		}
 		if(config.tool == 'freeHand' || config.tool=='commentator') {
 
@@ -284,36 +326,11 @@ SVGScribble.init=function(){
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
 			if(config.tool == 'arrow' || config.tool=='commentator') {
-				// Then get the original start position
-				let startX = arrow.startX;
-				let startY = arrow.startY;
-				// Set a default angle of 90
-				let angleStart = 90;
-				
-				// And a default direction of 'south east'
-				let arrowClass = arrow.arrowClasses[3];
-				// Calculate how far the user has moved their mouse from the original position
-				let endX = e.pageX - startX - window.scrollX;
-				let endY = e.pageY - startY - window.scrollY;
-
-				// And using that info, calculate the arrow's angle
-				helper.calculateArrowLineAngle(endX, endY);
-				// Then update the config to this new end position
-				arrow.stopX = endX;
-				arrow.stopY = endY;
-				
-				
-				if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>20){
-					arrow.domElem.classList.remove('d-none');
+				let history = arrow.pointers[e.pointerId]
+				history.push(e)
+				if(config.tool == 'arrow'){
+					paintArrowEnd(arrow,config)
 				}
-				// And update the HTML to show the new arrow to the user
-				//todo update this to be cached instead of dom queried like freeHand.pathElems
-				arrow.domElem.classList.remove('static');
-				arrow.domElem.setAttribute('data-direction', arrow.activeDirection);
-				arrow.svgElem.setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
-				arrow.pathElems.forEach(function(path){
-					path.setAttribute('d', `M0 0 L${endX} ${endY}`);
-				})
 			}
 			
 			if(config.tool == 'freeHand' || config.tool=='commentator') {
@@ -349,6 +366,10 @@ SVGScribble.init=function(){
 		
 	};
 	let paintEnd = function(e,config){
+			if(config.tool == 'commentator'){
+				paintArrowEnd(arrow,config)
+			}
+		
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
