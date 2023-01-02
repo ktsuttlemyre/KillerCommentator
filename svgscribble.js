@@ -158,7 +158,7 @@ SVGScribble.init=function(){
 		
 		events[e.pointerId]=[]
 		paths[e.pointerId]=[]
-		renderStart(setPoint(e));
+		paintStart(setPoint(e));
 		
 		
 		if(config.tool == 'arrow' || config.tool=='commentator') {
@@ -369,9 +369,9 @@ SVGScribble.init=function(){
 		});
 	});
 	
-	renderStart=function(point){}
-	renderMoveTo=function(point){}
-	renderFinish=function(point){}
+	paintStart=function(point){}
+	paintMove=function(point){}
+	paintFinish=function(point){}
 
 
 	let helper = {
