@@ -7,6 +7,14 @@ let config={
 
 appendTo('head',inject('link',{href:base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
 
+
+generateId= function() {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+		return v.toString(16);
+});
+
+
 SourceManager={}
 SourceManager.sources={
 	//https://challonge.com/module/instructions
@@ -121,8 +129,15 @@ SourceManager.cmd=function(source){
 	}
 }
 SourceManager.discoverComponents=function(){
-	let createDOMSizer=function(aspectRatio){
-		interact('.resize-drag')
+	let createDOMSizer=function(containerID,child,width,height){
+		let aspectRatio = width/height;
+		function snapVideoToContainer(x,y,width,height){
+			child.style.width=`${width}px`
+			child.style.height=`${height}px`
+			child.style.transform = `translate(${x}px,${y}px)`
+		}
+		
+		interact('#'+containerID)
 		  .resizable({
 		    // resize from all edges and corners
 		    edges: { left: true, right: true, bottom: true, top: true },
@@ -134,17 +149,21 @@ SourceManager.discoverComponents=function(){
 			var y = (Math.floor(parseFloat(target.getAttribute('data-y'))) || 0)
 
 			// update the element's style
-			target.style.width = Math.floor(event.rect.width) + 'px'
-			target.style.height = Math.foor(event.rect.height) + 'px'
-
+			let width = Math.floor(event.rect.width) + 'px'
+			let height = Math.foor(event.rect.height) + 'px'
+			target.style.width=width;
+			target.style.height=height;
+			      
 			// translate when resizing from top or left edges
 			x += event.deltaRect.left
 			y += event.deltaRect.top
 
-			target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+			target.style.transform = `translate(${x}px,${y}px)`
 
 			target.setAttribute('data-x', x)
 			target.setAttribute('data-y', y)
+			      
+			snapVideoToContainer(x,y,width,height)
 		      }
 		    },
 		    modifiers: [
@@ -161,12 +180,11 @@ SourceManager.discoverComponents=function(){
 
 				// minimum size
 				interact.modifiers.restrictSize({
-					min: { width: 100, height: 50 }
+					min: { width: width/4, height: height/4 }
 				})
 				],
 			}),
 		    ],
-
 		    inertia: true
 		  })
 		  .draggable({
@@ -211,12 +229,14 @@ SourceManager.discoverComponents=function(){
 			
 			let div = document.createElement('div')
 			div.className='resize-drag'
+			let id = generateId()
+			div.id=id
 			let button = document.createElement('a')
 			button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 			var video = document.createElement('video');
 			
 			video.addEventListener( "loadedmetadata", function (e) {
-				createDOMSizer(this.videoWidth/this.videoHeight)
+				createDOMSizer(id,this,this.videoWidth,this.videoHeight)
 			}, false )
 			
 			button.onclick=function(){video.play();button.parentNode.removeChild(button)}
@@ -232,7 +252,7 @@ SourceManager.discoverComponents=function(){
 			if (promise !== undefined) {
 			    promise.then(_ => {
 				// Autoplay started!
-				button.parent.removeChild(button)
+				button.parentNode.removeChild(button)
 			    }).catch(error => {
 				// Autoplay was prevented.
 				// Show a "Play" button so that user can start playback.
