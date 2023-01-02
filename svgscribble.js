@@ -207,13 +207,13 @@ SVGScribble.init=function(){
 		});
 	});
 	
-	paintStart=function(e,config,id){
+	function paintStart(e,config,id){
 		if(config.tool == 'arrow' || config.tool=='commentator') {
-			if(arrow.startX != null ){
-				paintMove(e,config)
-				paintEnd(e,config)
-				return
-			}else{
+// 			if(arrow.startX != null ){
+// 				paintMove(e,config)
+// 				paintEnd(e,config)
+// 				return
+// 			}else{
 				arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
 					startX: null,
 					startY: null,
@@ -277,7 +277,7 @@ SVGScribble.init=function(){
 				// If they have, delete it
 				helper.parent(e.target, '.drawing-el', 1).remove();
 			}
-		}
+		//}
 	}
 	function paintMove(e,config){
 	// Assuming there is a current item to in the drawing layer
