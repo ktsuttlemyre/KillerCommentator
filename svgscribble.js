@@ -160,7 +160,7 @@ SVGScribble.init=function(){
 		paths[e.pointerId]=[]
 		
 		setPoint(e)
-		paintStart(e);		
+		paintStart(e,config,id);		
 	})
 
 	drawing_cover.addEventListener('pointermove', function(e) {
@@ -302,7 +302,7 @@ SVGScribble.init=function(){
 		});
 	});
 	
-	paintStart=function(e){
+	paintStart=function(e,config,id){
 	
 		
 		if(config.tool == 'arrow' || config.tool=='commentator') {
