@@ -10,19 +10,19 @@ SVGScribble.clear=function(){
 }
 SVGScribble.hide=function(){
 		document.body.setAttribute('data-drawing', false);
-		config.drawing = false;
+		state.drawing = false;
 }
 SVGScribble.show=function(){
 		document.body.setAttribute('data-drawing', true);
-		config.drawing = true;
+		state.drawing = true;
 }
 SVGScribble.state=false;
 SVGScribble.init=function(){
 	window.SVGScribble.toggle=function(){
 		// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
 		// Also sets config.drawing to true or false.
-		let drawing = config.drawing;
-		config.drawing = !drawing;
+		let drawing = state.drawing;
+		state.drawing = !drawing;
 		document.body.setAttribute('data-drawing', !drawing)
 	}
 	var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
@@ -34,6 +34,7 @@ SVGScribble.init=function(){
 		}
 		paths[e.pointerId].push(obj)
 		events[e.pointerId].push(e)
+		return obj
 	}
 	function getDistance(x1, y1, x2, y2){
 	    let y = x2 - x1;
@@ -72,18 +73,22 @@ SVGScribble.init=function(){
 	});
 
 	var config = {
-		drawing: false,         // Set to true if we are drawing, false if we aren't
 		tool: 'commentator',       // The currently selected tool
 		color : 'white',        // The currently selected colour
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
 		configNormalisation: 12,// The average normalisation for pencil drawing
+	}
+
+	var state = {
+		drawing: false,         // Set to true if we are drawing, false if we aren't
 		pointerTypes: {
 			mouse:0,
 			pen:1,
 			touch:1,
-		}
+			}
 	}
+
 
 	let arrow = {}
 	let paths = {}
@@ -129,7 +134,7 @@ SVGScribble.init=function(){
 	}
 
 	// Closes the drawing box and sets 'data-drawing' on the body element to false
-	// Along with cofig.drawing to false.
+	// Along with state.drawing to false.
 	document.querySelector('#drawing-box .close').addEventListener('mousedown', function(e) {
 		SVGScribble.hide()
 	})
@@ -138,10 +143,10 @@ SVGScribble.init=function(){
 		SVGScribble.clear();
 	})
 
-	document.body.addEventListener('pointerdown', function(e) {
+	drawing_layer.addEventListener('pointerdown', function(e) {
 		if(!e.isTrusted){return}
-		if(config.drawing == false){return}
-		if(!config.pointerTypes[e.pointerType]){ return }
+		if(state.drawing == false){return}
+		if(!state.pointerTypes[e.pointerType]){ return }
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
 // 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
@@ -153,11 +158,12 @@ SVGScribble.init=function(){
 		
 		events[e.pointerId]=[]
 		paths[e.pointerId]=[]
-		setPoint(e);
+		renderStart(setPoint(e));
+		
 		
 		if(config.tool == 'arrow' || config.tool=='commentator') {
 			if(arrow.startX==null ){
-			
+				
 			}
 			arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
 				startX: null,
@@ -224,10 +230,10 @@ SVGScribble.init=function(){
 		}
 	})
 
-	document.body.addEventListener('pointermove', function(e) {
+	drawing_layer.addEventListener('pointermove', function(e) {
 		if(!e.isTrusted){return}
-		if(config.drawing == false){return}
-		if(!config.pointerTypes[e.pointerType]){ return }
+		if(state.drawing == false){return}
+		if(!state.pointerTypes[e.pointerType]){ return }
 		
 		//filters out other div layers we dont want to draw on due to event bubbling 
 // 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
@@ -261,7 +267,7 @@ SVGScribble.init=function(){
 				arrow.stopY = endY;
 				
 				
-				if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>10){
+				if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>20){
 					arrow.domElem.classList.remove('d-none');
 				}
 				// And update the HTML to show the new arrow to the user
@@ -282,7 +288,7 @@ SVGScribble.init=function(){
 				// And push these new coordinates to our config
 				let newCoordinates = [ endX, endY ];
 				freeHand[e.pointerId].lastMousePoints.push([endX, endY]);
-				if(freeHand[e.pointerId].lastMousePoints.length >= config.configNormalisation) {
+				if(freeHand[e.pointerId].lastMousePoints.length >= config.normalisation) {
 					freeHand[e.pointerId].lastMousePoints.shift();
 				}
 				
@@ -309,11 +315,11 @@ SVGScribble.init=function(){
 
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
 	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
-		document.body.addEventListener(item, function(e) {
+		drawing_layer.addEventListener(item, function(e) {
 			if(!e.isTrusted){return}
 			//purposely dont check for drawing state in case it changed mid line draw
-			//if(config.drawing == false){return}
-			if(e.type == 'pointerup' && !config.pointerTypes[e.pointerType]){ return }
+			//if(state.drawing == false){return}
+			if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
 			
 			//filters out other div layers we dont want to draw on due to event bubbling 
 			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
@@ -434,9 +440,9 @@ SVGScribble.init=function(){
 		// This function matches parent elements allowing us to select a parent element
 		parent: function(el, match, last) {
 			var result = [];
-			for (var p = el && el.parentElement; p; p = p.parentElement) {
-				result.push(p);
-				if(p.matches(match)) {
+			for (var parent = el && el.parentElement; parent; parent = parent.parentElement) {
+				result.push(parent);
+				if(parent.matches(match)) {
 					break;
 				}
 			}
@@ -450,7 +456,7 @@ SVGScribble.init=function(){
 	document.addEventListener('keydown',function(e) {
 		 if (e.key === "Escape") { // escape key maps to keycode `27`
 			document.body.setAttribute('data-drawing', false);
-			config.drawing = false;
+			state.drawing = false;
 		}else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
 			 SVGScribble.clear()
 	}});
