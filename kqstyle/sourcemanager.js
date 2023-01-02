@@ -127,14 +127,14 @@ SourceManager.discoverComponents=function(){
 			let div = document.createElement('div')
 			div.className='resize-drag'
 			const stream = await navigator.mediaDevices.getUserMedia({
-				video: {
-					deviceId: item.deviceId
+				deviceId: {
+				      exact:  item.deviceId
 				}
 			});
 			var video = document.querySelector('video');
 			appendTo(div,video)
 			appendTo(document.body,div);
-			video.srcObject = stream;
+			video.srcObject = stream
 			video.autoplay=true
 			video.playsinline=true
 			video.play();
