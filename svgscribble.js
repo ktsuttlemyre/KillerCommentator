@@ -209,11 +209,11 @@ SVGScribble.init=function(){
 	
 	let paintStart = function(e,config,id){
 		if(config.tool == 'arrow' || config.tool=='commentator') {
-// 			if(arrow.startX != null ){
-// 				paintMove(e,config)
-// 				paintEnd(e,config)
-// 				return
-// 			}else{
+			if(arrow.endX === null ){
+				paintMove(e,config)
+				paintEnd(e,config)
+				return
+			}else{
 				arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
 					startX: null,
 					startY: null,
@@ -376,6 +376,7 @@ SVGScribble.init=function(){
 			delete freeHand[e.pointerId]
 			//this is where you would send the path to the server
 			delete paths[e.pointerId]
+			arrow={}
 	};
 
 
