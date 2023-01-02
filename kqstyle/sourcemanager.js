@@ -4,6 +4,9 @@ let config={
 	},
 	twitch:{video:'1686476519'}
 }
+
+appendTo('head',inject('link',{href:base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
+
 SourceManager={}
 SourceManager.sources={
 	//https://challonge.com/module/instructions
@@ -123,8 +126,18 @@ SourceManager.discoverComponents=function(){
 		list.forEach(function(item){
 			let div = document.createElement('div')
 			div.className='resize-drag'
-			div.innerHTML="item"
-			appendTo('body',div);
+			const stream = await navigator.mediaDevices.getUserMedia({
+				video: {
+					deviceId: item.deviceId
+				}
+			});
+			var video = document.querySelector('video');
+			appendTo(div,video)
+			appendTo(document.body,div);
+			video.srcObject = stream;
+			video.autoplay=true
+			video.playsinline=true
+			video.play();
 		}
 
 		interact('.resize-drag')
