@@ -180,8 +180,6 @@ SourceManager.discoverComponents=function(){
 		    ]
 		  })
 		}
-	
-	}
 
 	let handleMediaQuery=async function(list){
 		for(var i=0,l=list.length;i<l;i++){
