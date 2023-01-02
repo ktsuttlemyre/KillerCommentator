@@ -151,7 +151,19 @@ SourceManager.discoverComponents=function(){
 			video.srcObject = stream
 			video.autoplay=true
 			video.playsinline=true
-			video.play();
+			let promise = video.play();
+			if (promise !== undefined) {
+			    promise.then(_ => {
+				// Autoplay started!
+			    }).catch(error => {
+				// Autoplay was prevented.
+				// Show a "Play" button so that user can start playback.
+				let button = document.createElement('a')
+				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
+				buton.onclick(function(){video.play();button.parent.removeChild(button)})
+				appendTo(div,button)
+			    });
+			}
 		}
 
 		interact('.resize-drag')
