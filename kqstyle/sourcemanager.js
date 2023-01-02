@@ -199,7 +199,7 @@ SourceManager.discoverComponents=function(){
 			  // update the posiion attributes
 			  target.setAttribute('data-x', x)
 			  target.setAttribute('data-y', y)
-			    snapVideoToContainer(x,y,width,height)
+			  snapVideoToContainer(x,y,width,height)
 		} },
 		    inertia: true,
 		    modifiers: [
@@ -252,9 +252,10 @@ SourceManager.discoverComponents=function(){
 			}, false )
 			
 			button.onclick=function(){video.play();button.parentNode.removeChild(button)}
+			prependTo(document.body,video)
 			prependTo(div,button)
 			prependTo(document.body,div);
-			prependTo(document.body,video)
+			
 			
 			video.srcObject = stream
 			//video.autoplay=true
