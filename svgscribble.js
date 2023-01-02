@@ -395,7 +395,8 @@ SVGScribble.init=function(){
 					if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
 						//make ephemerial
 						item.classList.add('ephemeral');
-						!(function(id){
+						
+						(item.id) && !(function(id){
 							setTimeout(function(){
 								let elem=document.getElementById(id);
 								elem.parentElement.removeChild(elem);
