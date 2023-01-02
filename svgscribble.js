@@ -209,7 +209,7 @@ SVGScribble.init=function(){
 	
 	let paintStart = function(e,config,id){
 		if(config.tool == 'arrow' || config.tool=='commentator') {
-			if(arrow.endX === null ){
+			if(arrow.stopX === null ){
 				paintMove(e,config)
 				paintEnd(e,config)
 				return
@@ -246,6 +246,7 @@ SVGScribble.init=function(){
 				arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
 				arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
 				arrow.pointerIds.push(e.pointerId)
+			}
 		}
 		if(config.tool == 'freeHand' || config.tool=='commentator') {
 
