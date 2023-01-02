@@ -227,7 +227,7 @@ SVGScribble.init=function(){
 	}
 	paintArrowEnd=function(arrow,config){
 		let history = arrow.pointers[arrow.pointerIds[0]]
-		if(config.tool == 'commentator'){
+		if(config.tool == 'commentator' && arrow.pointerIds[1]){
 			history = arrow.pointers[arrow.pointerIds[1]]
 		}
 		let e = history[history.length-1]
