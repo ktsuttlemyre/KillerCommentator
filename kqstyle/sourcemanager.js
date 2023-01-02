@@ -147,7 +147,7 @@ SourceManager.discoverComponents=function(){
 			});
 			var video = document.createElement('video');
 			appendTo(div,video)
-			prepend(document.body,div);
+			prependTo(document.body,div);
 			video.srcObject = stream
 			video.autoplay=true
 			video.playsinline=true
