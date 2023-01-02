@@ -279,7 +279,7 @@ SVGScribble.init=function(){
 			}
 		}
 	}
-	paintMove=function(point,config){
+	function paintMove(e,config){
 	// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
@@ -348,7 +348,7 @@ SVGScribble.init=function(){
 		}
 		
 	}
-	paintEnd=function(e,config){
+	function paintEnd(e,config){
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
