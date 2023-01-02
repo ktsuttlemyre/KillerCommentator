@@ -335,7 +335,7 @@ SVGScribble.init=function(){
 			}
 		}
 	}
-	paintFinish=function(point,config){
+	paintFinish=function(e,config){
 
 		if(paths[e.pointerId] && paths[e.pointerId].length<20){
 			console.log('clicked')
