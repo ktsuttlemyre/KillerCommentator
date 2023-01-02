@@ -158,7 +158,8 @@ SVGScribble.init=function(){
 		
 		events[e.pointerId]=[]
 		paths[e.pointerId]=[]
-		paintStart(setPoint(e),config);
+		setPoint(e)
+		paintStart(e,config);
 	})
 
 	drawing_cover.addEventListener('pointermove', function(e) {
@@ -172,8 +173,8 @@ SVGScribble.init=function(){
 // 		}
 		
 		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
-		
-		paintMove(setPoint(e),config)
+		setPoint(e)
+		paintMove(e,config)
 	});
 
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
@@ -190,8 +191,8 @@ SVGScribble.init=function(){
 			// 		}
 
 			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
-
-			paintFinish(setPoint(e),config)			
+			setPoint(e)
+			paintFinish(e,config)			
 		});
 	});
 	
