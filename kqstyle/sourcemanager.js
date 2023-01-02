@@ -186,6 +186,7 @@ SourceManager.discoverComponents=function(){
 	let handleMediaQuery=async function(list){
 		for(var i=0,l=list.length;i<l;i++){
 			let item=list[i]
+			console.log(item)
 			if(item.kind!='videoinput'){
 				continue
 			}
@@ -241,6 +242,7 @@ SourceManager.discoverComponents=function(){
 			    });
 			}
 		}
+	}
 	
 	navigator.mediaDevices.enumerateDevices().then(handleMediaQuery,console.error)
 
