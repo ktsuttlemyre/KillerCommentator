@@ -197,17 +197,17 @@ SVGScribble.init=function(){
 			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
 			
 			if(paths[e.pointerId] && paths[e.pointerId].length<state.deadZone){
-				console.log('clicked')
-				//pass the original event
-				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
-				//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
-			}else{
-				setPoint(e)
-				if(config.tool == 'commentator'){
+				if(arrow.pointerIds.length==1){
+					console.log('clicked')
+					//pass the original event
+					document.getElementById('drawing-layer').click(events[e.pointerId][0]);
+					//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
+				}else if(config.tool == 'commentator'){
 					paintArrowStart(arrow,config)
 					paintArrowEnd(arrow,config)
 				}
-
+			}else{
+				setPoint(e)
 			}
 			paintEnd(e,config)
 			
