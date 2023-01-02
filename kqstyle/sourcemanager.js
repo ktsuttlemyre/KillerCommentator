@@ -117,7 +117,71 @@ SourceManager.cmd=function(source){
 		return SourceManager.load(source)
 	}
 }
+SourceManager.discoverComponents=function(){
 
+	let createDOM=function(list){
+		list.forEach(function(item){
+			let div = document.createElement('div')
+			div.className='resize-drag'
+			div.innerHTML="item"
+			appendTo('body',div);
+		}
+
+		interact('.resize-drag')
+		  .resizable({
+		    // resize from all edges and corners
+		    edges: { left: true, right: true, bottom: true, top: true },
+
+		    listeners: {
+		      move (event) {
+			var target = event.target
+			var x = (parseFloat(target.getAttribute('data-x')) || 0)
+			var y = (parseFloat(target.getAttribute('data-y')) || 0)
+
+			// update the element's style
+			target.style.width = event.rect.width + 'px'
+			target.style.height = event.rect.height + 'px'
+
+			// translate when resizing from top or left edges
+			x += event.deltaRect.left
+			y += event.deltaRect.top
+
+			target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+			target.setAttribute('data-x', x)
+			target.setAttribute('data-y', y)
+			target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
+		      }
+		    },
+		    modifiers: [
+		      // keep the edges inside the parent
+		      interact.modifiers.restrictEdges({
+			outer: 'parent'
+		      }),
+
+		      // minimum size
+		      interact.modifiers.restrictSize({
+			min: { width: 100, height: 50 }
+		      })
+		    ],
+
+		    inertia: true
+		  })
+		  .draggable({
+		    listeners: { move: window.dragMoveListener },
+		    inertia: true,
+		    modifiers: [
+		      interact.modifiers.restrictRect({
+			restriction: 'parent',
+			endOnly: true
+		      })
+		    ]
+		  })
+	}
+	
+	navigator.mediaDevices.enumerateDevices().then(createDOM,console.error)
+
+}
 SourceManager.loadComponents=function(options){
 
 	var constraints = {
@@ -162,8 +226,6 @@ SourceManager.loadComponents=function(options){
 	attachSourceToStream(cam1)
 
 
-
-	navigator.mediaDevices.enumerateDevices().then((data) => console.log(data),console.error)
 }
 
 //init
@@ -200,53 +262,4 @@ ajax("./templates/video_source_modal.tmpl",function(data){
 })
 
 
-interact('.resize-drag')
-  .resizable({
-    // resize from all edges and corners
-    edges: { left: true, right: true, bottom: true, top: true },
 
-    listeners: {
-      move (event) {
-        var target = event.target
-        var x = (parseFloat(target.getAttribute('data-x')) || 0)
-        var y = (parseFloat(target.getAttribute('data-y')) || 0)
-
-        // update the element's style
-        target.style.width = event.rect.width + 'px'
-        target.style.height = event.rect.height + 'px'
-
-        // translate when resizing from top or left edges
-        x += event.deltaRect.left
-        y += event.deltaRect.top
-
-        target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
-        target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
-      }
-    },
-    modifiers: [
-      // keep the edges inside the parent
-      interact.modifiers.restrictEdges({
-        outer: 'parent'
-      }),
-
-      // minimum size
-      interact.modifiers.restrictSize({
-        min: { width: 100, height: 50 }
-      })
-    ],
-
-    inertia: true
-  })
-  .draggable({
-    listeners: { move: window.dragMoveListener },
-    inertia: true,
-    modifiers: [
-      interact.modifiers.restrictRect({
-        restriction: 'parent',
-        endOnly: true
-      })
-    ]
-  })
