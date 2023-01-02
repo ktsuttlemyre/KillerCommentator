@@ -368,6 +368,7 @@ SVGScribble.init=function(){
 	};
 	let paintEnd = function(e,config){
 			if(config.tool == 'commentator'){
+				paintArrowStart(arrow,config)
 				paintArrowEnd(arrow,config)
 			}
 		
