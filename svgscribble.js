@@ -203,7 +203,7 @@ SVGScribble.init=function(){
 					document.getElementById('drawing-layer').click(events[e.pointerId][0]);
 					//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
 				}else if(config.tool == 'commentator'){
-					if(!arrow.pointerIds[0] || !arrow.pointers[0]){
+					if(arrow.pointerIds[0] == null || arrow.pointers[0] == null){
 						debugger
 					}
 					paintArrowStart(arrow,config)
