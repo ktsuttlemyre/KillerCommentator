@@ -148,7 +148,7 @@ SourceManager.discoverComponents=function(){
 
 			// update the element's style
 			let width = Math.floor(event.rect.width) + 'px'
-			let height = Math.foor(event.rect.height) + 'px'
+			let height = Math.floor(event.rect.height) + 'px'
 			target.style.width=width;
 			target.style.height=height;
 			      
