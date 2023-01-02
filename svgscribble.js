@@ -406,7 +406,7 @@ SVGScribble.init=function(){
 			delete freeHand[e.pointerId]
 			//this is where you would send the path to the server
 			delete paths[e.pointerId]
-			if(arrow.pointers && arrow.pointers.length>1 && arrow.pointers[1]==e.pointerId){
+			if(arrow.pointerIds && arrow.pointerIds.length>1 && arrow.pointerIds[1]==e.pointerId){
 				arrow={}
 			}
 	};
