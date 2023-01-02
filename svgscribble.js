@@ -333,7 +333,7 @@ SVGScribble.init=function(){
 			if(paths[e.pointerId] && paths[e.pointerId].length<20){
 				console.log('clicked')
 				//pass the original event
-				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
+				document.body.click(events[e.pointerId][0]);
 				
 			}
 			
