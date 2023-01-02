@@ -28,13 +28,13 @@ SVGScribble.init=function(){
 	var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
 	setPoint=function(e){
 		if(!paths[e.pointerId]){return}
-		let point={}
+		let obj={}
 		for(var i=0,l=pointAttrs.length;i<l;i++){
-			point[pointAttrs[i]]=e[pointAttrs[i]]
+			obj[pointAttrs[i]]=e[pointAttrs[i]]
 		}
-		paths[e.pointerId].push(point)
+		paths[e.pointerId].push(obj)
 		events[e.pointerId].push(e)
-		return e //TODO this should return point instead of event if you want to use this for future network drawings or drawing history andimations
+		return obj
 	}
 	function getDistance(x1, y1, x2, y2){
 	    let y = x2 - x1;
@@ -77,7 +77,7 @@ SVGScribble.init=function(){
 		color : 'white',        // The currently selected colour
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
-		normalisation: 6,// The average normalisation for pencil drawing
+		normalisation: 12,// The average normalisation for pencil drawing
 	}
 
 	var state = {
@@ -158,50 +158,12 @@ SVGScribble.init=function(){
 		
 		events[e.pointerId]=[]
 		paths[e.pointerId]=[]
-		setPoint(e)
-		paintStart(e,config);
-	})
-
-	drawing_cover.addEventListener('pointermove', function(e) {
-		if(!e.isTrusted){return}
-		if(state.drawing == false){return}
-		if(!state.pointerTypes[e.pointerType]){ return }
+		paintStart(setPoint(e));
 		
-		//filters out other div layers we dont want to draw on due to event bubbling 
-// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
-// 			return false;
-// 		}
 		
-		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
-		setPoint(e)
-		paintMove(e,config)
-	});
-
-	// Whenever the user leaves the page with their mouse or lifts up their cursor
-	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
-		drawing_cover.addEventListener(item, function(e) {
-			if(!e.isTrusted){return}
-			//purposely dont check for drawing state in case it changed mid line draw
-			//if(state.drawing == false){return}
-			if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
-			
-			//filters out other div layers we dont want to draw on due to event bubbling 
-			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
-			// 			return false;
-			// 		}
-
-			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
-			setPoint(e)
-			paintFinish(e,config)			
-		});
-	});
-	
-	paintStart=function(e,config){
 		if(config.tool == 'arrow' || config.tool=='commentator') {
 			if(arrow.startX==null ){
-				paintMove(e,config)
-				paintFinish(e,config)
-				return
+				
 			}
 			arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
 				startX: null,
@@ -266,9 +228,22 @@ SVGScribble.init=function(){
 				helper.parent(e.target, '.drawing-el', 1).remove();
 			}
 		}
-	}
-	paintMove=function(e,config){
-	
+	})
+
+	drawing_cover.addEventListener('pointermove', function(e) {
+		if(!e.isTrusted){return}
+		if(state.drawing == false){return}
+		if(!state.pointerTypes[e.pointerType]){ return }
+		
+		//filters out other div layers we dont want to draw on due to event bubbling 
+// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+// 			return false;
+// 		}
+		
+		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
+		
+		setPoint(e)
+
 		// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
@@ -335,46 +310,68 @@ SVGScribble.init=function(){
 
 			}
 		}
-	}
-	paintFinish=function(e,config){
+			
+	});
 
-		if(paths[e.pointerId] && paths[e.pointerId].length<20){
-			console.log('clicked')
-			//pass the original event
-			document.body.click(events[e.pointerId][0]);
+	// Whenever the user leaves the page with their mouse or lifts up their cursor
+	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
+		drawing_cover.addEventListener(item, function(e) {
+			if(!e.isTrusted){return}
+			//purposely dont check for drawing state in case it changed mid line draw
+			//if(state.drawing == false){return}
+			if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
+			
+			//filters out other div layers we dont want to draw on due to event bubbling 
+			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+			// 			return false;
+			// 		}
 
-		}
+			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
 
-		// Remove current-item class from all elements, and give all SVG elements pointer-events
-		document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
-			item.style.pointerEvent = 'all';
-			if(item.classList.contains(`pointerId-${e.pointerId}`)){
-				//should this be perminant or fade away
-				if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
-					//make ephemerial
-					item.classList.add('ephemeral');
-					!(function(id){
-						setTimeout(function(){
-							let elem=document.getElementById(id);
-							elem.parentElement.removeChild(elem);
-						},10000)
-					})(item.id)
+			setPoint(e)
+			
+			if(paths[e.pointerId] && paths[e.pointerId].length<20){
+				console.log('clicked')
+				//pass the original event
+				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
+				
+			}
+			
+			// Remove current-item class from all elements, and give all SVG elements pointer-events
+			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
+				item.style.pointerEvent = 'all';
+				if(item.classList.contains(`pointerId-${e.pointerId}`)){
+					//should this be perminant or fade away
+					if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
+						//make ephemerial
+						item.classList.add('ephemeral');
+						!(function(id){
+							setTimeout(function(){
+								let elem=document.getElementById(id);
+								elem.parentElement.removeChild(elem);
+							},10000)
+						})(item.id)
+					}
+					item.classList.remove('current-item');
+					item.classList.remove(`pointerId-${e.pointerId}`);
 				}
-				item.classList.remove('current-item');
-				item.classList.remove(`pointerId-${e.pointerId}`);
-			}
-			// Delete any 'static' elements
-			if(item.classList.contains('static')) {
-				item.remove();
-			}
+				// Delete any 'static' elements
+				if(item.classList.contains('static')) {
+					item.remove();
+				}
+			});
+			
+			// Reset freeHand variables where needed
+			delete freeHand[e.pointerId]
+			//this is where you would send the path to the server
+			delete paths[e.pointerId]
+			
 		});
-		// Reset freeHand variables where needed
-		delete freeHand[e.pointerId]
-		//this is where you would send the path to the server
-		delete paths[e.pointerId]
+	});
 	
-	
-	}
+	paintStart=function(point){}
+	paintMove=function(point){}
+	paintFinish=function(point){}
 
 
 	let helper = {
@@ -382,7 +379,7 @@ SVGScribble.init=function(){
 		// To give our lines a smoother effect
 		getAveragePoint: function(offset,e) {
 			let len = freeHand[e.pointerId].lastMousePoints.length;
-			if (len % 2 === 1 || len >= 8) {
+			if (len % 2 === 1 || len >= 4) {
 				let totalX = 0;
 				let totalY = 0;
 				let pt, i;
