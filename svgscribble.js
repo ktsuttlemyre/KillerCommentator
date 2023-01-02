@@ -5,19 +5,19 @@ appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764ef
 
 
 SVGScribble={}
-SVGScribble.clear=function(){
-	(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
-}
-SVGScribble.hide=function(){
-		document.body.setAttribute('data-drawing', false);
-		state.drawing = false;
-}
-SVGScribble.show=function(){
-		document.body.setAttribute('data-drawing', true);
-		state.drawing = true;
-}
 SVGScribble.state=false;
 SVGScribble.init=function(){
+	window.SVGScribble.clear=function(){
+		(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
+	}
+	window.SVGScribble.hide=function(){
+			document.body.setAttribute('data-drawing', false);
+			state.drawing = false;
+	}
+	window.SVGScribble.show=function(){
+			document.body.setAttribute('data-drawing', true);
+			state.drawing = true;
+	}
 	window.SVGScribble.toggle=function(){
 		// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
 		// Also sets config.drawing to true or false.
