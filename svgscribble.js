@@ -87,7 +87,7 @@ SVGScribble.init=function(){
 			mouse:0,
 			pen:1,
 			touch:1,
-			}
+			},
 		deadZone:20,
 	}
 
