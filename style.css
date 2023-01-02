@@ -129,6 +129,21 @@ html, body {
         color: rgba(0,100,150,1);
     }
 
+    #drawing-cover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        transition: all 0.3s ease-out;
+        width: 100%;
+        height: 100%;
+    }
+    [data-drawing="true"] #drawing-cover {
+        background: rgba(0,0,0,0);
+        pointer-events: all;
+    }
+
+
     #drawing-layer svg {
         display: block !important;
         fill: transparent;
@@ -140,6 +155,7 @@ html, body {
         position: absolute;
         top: 0;
         left: 0;
+	pointer-events: none;
         transition: all 0.3s ease-out;
         width: 100%;
         height: 100%;
