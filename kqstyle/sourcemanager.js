@@ -130,7 +130,9 @@ SourceManager.discoverComponents=function(){
 			}
 			let div = document.createElement('div')
 			div.className='resize-drag'
-			const stream = await navigator.mediaDevices.getUserMedia({
+			let stream = null;
+			try{
+				navigator.mediaDevices.getUserMedia({
 				  video: {
 					width: {
 						ideal: 1920,
@@ -144,7 +146,10 @@ SourceManager.discoverComponents=function(){
 						exact:  item.deviceId
 					}
 				  }
-			});
+				});
+			}catch(e){console.error(e)}
+			if(!stream){continue}
+			
 			var video = document.createElement('video');
 			appendTo(div,video)
 			prependTo(document.body,div);
