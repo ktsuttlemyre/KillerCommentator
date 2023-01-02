@@ -176,8 +176,111 @@ SVGScribble.init=function(){
 		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
 		
 		setPoint(e)
+		paintMove(e,config)	
+	});
 
-		// Assuming there is a current item to in the drawing layer
+	// Whenever the user leaves the page with their mouse or lifts up their cursor
+	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
+		drawing_cover.addEventListener(item, function(e) {
+			if(!e.isTrusted){return}
+			//purposely dont check for drawing state in case it changed mid line draw
+			//if(state.drawing == false){return}
+			if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
+			
+			//filters out other div layers we dont want to draw on due to event bubbling 
+			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+			// 			return false;
+			// 		}
+
+			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
+			
+			if(paths[e.pointerId] && paths[e.pointerId].length<20){
+				console.log('clicked')
+				//pass the original event
+				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
+				//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
+			}else{
+				setPoint(e)
+			}
+			paintEnd(e,config)
+			
+		});
+	});
+	
+	paintStart=function(e,config,id){
+		if(config.tool == 'arrow' || config.tool=='commentator') {
+			if(arrow.startX != null ){
+				paintMove(e,config)
+				paintEnd(e,config)
+				return
+			}else{
+				arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
+					startX: null,
+					startY: null,
+					stopX: null,      
+					stopY: null,          
+					activeDirection: 'se',                    // This is the current direction of the arrow, i.e. south-east
+					arrowClasses: [ 'nw', 'ne', 'sw', 'se' ], // These are possible arrow directions
+					lineAngle: 0,                             // This is the angle the arrow point at about the starting point
+					domElem:null,
+					pathElems:null,
+					svgElem:null,
+					pointerIds:[],
+				}
+				// Set arrow start point
+				arrow.startX = e.pageX;
+				arrow.startY = e.pageY;
+
+				// Add element to drawing layer
+				var wrapper= document.createElement('div');
+				wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+				wrapper.firstChild.classList.add('current-item');
+				if(config.tool=='commentator'){
+					wrapper.firstChild.classList.add('d-none');
+				}
+				wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
+
+				drawing_layer.appendChild(wrapper.firstChild);
+
+				arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
+				arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
+				arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
+				arrow.pointerIds.push(e.pointerId)
+			}
+		}
+		if(config.tool == 'freeHand' || config.tool=='commentator') {
+
+			freeHand[e.pointerId]={
+				currentPathText: `M${window.scrollX} ${window.scrollY} `,      // This is the current path of the pencil line, in text
+				startX: e.pageX,                       // The starting X coordinate
+				startY: e.pageY,                       // The starting Y coordinate
+				lastMousePoints: [[ window.scrollX, window.scrollY ]],   // This is the current path of the pencil line, in array
+				domElem:null,
+				pathElems:null,
+			}
+			
+			
+			// Add element to the drawing layer
+			var wrapper= document.createElement('div');
+			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
+			wrapper.firstChild.classList.add('current-item')
+			wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`)
+			
+			drawing_layer.appendChild(wrapper.firstChild);
+			freeHand[e.pointerId].pathElems=document.querySelectorAll(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId} svg path`);
+			freeHand[e.pointerId].domElem=document.querySelector(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId}`);
+		} 
+		else if(config.tool == 'eraser') {
+			// Check if user has clicked on an svg
+			console.log('eraser clicked ',e.target,e)
+			if(helper.parent(e.target, '.drawing-el', 1) !== null && helper.parent(e.target, '.drawing-el', 1).matches('.drawing-el')) {
+				// If they have, delete it
+				helper.parent(e.target, '.drawing-el', 1).remove();
+			}
+		}
+	}
+	paintMove=function(point,config){
+	// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
 			if(config.tool == 'arrow' || config.tool=='commentator') {
@@ -243,33 +346,9 @@ SVGScribble.init=function(){
 
 			}
 		}
-			
-	});
-
-	// Whenever the user leaves the page with their mouse or lifts up their cursor
-	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
-		drawing_cover.addEventListener(item, function(e) {
-			if(!e.isTrusted){return}
-			//purposely dont check for drawing state in case it changed mid line draw
-			//if(state.drawing == false){return}
-			if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
-			
-			//filters out other div layers we dont want to draw on due to event bubbling 
-			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
-			// 			return false;
-			// 		}
-
-			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
-
-			setPoint(e)
-			
-			if(paths[e.pointerId] && paths[e.pointerId].length<20){
-				console.log('clicked')
-				//pass the original event
-				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
-				
-			}
-			
+		
+	}
+	paintEnd=function(e,config){
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
@@ -298,83 +377,7 @@ SVGScribble.init=function(){
 			delete freeHand[e.pointerId]
 			//this is where you would send the path to the server
 			delete paths[e.pointerId]
-			
-		});
-	});
-	
-	paintStart=function(e,config,id){
-	
-		
-		if(config.tool == 'arrow' || config.tool=='commentator') {
-			if(arrow.startX==null ){
-				
-			}
-			arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
-				startX: null,
-				startY: null,
-				stopX: null,      
-				stopY: null,          
-				activeDirection: 'se',                    // This is the current direction of the arrow, i.e. south-east
-				arrowClasses: [ 'nw', 'ne', 'sw', 'se' ], // These are possible arrow directions
-				lineAngle: 0,                             // This is the angle the arrow point at about the starting point
-				domElem:null,
-				pathElems:null,
-				svgElem:null,
-				pointerIds:[],
-			}
-			// Set arrow start point
-			arrow.startX = e.pageX;
-			arrow.startY = e.pageY;
-
-			// Add element to drawing layer
-			var wrapper= document.createElement('div');
-			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
-			wrapper.firstChild.classList.add('current-item');
-			if(config.tool=='commentator'){
-				wrapper.firstChild.classList.add('d-none');
-			}
-			wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
-			
-			drawing_layer.appendChild(wrapper.firstChild);
-			
-			arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
-			arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
-			arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
-			arrow.pointerIds.push(e.pointerId)
-		}
-		if(config.tool == 'freeHand' || config.tool=='commentator') {
-
-			freeHand[e.pointerId]={
-				currentPathText: `M${window.scrollX} ${window.scrollY} `,      // This is the current path of the pencil line, in text
-				startX: e.pageX,                       // The starting X coordinate
-				startY: e.pageY,                       // The starting Y coordinate
-				lastMousePoints: [[ window.scrollX, window.scrollY ]],   // This is the current path of the pencil line, in array
-				domElem:null,
-				pathElems:null,
-			}
-			
-			
-			// Add element to the drawing layer
-			var wrapper= document.createElement('div');
-			wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
-			wrapper.firstChild.classList.add('current-item')
-			wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`)
-			
-			drawing_layer.appendChild(wrapper.firstChild);
-			freeHand[e.pointerId].pathElems=document.querySelectorAll(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId} svg path`);
-			freeHand[e.pointerId].domElem=document.querySelector(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId}`);
-		} 
-		else if(config.tool == 'eraser') {
-			// Check if user has clicked on an svg
-			console.log('eraser clicked ',e.target,e)
-			if(helper.parent(e.target, '.drawing-el', 1) !== null && helper.parent(e.target, '.drawing-el', 1).matches('.drawing-el')) {
-				// If they have, delete it
-				helper.parent(e.target, '.drawing-el', 1).remove();
-			}
-		}
 	}
-	paintMove=function(point){}
-	paintFinish=function(point){}
 
 
 	let helper = {
