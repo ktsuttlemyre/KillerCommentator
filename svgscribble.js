@@ -176,74 +176,7 @@ SVGScribble.init=function(){
 		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
 		
 		setPoint(e)
-
-		// Assuming there is a current item to in the drawing layer
-		if(document.querySelector('#drawing-layer .current-item') !== null) { 
-			// If we are using the arrow tool
-			if(config.tool == 'arrow' || config.tool=='commentator') {
-				// Then get the original start position
-				let startX = arrow.startX;
-				let startY = arrow.startY;
-				// Set a default angle of 90
-				let angleStart = 90;
-				
-				// And a default direction of 'south east'
-				let arrowClass = arrow.arrowClasses[3];
-				// Calculate how far the user has moved their mouse from the original position
-				let endX = e.pageX - startX - window.scrollX;
-				let endY = e.pageY - startY - window.scrollY;
-
-				// And using that info, calculate the arrow's angle
-				helper.calculateArrowLineAngle(endX, endY);
-				// Then update the config to this new end position
-				arrow.stopX = endX;
-				arrow.stopY = endY;
-				
-				
-				if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>20){
-					arrow.domElem.classList.remove('d-none');
-				}
-				// And update the HTML to show the new arrow to the user
-				//todo update this to be cached instead of dom queried like freeHand.pathElems
-				arrow.domElem.classList.remove('static');
-				arrow.domElem.setAttribute('data-direction', arrow.activeDirection);
-				arrow.svgElem.setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
-				arrow.pathElems.forEach(function(path){
-					path.setAttribute('d', `M0 0 L${endX} ${endY}`);
-				})
-			}
-			
-			if(config.tool == 'freeHand' || config.tool=='commentator') {
-				// Similar to arrows, calculate the user's end position
-				let endX = e.pageX - freeHand[e.pointerId].startX;
-				let endY = e.pageY - freeHand[e.pointerId].startY;
-				
-				// And push these new coordinates to our config
-				let newCoordinates = [ endX, endY ];
-				freeHand[e.pointerId].lastMousePoints.push([endX, endY]);
-				if(freeHand[e.pointerId].lastMousePoints.length >= config.normalisation) {
-					freeHand[e.pointerId].lastMousePoints.shift();
-				}
-				
-				// Then calculate the average points to display a line to the user
-				let avgPoint = helper.getAveragePoint(0,e);
-				if (avgPoint) {
-					freeHand[e.pointerId].currentPathText += " L" + avgPoint.x + " " + avgPoint.y;
-
-					let tmpPath = '';
-					for (let offset = 2; offset < freeHand[e.pointerId].lastMousePoints.length; offset += 2) {
-						avgPoint = helper.getAveragePoint(offset,e);
-						tmpPath += " L" + avgPoint.x + " " + avgPoint.y;
-					}
-
-					// Set the complete current path coordinates
-					freeHand[e.pointerId].domElem.classList.remove('static');
-					freeHand[e.pointerId].pathElems.forEach(function(path){path.setAttribute('d', freeHand[e.pointerId].currentPathText + tmpPath)});
-				}
-
-			}
-		}
-			
+		paintMove(e,config)	
 	});
 
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
@@ -260,54 +193,26 @@ SVGScribble.init=function(){
 			// 		}
 
 			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
-
-			setPoint(e)
 			
 			if(paths[e.pointerId] && paths[e.pointerId].length<20){
 				console.log('clicked')
 				//pass the original event
 				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
-				
+				//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
+			}else{
+				setPoint(e)
 			}
-			
-			// Remove current-item class from all elements, and give all SVG elements pointer-events
-			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
-				item.style.pointerEvent = 'all';
-				if(item.classList.contains(`pointerId-${e.pointerId}`)){
-					//should this be perminant or fade away
-					if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
-						//make ephemerial
-						item.classList.add('ephemeral');
-						!(function(id){
-							setTimeout(function(){
-								let elem=document.getElementById(id);
-								elem.parentElement.removeChild(elem);
-							},10000)
-						})(item.id)
-					}
-					item.classList.remove('current-item');
-					item.classList.remove(`pointerId-${e.pointerId}`);
-				}
-				// Delete any 'static' elements
-				if(item.classList.contains('static')) {
-					item.remove();
-				}
-			});
-			
-			// Reset freeHand variables where needed
-			delete freeHand[e.pointerId]
-			//this is where you would send the path to the server
-			delete paths[e.pointerId]
+			paintEnd(e,config)
 			
 		});
 	});
 	
 	paintStart=function(e,config,id){
-	
-		
 		if(config.tool == 'arrow' || config.tool=='commentator') {
 			if(arrow.startX==null ){
-				
+				paintMove(e,config)
+				paintEnd(e,config)
+				return
 			}
 			arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
 				startX: null,
@@ -373,8 +278,105 @@ SVGScribble.init=function(){
 			}
 		}
 	}
-	paintMove=function(point){}
-	paintFinish=function(point){}
+	paintMove=function(point,config){
+	// Assuming there is a current item to in the drawing layer
+		if(document.querySelector('#drawing-layer .current-item') !== null) { 
+			// If we are using the arrow tool
+			if(config.tool == 'arrow' || config.tool=='commentator') {
+				// Then get the original start position
+				let startX = arrow.startX;
+				let startY = arrow.startY;
+				// Set a default angle of 90
+				let angleStart = 90;
+				
+				// And a default direction of 'south east'
+				let arrowClass = arrow.arrowClasses[3];
+				// Calculate how far the user has moved their mouse from the original position
+				let endX = e.pageX - startX - window.scrollX;
+				let endY = e.pageY - startY - window.scrollY;
+
+				// And using that info, calculate the arrow's angle
+				helper.calculateArrowLineAngle(endX, endY);
+				// Then update the config to this new end position
+				arrow.stopX = endX;
+				arrow.stopY = endY;
+				
+				
+				if(getDistance(arrow.startX,arrow.startY,arrow.stopX,arrow.stopY)>20){
+					arrow.domElem.classList.remove('d-none');
+				}
+				// And update the HTML to show the new arrow to the user
+				//todo update this to be cached instead of dom queried like freeHand.pathElems
+				arrow.domElem.classList.remove('static');
+				arrow.domElem.setAttribute('data-direction', arrow.activeDirection);
+				arrow.svgElem.setAttribute('viewbox', `0 ${endX} 0 ${endY}`);
+				arrow.pathElems.forEach(function(path){
+					path.setAttribute('d', `M0 0 L${endX} ${endY}`);
+				})
+			}
+			
+			if(config.tool == 'freeHand' || config.tool=='commentator') {
+				// Similar to arrows, calculate the user's end position
+				let endX = e.pageX - freeHand[e.pointerId].startX;
+				let endY = e.pageY - freeHand[e.pointerId].startY;
+				
+				// And push these new coordinates to our config
+				let newCoordinates = [ endX, endY ];
+				freeHand[e.pointerId].lastMousePoints.push([endX, endY]);
+				if(freeHand[e.pointerId].lastMousePoints.length >= config.normalisation) {
+					freeHand[e.pointerId].lastMousePoints.shift();
+				}
+				
+				// Then calculate the average points to display a line to the user
+				let avgPoint = helper.getAveragePoint(0,e);
+				if (avgPoint) {
+					freeHand[e.pointerId].currentPathText += " L" + avgPoint.x + " " + avgPoint.y;
+
+					let tmpPath = '';
+					for (let offset = 2; offset < freeHand[e.pointerId].lastMousePoints.length; offset += 2) {
+						avgPoint = helper.getAveragePoint(offset,e);
+						tmpPath += " L" + avgPoint.x + " " + avgPoint.y;
+					}
+
+					// Set the complete current path coordinates
+					freeHand[e.pointerId].domElem.classList.remove('static');
+					freeHand[e.pointerId].pathElems.forEach(function(path){path.setAttribute('d', freeHand[e.pointerId].currentPathText + tmpPath)});
+				}
+
+			}
+		}
+		
+	}
+	paintEnd=function(e,config){
+			// Remove current-item class from all elements, and give all SVG elements pointer-events
+			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
+				item.style.pointerEvent = 'all';
+				if(item.classList.contains(`pointerId-${e.pointerId}`)){
+					//should this be perminant or fade away
+					if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
+						//make ephemerial
+						item.classList.add('ephemeral');
+						!(function(id){
+							setTimeout(function(){
+								let elem=document.getElementById(id);
+								elem.parentElement.removeChild(elem);
+							},10000)
+						})(item.id)
+					}
+					item.classList.remove('current-item');
+					item.classList.remove(`pointerId-${e.pointerId}`);
+				}
+				// Delete any 'static' elements
+				if(item.classList.contains('static')) {
+					item.remove();
+				}
+			});
+			
+			// Reset freeHand variables where needed
+			delete freeHand[e.pointerId]
+			//this is where you would send the path to the server
+			delete paths[e.pointerId]
+	}
 
 
 	let helper = {
