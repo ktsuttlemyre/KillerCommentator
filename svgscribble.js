@@ -290,13 +290,16 @@ SVGScribble.init=function(){
 					svgElem:null,
 					pointers:{},
 					pointerIds:[e.pointerId],
-					id:id,
 				}
 				arrow.pointers[e.pointerId]=[e];
 				if(config.tool=='arrow'){
+					arrow.id=id
 					paintArrowStart(arrow,config)
 				}
-			}else if(arrow.pointerIds.length>=1){
+			}else if(config.tool=='commentator' && arrow.pointerIds.length>=1){
+				if(arrow.pointerIds.length==1){
+					arrow.id=id
+				}
 				arrow.pointerIds.push(e.pointerId)
 				arrow.pointers[e.pointerId]=[e];
 			}
