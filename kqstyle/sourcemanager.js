@@ -124,7 +124,8 @@ SourceManager.discoverComponents=function(){
 
 	let createDOM=async function(list){
 		for(var i=0,l=list.length;i<l;i++){
-			if(list[i].kind!='videoinput'){
+			let item=list[i]
+			if(item.kind!='videoinput'){
 				continue
 			}
 			let div = document.createElement('div')
