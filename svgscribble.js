@@ -73,7 +73,7 @@ SVGScribble.init=function(){
 	});
 
 	var config = {
-		tool: 'commentator',       // The currently selected tool
+		tool: 'freehand',       // The currently selected tool //commentator arrow
 		color : 'white',        // The currently selected colour
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
