@@ -13,3 +13,8 @@
   /* This makes things *much* easier */
   box-sizing: border-box;
 }
+
+.resize-drag video{
+  width:100%;
+  height:100%;
+}
