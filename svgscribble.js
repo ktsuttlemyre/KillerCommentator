@@ -221,6 +221,11 @@ SVGScribble.init=function(){
 	
 	paintArrowStart=function(arrow,config){
 		let e=arrow.pointers[arrow.pointerIds[0]][0]
+		let e2=e;
+		if(config.tool == 'commentator' && arrow.pointerIds[1]){
+			let history = arrow.pointers[arrow.pointerIds[1]]
+			e2 = history[history.length-1];
+		}
 		
 		// Add element to drawing layer
 		var wrapper= document.createElement('div');
@@ -228,13 +233,13 @@ SVGScribble.init=function(){
 		wrapper.firstChild.classList.add('current-item');
 // 		if(config.tool=='commentator'){
 // 		wrapper.firstChild.classList.add('d-none');
-		wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
+		wrapper.firstChild.classList.add(`pointerId-${e2.pointerId}`);
 
 		drawing_layer.appendChild(wrapper.firstChild);
 
-		arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} path.arrow-line`);
-		arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId}`);
-		arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e.pointerId} svg`);
+		arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e2.pointerId} path.arrow-line`);
+		arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e2.pointerId}`);
+		arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e2.pointerId} svg`);
 	}
 	paintArrowEnd=function(arrow,config){
 		let history = arrow.pointers[arrow.pointerIds[0]]
