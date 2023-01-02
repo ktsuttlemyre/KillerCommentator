@@ -197,7 +197,7 @@ SVGScribble.init=function(){
 			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
 			
 			if(paths[e.pointerId] && paths[e.pointerId].length<state.deadZone){
-				if(arrow.pointerIds.length==1){
+				if(arrow.pointerIds && arrow.pointerIds.length==1){
 					console.log('clicked')
 					//pass the original event
 					document.getElementById('drawing-layer').click(events[e.pointerId][0]);
@@ -224,7 +224,7 @@ SVGScribble.init=function(){
 		wrapper.firstChild.classList.add('current-item');
 // 		if(config.tool=='commentator'){
 // 		wrapper.firstChild.classList.add('d-none');
-// 		wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
+		wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`);
 
 		drawing_layer.appendChild(wrapper.firstChild);
 
