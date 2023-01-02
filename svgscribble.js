@@ -207,7 +207,7 @@ SVGScribble.init=function(){
 		});
 	});
 	
-	function paintStart(e,config,id){
+	let paintStart = function(e,config,id){
 		if(config.tool == 'arrow' || config.tool=='commentator') {
 // 			if(arrow.startX != null ){
 // 				paintMove(e,config)
@@ -278,8 +278,8 @@ SVGScribble.init=function(){
 				helper.parent(e.target, '.drawing-el', 1).remove();
 			}
 		//}
-	}
-	function paintMove(e,config){
+	};
+	let paintMove = function(e,config){
 	// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
@@ -347,8 +347,8 @@ SVGScribble.init=function(){
 			}
 		}
 		
-	}
-	function paintEnd(e,config){
+	};
+	let paintEnd = function(e,config){
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
@@ -377,7 +377,7 @@ SVGScribble.init=function(){
 			delete freeHand[e.pointerId]
 			//this is where you would send the path to the server
 			delete paths[e.pointerId]
-	}
+	};
 
 
 	let helper = {
