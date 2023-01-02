@@ -148,10 +148,10 @@ SourceManager.discoverComponents=function(){
 			var y = (Math.floor(parseFloat(target.getAttribute('data-y'))) || 0)
 
 			// update the element's style
-			let width = Math.floor(event.rect.width) + 'px'
-			let height = Math.floor(event.rect.height) + 'px'
-			target.style.width=width;
-			target.style.height=height;
+			let w = Math.floor(event.rect.width) + 'px'
+			let h = Math.floor(event.rect.height) + 'px'
+			target.style.width=w;
+			target.style.height=h;
 			      
 			// translate when resizing from top or left edges
 			x += event.deltaRect.left
@@ -162,7 +162,7 @@ SourceManager.discoverComponents=function(){
 			target.setAttribute('data-x', x)
 			target.setAttribute('data-y', y)
 			      
-			snapVideoToContainer(x,y,width,height)
+			snapVideoToContainer(x,y,w,h)
 		      }
 		    },
 		    modifiers: [
