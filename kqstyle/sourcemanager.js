@@ -121,56 +121,7 @@ SourceManager.cmd=function(source){
 	}
 }
 SourceManager.discoverComponents=function(){
-
-	let createDOM=async function(list){
-		for(var i=0,l=list.length;i<l;i++){
-			let item=list[i]
-			if(item.kind!='videoinput'){
-				continue
-			}
-			let div = document.createElement('div')
-			div.className='resize-drag'
-			let stream = null;
-			try{
-				navigator.mediaDevices.getUserMedia({
-				  video: {
-					width: {
-						ideal: 1920,
-						max: 2560,
-					},
-					height: {
-						ideal: 1080,
-						max: 1440
-					},
-					deviceId: {
-						exact:  item.deviceId
-					}
-				  }
-				});
-			}catch(e){console.error(e)}
-			if(!stream){continue}
-			
-			var video = document.createElement('video');
-			appendTo(div,video)
-			prependTo(document.body,div);
-			video.srcObject = stream
-			video.autoplay=true
-			video.playsinline=true
-			let promise = video.play();
-			if (promise !== undefined) {
-			    promise.then(_ => {
-				// Autoplay started!
-			    }).catch(error => {
-				// Autoplay was prevented.
-				// Show a "Play" button so that user can start playback.
-				let button = document.createElement('a')
-				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
-				buton.onclick(function(){video.play();button.parent.removeChild(button)})
-				appendTo(div,button)
-			    });
-			}
-		}
-
+	let createDOMSizer=function(aspectRatio){
 		interact('.resize-drag')
 		  .resizable({
 		    // resize from all edges and corners
@@ -197,15 +148,23 @@ SourceManager.discoverComponents=function(){
 		      }
 		    },
 		    modifiers: [
-		      // keep the edges inside the parent
-		      interact.modifiers.restrictEdges({
-			outer: 'parent'
-		      }),
+			interact.modifiers.aspectRatio({
+				// make sure the width is always double the height
+				ratio: aspectRatio,
+				// also restrict the size by nesting another modifier
+			modifiers: [
+				//interact.modifiers.restrictSize({ max: 'parent' }),
+				// keep the edges inside the parent
+				interact.modifiers.restrictEdges({
+					outer: 'parent'
+				}),
 
-		      // minimum size
-		      interact.modifiers.restrictSize({
-			min: { width: 100, height: 50 }
-		      })
+				// minimum size
+				interact.modifiers.restrictSize({
+					min: { width: 100, height: 50 }
+				})
+				],
+			}),
 		    ],
 
 		    inertia: true
@@ -220,9 +179,70 @@ SourceManager.discoverComponents=function(){
 		      })
 		    ]
 		  })
-	}
+		}
 	
-	navigator.mediaDevices.enumerateDevices().then(createDOM,console.error)
+	}
+
+	let handleMediaQuery=async function(list){
+		for(var i=0,l=list.length;i<l;i++){
+			let item=list[i]
+			if(item.kind!='videoinput'){
+				continue
+			}
+			
+			let stream = null;
+			try{
+				navigator.mediaDevices.getUserMedia({
+				  video: {
+					width: {
+						ideal: 1920,
+						max: 2560,
+					},
+					height: {
+						ideal: 1080,
+						max: 1440
+					},
+					deviceId: {
+						exact:  item.deviceId
+					}
+				  }
+				});
+			}catch(e){console.error(e)}
+			if(!stream){continue}
+			
+			let div = document.createElement('div')
+			div.className='resize-drag'
+			let button = document.createElement('a')
+			button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
+			var video = document.createElement('video');
+			
+			video.addEventListener( "loadedmetadata", function (e) {
+				createDOMSizer(this.videoWidth/this.videoHeight)
+			}, false )
+			
+			buton.onclick(function(){video.play();button.parent.removeChild(button)})
+			prependTo(div,button)
+			prependTo(document.body,div);
+			prependTo(document.body,video)
+			
+			video.srcObject = stream
+			//video.autoplay=true
+			video.playsinline=true
+			
+			let promise = video.play();
+			if (promise !== undefined) {
+			    promise.then(_ => {
+				// Autoplay started!
+				button.parent.removeChild(button)
+			    }).catch(error => {
+				// Autoplay was prevented.
+				// Show a "Play" button so that user can start playback.
+
+			    });
+			}
+		}
+	
+	navigator.mediaDevices.enumerateDevices().then(handleMediaQuery,console.error)
 
 }
 SourceManager.loadComponents=function(options){
