@@ -124,6 +124,9 @@ SourceManager.discoverComponents=function(){
 
 	let createDOM=async function(list){
 		for(var i=0,l=list.length;i<l;i++){
+			if(list[i].kind!='videoinput'){
+				continue
+			}
 			let div = document.createElement('div')
 			div.className='resize-drag'
 			const stream = await navigator.mediaDevices.getUserMedia({
