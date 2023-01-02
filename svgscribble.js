@@ -211,9 +211,10 @@ SVGScribble.init=function(){
 	
 	
 	paintArrowStart=function(arrow,config){
+		let e=arrow.pointers[arrow.pointerIds[0]][0]
 		// Add element to drawing layer
 		var wrapper= document.createElement('div');
-		wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX + window.scrollX, arrow.startY + window.scrollY ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+		wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX /*+ window.scrollX*/, arrow.startY /*+ window.scrollY*/ ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
 		wrapper.firstChild.classList.add('current-item');
 // 		if(config.tool=='commentator'){
 // 		wrapper.firstChild.classList.add('d-none');
