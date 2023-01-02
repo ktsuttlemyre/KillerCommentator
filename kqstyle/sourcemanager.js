@@ -127,7 +127,7 @@ SourceManager.cmd=function(source){
 	}
 }
 SourceManager.discoverComponents=function(){
-	let createDOMSizer=function(containerID,child,width,height){
+	let createDOMSizer=function(container,child,width,height){
 		let aspectRatio = width/height;
 		function snapVideoToContainer(x,y,width,height){
 			child.style.width=`${width}px`
@@ -135,7 +135,7 @@ SourceManager.discoverComponents=function(){
 			child.style.transform = `translate(${x}px,${y}px)`
 		}
 		
-		interact('#'+containerID)
+		interact(container)
 		  .resizable({
 		    // resize from all edges and corners
 		    edges: { left: true, right: true, bottom: true, top: true },
@@ -234,7 +234,7 @@ SourceManager.discoverComponents=function(){
 			var video = document.createElement('video');
 			
 			video.addEventListener( "loadedmetadata", function (e) {
-				createDOMSizer(id,this,this.videoWidth,this.videoHeight)
+				createDOMSizer(div,this,this.videoWidth,this.videoHeight)
 			}, false )
 			
 			button.onclick=function(){video.play();button.parentNode.removeChild(button)}
