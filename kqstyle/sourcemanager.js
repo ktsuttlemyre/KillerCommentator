@@ -219,7 +219,7 @@ SourceManager.discoverComponents=function(){
 				createDOMSizer(this.videoWidth/this.videoHeight)
 			}, false )
 			
-			button.onclick(function(){video.play();button.parent.removeChild(button)})
+			button.onclick=function(){video.play();button.parent.removeChild(button)}
 			prependTo(div,button)
 			prependTo(document.body,div);
 			prependTo(document.body,video)
