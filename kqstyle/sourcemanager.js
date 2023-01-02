@@ -191,7 +191,7 @@ SourceManager.discoverComponents=function(){
 			
 			let stream = null;
 			try{
-				stream = navigator.mediaDevices.getUserMedia({
+				stream = await navigator.mediaDevices.getUserMedia({
 				  video: {
 					width: {
 						ideal: 1920,
