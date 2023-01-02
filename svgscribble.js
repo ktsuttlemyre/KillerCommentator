@@ -77,7 +77,7 @@ SVGScribble.init=function(){
 		color : 'white',        // The currently selected colour
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
-		normalisation: 12,// The average normalisation for pencil drawing
+		normalisation: 6,// The average normalisation for pencil drawing
 	}
 
 	var state = {
@@ -379,7 +379,7 @@ SVGScribble.init=function(){
 		// To give our lines a smoother effect
 		getAveragePoint: function(offset,e) {
 			let len = freeHand[e.pointerId].lastMousePoints.length;
-			if (len % 2 === 1 || len >= 4) {
+			if (len % 2 === 1 || len >= 8) {
 				let totalX = 0;
 				let totalY = 0;
 				let pt, i;
