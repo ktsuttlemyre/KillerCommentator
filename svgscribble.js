@@ -28,13 +28,13 @@ SVGScribble.init=function(){
 	var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
 	setPoint=function(e){
 		if(!paths[e.pointerId]){return}
-		let obj={}
+		let point={}
 		for(var i=0,l=pointAttrs.length;i<l;i++){
-			obj[pointAttrs[i]]=e[pointAttrs[i]]
+			point[pointAttrs[i]]=e[pointAttrs[i]]
 		}
-		paths[e.pointerId].push(obj)
+		paths[e.pointerId].push(point)
 		events[e.pointerId].push(e)
-		return obj
+		return e //TODO this should return point instead of event if you want to use this for future network drawings or drawing history andimations
 	}
 	function getDistance(x1, y1, x2, y2){
 	    let y = x2 - x1;
@@ -158,12 +158,49 @@ SVGScribble.init=function(){
 		
 		events[e.pointerId]=[]
 		paths[e.pointerId]=[]
-		paintStart(setPoint(e));
+		paintStart(setPoint(e),config);
+	})
+
+	drawing_cover.addEventListener('pointermove', function(e) {
+		if(!e.isTrusted){return}
+		if(state.drawing == false){return}
+		if(!state.pointerTypes[e.pointerType]){ return }
 		
+		//filters out other div layers we dont want to draw on due to event bubbling 
+// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+// 			return false;
+// 		}
 		
+		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
+		
+		paintMove(setPoint(e),config)
+	});
+
+	// Whenever the user leaves the page with their mouse or lifts up their cursor
+	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
+		drawing_cover.addEventListener(item, function(e) {
+			if(!e.isTrusted){return}
+			//purposely dont check for drawing state in case it changed mid line draw
+			//if(state.drawing == false){return}
+			if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
+			
+			//filters out other div layers we dont want to draw on due to event bubbling 
+			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+			// 			return false;
+			// 		}
+
+			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
+
+			paintFinish(setPoint(e),config)			
+		});
+	});
+	
+	paintStart=function(e,config){
 		if(config.tool == 'arrow' || config.tool=='commentator') {
 			if(arrow.startX==null ){
-				
+				paintMove(e,config)
+				paintFinish(e,config)
+				return
 			}
 			arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
 				startX: null,
@@ -228,22 +265,9 @@ SVGScribble.init=function(){
 				helper.parent(e.target, '.drawing-el', 1).remove();
 			}
 		}
-	})
-
-	drawing_cover.addEventListener('pointermove', function(e) {
-		if(!e.isTrusted){return}
-		if(state.drawing == false){return}
-		if(!state.pointerTypes[e.pointerType]){ return }
-		
-		//filters out other div layers we dont want to draw on due to event bubbling 
-// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
-// 			return false;
-// 		}
-		
-		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
-		
-		setPoint(e)
-
+	}
+	paintMove=function(e,config){
+	
 		// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
@@ -310,68 +334,46 @@ SVGScribble.init=function(){
 
 			}
 		}
-			
-	});
+	}
+	paintFinish=function(point,config){
 
-	// Whenever the user leaves the page with their mouse or lifts up their cursor
-	[ 'mouseleave', 'pointerup' ].forEach(function(item) {
-		drawing_cover.addEventListener(item, function(e) {
-			if(!e.isTrusted){return}
-			//purposely dont check for drawing state in case it changed mid line draw
-			//if(state.drawing == false){return}
-			if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
-			
-			//filters out other div layers we dont want to draw on due to event bubbling 
-			// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
-			// 			return false;
-			// 		}
+		if(paths[e.pointerId] && paths[e.pointerId].length<20){
+			console.log('clicked')
+			//pass the original event
+			document.body.click(events[e.pointerId][0]);
 
-			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
+		}
 
-			setPoint(e)
-			
-			if(paths[e.pointerId] && paths[e.pointerId].length<20){
-				console.log('clicked')
-				//pass the original event
-				document.body.click(events[e.pointerId][0]);
-				
+		// Remove current-item class from all elements, and give all SVG elements pointer-events
+		document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
+			item.style.pointerEvent = 'all';
+			if(item.classList.contains(`pointerId-${e.pointerId}`)){
+				//should this be perminant or fade away
+				if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
+					//make ephemerial
+					item.classList.add('ephemeral');
+					!(function(id){
+						setTimeout(function(){
+							let elem=document.getElementById(id);
+							elem.parentElement.removeChild(elem);
+						},10000)
+					})(item.id)
+				}
+				item.classList.remove('current-item');
+				item.classList.remove(`pointerId-${e.pointerId}`);
 			}
-			
-			// Remove current-item class from all elements, and give all SVG elements pointer-events
-			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
-				item.style.pointerEvent = 'all';
-				if(item.classList.contains(`pointerId-${e.pointerId}`)){
-					//should this be perminant or fade away
-					if (!e.shiftKey && !e.ctrlKey) { //|| e.altKey 
-						//make ephemerial
-						item.classList.add('ephemeral');
-						!(function(id){
-							setTimeout(function(){
-								let elem=document.getElementById(id);
-								elem.parentElement.removeChild(elem);
-							},10000)
-						})(item.id)
-					}
-					item.classList.remove('current-item');
-					item.classList.remove(`pointerId-${e.pointerId}`);
-				}
-				// Delete any 'static' elements
-				if(item.classList.contains('static')) {
-					item.remove();
-				}
-			});
-			
-			// Reset freeHand variables where needed
-			delete freeHand[e.pointerId]
-			//this is where you would send the path to the server
-			delete paths[e.pointerId]
-			
+			// Delete any 'static' elements
+			if(item.classList.contains('static')) {
+				item.remove();
+			}
 		});
-	});
+		// Reset freeHand variables where needed
+		delete freeHand[e.pointerId]
+		//this is where you would send the path to the server
+		delete paths[e.pointerId]
 	
-	paintStart=function(point){}
-	paintMove=function(point){}
-	paintFinish=function(point){}
+	
+	}
 
 
 	let helper = {
