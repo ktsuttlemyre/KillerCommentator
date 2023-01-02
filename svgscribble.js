@@ -402,13 +402,17 @@ SVGScribble.init=function(){
 				}
 			});
 			
+		
+			if(paths[e.pointerId] && paths[e.pointerId].length<state.deadZone){
+				arrow={}
+			}else if(arrow.pointerIds && arrow.pointerIds[1]==e.pointerId){
+				arrow={}
+			}
 			// Reset freeHand variables where needed
 			delete freeHand[e.pointerId]
 			//this is where you would send the path to the server
 			delete paths[e.pointerId]
-			if(arrow.pointerIds && arrow.pointerIds.length>1 && arrow.pointerIds[1]==e.pointerId){
-				arrow={}
-			}
+			
 	};
 
 
