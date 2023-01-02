@@ -212,9 +212,10 @@ SVGScribble.init=function(){
 	
 	paintArrowStart=function(arrow,config){
 		let e=arrow.pointers[arrow.pointerIds[0]][0]
+		
 		// Add element to drawing layer
 		var wrapper= document.createElement('div');
-		wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX /*+ window.scrollX*/, arrow.startY /*+ window.scrollY*/ ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], id );
+		wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX /*+ window.scrollX*/, arrow.startY /*+ window.scrollY*/ ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], arrow.id );
 		wrapper.firstChild.classList.add('current-item');
 // 		if(config.tool=='commentator'){
 // 		wrapper.firstChild.classList.add('d-none');
@@ -279,7 +280,8 @@ SVGScribble.init=function(){
 					pathElems:null,
 					svgElem:null,
 					pointers:{},
-					pointerIds:[e.pointerId]
+					pointerIds:[e.pointerId],
+					id:id,
 				}
 				arrow.pointers[e.pointerId]=[e];
 				if(config.tool=='arrow'){
@@ -300,6 +302,7 @@ SVGScribble.init=function(){
 				lastMousePoints: [[ window.scrollX, window.scrollY ]],   // This is the current path of the pencil line, in array
 				domElem:null,
 				pathElems:null,
+				id:id,
 			}
 			
 			
