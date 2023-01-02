@@ -176,7 +176,7 @@ SVGScribble.init=function(){
 		console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
 		
 		setPoint(e)
-		paintMove(e,config)
+
 		// Assuming there is a current item to in the drawing layer
 		if(document.querySelector('#drawing-layer .current-item') !== null) { 
 			// If we are using the arrow tool
@@ -243,6 +243,7 @@ SVGScribble.init=function(){
 
 			}
 		}
+			
 	});
 
 	// Whenever the user leaves the page with their mouse or lifts up their cursor
@@ -259,16 +260,15 @@ SVGScribble.init=function(){
 			// 		}
 
 			console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
+
+			setPoint(e)
 			
 			if(paths[e.pointerId] && paths[e.pointerId].length<20){
 				console.log('clicked')
 				//pass the original event
 				document.getElementById('drawing-layer').click(events[e.pointerId][0]);
-				//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
-			}else{
-				setPoint(e)
+				
 			}
-			paintEnd(e,config)
 			
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
@@ -298,15 +298,16 @@ SVGScribble.init=function(){
 			delete freeHand[e.pointerId]
 			//this is where you would send the path to the server
 			delete paths[e.pointerId]
+			
 		});
 	});
 	
-	function paintStart(e,config,id){
+	paintStart=function(e,config,id){
+	
+		
 		if(config.tool == 'arrow' || config.tool=='commentator') {
 			if(arrow.startX==null ){
-				paintMove(e,config)
-				paintEnd(e,config)
-				return
+				
 			}
 			arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
 				startX: null,
@@ -372,12 +373,8 @@ SVGScribble.init=function(){
 			}
 		}
 	}
-	function paintMove(e,config){
-	
-		
-	}
-	function paintEnd(e,config){
-	}
+	paintMove=function(point){}
+	paintFinish=function(point){}
 
 
 	let helper = {
