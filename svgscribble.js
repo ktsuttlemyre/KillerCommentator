@@ -276,7 +276,7 @@ SVGScribble.init=function(){
 				// If they have, delete it
 				helper.parent(e.target, '.drawing-el', 1).remove();
 			}
-		//}
+		}
 	};
 	let paintMove = function(e,config){
 	// Assuming there is a current item to in the drawing layer
