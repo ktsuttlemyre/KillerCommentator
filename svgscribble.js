@@ -368,6 +368,10 @@ SVGScribble.init=function(){
 			
 		});
 	});
+	
+	renderStart=function(point){}
+	renderMoveTo=function(point){}
+	renderFinish=function(point){}
 
 
 	let helper = {
