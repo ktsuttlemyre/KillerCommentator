@@ -122,8 +122,8 @@ SourceManager.cmd=function(source){
 }
 SourceManager.discoverComponents=function(){
 
-	let createDOM=function(list){
-		list.forEach(function(item){
+	let createDOM=async function(list){
+		for(var i=0,l=list.length;i<l;i++){
 			let div = document.createElement('div')
 			div.className='resize-drag'
 			const stream = await navigator.mediaDevices.getUserMedia({
@@ -190,7 +190,6 @@ SourceManager.discoverComponents=function(){
 		      })
 		    ]
 		  })
-	}
 	
 	navigator.mediaDevices.enumerateDevices().then(createDOM,console.error)
 
