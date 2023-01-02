@@ -203,6 +203,11 @@ SVGScribble.init=function(){
 				//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
 			}else{
 				setPoint(e)
+				if(config.tool == 'commentator'){
+					paintArrowStart(arrow,config)
+					paintArrowEnd(arrow,config)
+				}
+
 			}
 			paintEnd(e,config)
 			
@@ -370,11 +375,6 @@ SVGScribble.init=function(){
 		
 	};
 	let paintEnd = function(e,config){
-			if(config.tool == 'commentator'){
-				paintArrowStart(arrow,config)
-				paintArrowEnd(arrow,config)
-			}
-		
 			// Remove current-item class from all elements, and give all SVG elements pointer-events
 			document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
 				item.style.pointerEvent = 'all';
