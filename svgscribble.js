@@ -77,7 +77,7 @@ SVGScribble.init=function(){
 		color : 'white',        // The currently selected colour
 		colorAlt : 'black',
 		strokeWidth: 4,         // The width of the lines we draw
-		configNormalisation: 2,// The average normalisation for pencil drawing
+		normalisation: 12,// The average normalisation for pencil drawing
 	}
 
 	var state = {
