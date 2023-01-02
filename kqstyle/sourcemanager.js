@@ -145,7 +145,7 @@ SourceManager.discoverComponents=function(){
 					}
 				  }
 			});
-			var video = document.querySelector('video');
+			var video = document.createElement('video');
 			appendTo(div,video)
 			appendTo(document.body,div);
 			video.srcObject = stream
