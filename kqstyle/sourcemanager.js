@@ -133,7 +133,7 @@ SourceManager.discoverComponents=function(){
 			console.log('resizing video')
 			child.style.width=`${width}px`
 			child.style.height=`${height}px`
-			child.style.transform = `translate(${x}px,${y}px)`
+			child.style.transform = `translate(${x}px, ${y}px)`
 		}
 		
 		interact(container)
@@ -157,7 +157,7 @@ SourceManager.discoverComponents=function(){
 			x += event.deltaRect.left
 			y += event.deltaRect.top
 
-			target.style.transform = `translate(${x}px,${y}px)`
+			target.style.transform = `translate(${x}px, ${y}px)`
 
 			target.setAttribute('data-x', x)
 			target.setAttribute('data-y', y)
@@ -187,7 +187,20 @@ SourceManager.discoverComponents=function(){
 		    inertia: true
 		  })
 		  .draggable({
-		    listeners: { move: window.dragMoveListener },
+		    listeners: { move: function(event){
+			  var target = event.target
+			  // keep the dragged position in the data-x/data-y attributes
+			  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+			  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+			  // translate the element
+			  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+			  // update the posiion attributes
+			  target.setAttribute('data-x', x)
+			  target.setAttribute('data-y', y)
+			    snapVideoToContainer(x,y,width,height)
+		} },
 		    inertia: true,
 		    modifiers: [
 		      interact.modifiers.restrictRect({
