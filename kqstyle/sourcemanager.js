@@ -130,7 +130,7 @@ SourceManager.discoverComponents=function(){
 	let createDOMSizer=function(container,child,width,height){
 		let aspectRatio = width/height;
 		function snapVideoToContainer(x,y,w,h){
-			console.log('resizing video')
+			console.log('resizing video');
 			(w!=null) && child.style.width=`${w}px`
 			(h!=null) && child.style.height=`${h}px`
 			(x!=null) && child.style.transform = `translate(${x}px, ${y}px)`
