@@ -148,10 +148,10 @@ SourceManager.discoverComponents=function(){
 			var y = (Math.floor(parseFloat(target.getAttribute('data-y'))) || 0)
 
 			// update the element's style
-			let w = Math.floor(event.rect.width) + 'px'
-			let h = Math.floor(event.rect.height) + 'px'
-			target.style.width=w;
-			target.style.height=h;
+			let w = Math.floor(event.rect.width)
+			let h = Math.floor(event.rect.height)
+			target.style.width=`${w}px`;
+			target.style.height=`${h}px`;
 			      
 			// translate when resizing from top or left edges
 			x += event.deltaRect.left
