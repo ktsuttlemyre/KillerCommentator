@@ -232,7 +232,7 @@ SourceManager.discoverComponents=function(){
 			let button = document.createElement('a')
 			button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 			var video = document.createElement('video');
-			
+			video.className='resize-drag-video'
 			video.addEventListener( "loadedmetadata", function (e) {
 				createDOMSizer(div,this,this.videoWidth,this.videoHeight)
 			}, false )
