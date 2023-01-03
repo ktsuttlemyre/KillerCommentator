@@ -8,6 +8,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		callArgs.push("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js")
 	}
 	callArgs.push(function(){
+		pp = plugin_platform();
 		inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
 		//platform plugin ready to use
 		include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",
