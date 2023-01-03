@@ -1,13 +1,17 @@
-window.KillerCommentator=(function(document,o,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
-	var base_site=o.base_site="https://ktsuttlemyre.github.io/KillerCommentator/"
+window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, appendTo, prependTo, ajax, domParse;
+	var base_site=KillerCommentator.base_site="https://ktsuttlemyre.github.io/KillerCommentator/"
 	//https://github.com/EvanHahn/ScriptInclude
-	var include=o.include=function(){function g(){var a=this.readyState;if(!a||/ded|te/.test(a))b--,!b&&e&&f()}var a=arguments,c=document,b=a.length,f=a[b-1],e=f.call;e&&b--;for(var d=0;d<b;d++)a=c.createElement("script"),a.src=arguments[d],a.async=!0,a.onload=a.onerror=a.onreadystatechange=g,(c.head||c.getElementsByTagName("head")[0]).appendChild(a)};
-	include("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js",
-		"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js",function(){
-		//platform plguin ready to use
+	var include=KillerCommentator.include=function(){function g(){var a=this.readyState;if(!a||/ded|te/.test(a))b--,!b&&e&&f()}var a=arguments,c=document,b=a.length,f=a[b-1],e=f.call;e&&b--;for(var d=0;d<b;d++)a=c.createElement("script"),a.src=arguments[d],a.async=!0,a.onload=a.onerror=a.onreadystatechange=g,(c.head||c.getElementsByTagName("head")[0]).appendChild(a)};
+	
+	let callArgs = ["https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"]
+	if(!pp){
+		callArgs.push("https://ktsuttlemyre.github.io/KillerCommentator/plugin_platform.js")
+	}
+	callArgs.push(function(){
+		inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
+		//platform plugin ready to use
 		include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",
 			"https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js",
-
 			base_site+"svgscribble.js",
 			base_site+"kqstyle/sourcemanager.js",
 			base_site+"speechcommands.js",function(){
@@ -22,7 +26,6 @@ window.KillerCommentator=(function(document,o,pp){let inject=pp.inject, appendTo
 					main()
 				});
 			});
-
 		})
 
 		//inject fontawesome
@@ -31,6 +34,9 @@ window.KillerCommentator=(function(document,o,pp){let inject=pp.inject, appendTo
 		//inject logo
 		appendTo('head',inject('link',{href:base_site+"logo/index.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
 	});
+
+	//this is the call for entry point where we set up base envrionment
+	include.apply(include,callArgs);
 	 
 	let startScribble=function(){
 		SVGScribble.init();
@@ -99,4 +105,5 @@ window.KillerCommentator=(function(document,o,pp){let inject=pp.inject, appendTo
 		// this function is used later in the resizing and gesture demos
 		window.dragMoveListener = dragMoveListener
 	}
+	return KillerCommentator.
 })(document,{},plugin_platform());
