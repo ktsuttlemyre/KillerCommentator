@@ -106,5 +106,5 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		// this function is used later in the resizing and gesture demos
 		window.dragMoveListener = dragMoveListener
 	}
-	return KillerCommentator.
+	return KillerCommentator
 })(document,{},(window.plugin_platform && window.plugin_platform()));
