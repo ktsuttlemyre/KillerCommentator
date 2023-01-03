@@ -69,7 +69,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				parent: [location.host,"kq.style","ktsuttlemyre.github.io"]
 				},options)
 			appendTo(document.body,inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},function(){
-				SourceManager.twitchPlayer = new Twitch.Player("media_stage", options);
+				SourceManager.twitchPlayer = new Twitch.Player("stage_main", options);
 				//twitchPlayer.setVolume(0.5);
 			}))
 		},
@@ -225,7 +225,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	SourceManager.load=function(source,stage,player){
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
-		stage=stage||SourceManager.stages.mediaStage;
+		stage=stage||SourceManager.stages.stage_main;
 		
 		stage.innerHTML = "";
 
@@ -242,9 +242,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		var tmp = source;
 		switch(source){
 			case "whiteboard":
-			return SourceManager.load(SourceManager.sources.urls.whiteboard,SourceManager.stages.mediaStage,SourceManager.players.iframe);	
+			return SourceManager.load(SourceManager.sources.urls.whiteboard,SourceManager.stages.stage_main,SourceManager.players.iframe);	
 			case "twitch":
-			return SourceManager.load(config.twitch,SourceManager.stages.mediaStage,SourceManager.players.twitch);
+			return SourceManager.load(config.twitch,SourceManager.stages.stage_main,SourceManager.players.twitch);
 			default:
 				//is it a whiteboard?
 				source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
