@@ -1,4 +1,4 @@
-let SourceManager=(function(){
+let SourceManager=(function(SourceManager){
 let config={
 	urls:{
 		challonge:['HCC_2022'],
@@ -14,7 +14,6 @@ generateId=function() {
 		return v.toString(16);
 })};
 
-SourceManager={}
 SourceManager.sources={
 	//https://challonge.com/module/instructions
 	urls:{
@@ -325,7 +324,7 @@ SourceManager.loadComponents=function(options){
 
 }
 	return SourceManager
-})();
+})({});
 
 //init
 appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
