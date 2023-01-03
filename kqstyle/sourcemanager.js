@@ -6,7 +6,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		twitch:{video:'1686476519'}
 	}
 
-	appendTo('head',inject('link',{href:base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
+	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
 
 	generateId=function() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
