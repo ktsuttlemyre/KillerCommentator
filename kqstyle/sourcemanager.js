@@ -484,7 +484,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	appendTo(document.body,inject('script',{src:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js", integrity:"sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN", crossorigin:"anonymous"},function(){
 		  // remote script has loaded
 	      }));
-	ajax("./templates/video_source_modal.tmpl",function(data){
+	ajax(KillerCommentator.base_site+"templates/video_source_modal.tmpl",function(data){
 		data=data.split(/\r?\n---/);
 		let modalSRC = data[0]
 		let itemSRC = data[1]
