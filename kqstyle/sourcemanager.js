@@ -203,11 +203,12 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		let stage = document.createElement('div');
 		stage.id=id;
 		stage.style.position='absolute'
-		stage.style.top=obj.x
-		stage.style.left=obj.y
-		stage.style.width=obj.w
-		stage.style.height=obj.h
-		stage.className='kc-stage'
+		Object.keys(obj).forEach(function(key){
+			//filter out secondary
+			if(key == 'secondary'){return}
+			stage.style[key]=obj[key]
+		})
+		stage.className+=' kc-stage'
 		
 		appendTo(document.body,stage)
 		SourceManager.stages[id]=stage;
