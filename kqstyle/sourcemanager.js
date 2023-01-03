@@ -74,12 +74,134 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			}))
 		},
 	}
+							  
+	!window.api && (window.api={});				  
+	!window.api.stages && (window.api.stages={
+		'stage_main':{
+			x:'0px',
+			y:'0px',
+			w:'1280px',
+			h:'720px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+		'stage_fullscreen':{
+			x:'0px',
+			y:'0px',
+			w:'100%',
+			h:'100%',
+		},
+		'stage_cam_team_blue':{
+			x:'0px',
+			y:'0px',
+			w:'426px',
+			h:'240px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+		'stage_cam_team_gold':{
+			x:'0px',
+			y:'0px',
+			w:'426px',
+			h:'240px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+		'stage_cam_commentator':{
+			x:'0px',
+			y:'0px',
+			w:'426px',
+			h:'240px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+		'stage_chat':{
+			x:'0px',
+			y:'0px',
+			w:'426px',
+			h:'240px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+		'stage_roster_blue':{
+			x:'0px',
+			y:'0px',
+			w:'426px',
+			h:'240px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+		'stage_roster_gold':{
+			x:'0px',
+			y:'0px',
+			w:'426px',
+			h:'240px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+		'stage_advert':{
+			x:'0px',
+			y:'0px',
+			w:'426px',
+			h:'240px',
+			secondary:{
+				x:'0px',
+				y:'0px',
+				w:'426px',
+				h:'240px',
+			},
+		},
+	});
+						
+	let stageParser=function(entry){
+		const [id, obj] = entry;
+		let stage = document.createElement('div');
+		stage.id=id;
+		stage.style.position='absolute'
+		stage.style.top=obj.x
+		stage.style.left=obj.y
+		stage.style.width=obj.w
+		stage.style.height=obj.h
+		stage.className='kc-stage'
+		
+		appendTo(document.body,stage)
+		SourceManager.stages[id]=stage;
+		if(obj.secondary}{
+			stageParser([`${id}_secondary`,obj.secondary])
+		}
+	}
+	Object.entries(window.api.stages).forEach(stageParser)
+							  
 	SourceManager.stages={}
-	let mediaStage = document.createElement('div')
-	mediaStage.style.width="100%";
-	mediaStage.style.height="100%";
-	SourceManager.stages.mediaStage=mediaStage;
-	appendTo(document.body,mediaStage)
+
 							  
 	SourceManager.load=function(source,stage,player){
 		if(!source){return}
