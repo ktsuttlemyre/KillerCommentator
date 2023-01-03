@@ -107,4 +107,4 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		window.dragMoveListener = dragMoveListener
 	}
 	return KillerCommentator.
-})(document,{},plugin_platform());
+})(document,{},(window.plugin_platform && plugin_platform()));
