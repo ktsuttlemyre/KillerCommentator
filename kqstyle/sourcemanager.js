@@ -212,7 +212,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		
 		appendTo(document.body,stage)
 		SourceManager.stages[id]=stage;
-		if(obj.secondary}{
+		if(obj.secondary){
 			stageParser([`${id}_secondary`,obj.secondary])
 		}
 	}
