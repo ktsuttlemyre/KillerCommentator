@@ -1,5 +1,5 @@
 window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
-	appendTo('head',inject('link',{href:"style.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
+	appendTo('head',inject('link',{href:KillerCommentator.base_site+"style.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
 	appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){
 		  // remote script has loaded
 	      }));
