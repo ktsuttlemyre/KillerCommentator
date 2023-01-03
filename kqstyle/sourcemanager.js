@@ -1,3 +1,4 @@
+let SourceManager=(function(){
 let config={
 	urls:{
 		challonge:['HCC_2022'],
@@ -323,6 +324,8 @@ SourceManager.loadComponents=function(options){
 
 
 }
+	return SourceManager
+})();
 
 //init
 appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
