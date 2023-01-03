@@ -74,9 +74,13 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			}))
 		},
 	}
-	SourceManager.stages={
-		mediaStage:document.getElementById('media_stage')
-	}
+	SourceManager.stages={}
+	let mediaStage = document.createElement('div')
+	mediaStage.style.width="100%";
+	mediaStage.style.height="100%";
+	SourceManager.stages.mediaStage=mediaStage;
+	appendTo(document.body,mediaStage)
+							  
 	SourceManager.load=function(source,stage,player){
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
