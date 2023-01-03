@@ -197,6 +197,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			},
 		},
 	});
+							  
+	SourceManager.stages={}
 						
 	let stageParser=function(entry){
 		const [id, obj] = entry;
@@ -217,8 +219,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		}
 	}
 	Object.entries(window.api.stages).forEach(stageParser)
-							  
-	SourceManager.stages={}
+	
 
 							  
 	SourceManager.load=function(source,stage,player){
