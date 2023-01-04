@@ -82,7 +82,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		'stage_main':{
 			top:'0px',
 			left:'0px',
-			width:'1590px',
+			width:'1540px',
 			height:'874px',
 			className:'',
 			secondary:{
