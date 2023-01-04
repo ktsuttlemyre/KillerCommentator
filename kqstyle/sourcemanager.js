@@ -365,93 +365,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		}
 	}
 	SourceManager.discoverComponents=function(){
-		let createDOMSizer=function(container,child,width,height){
-			let aspectRatio = width/height;
-			function snapVideoToContainer(x,y,w,h){
-				console.log('resizing video');
-				(w!=null) && (child.style.width=`${w}px`);
-				(h!=null) && (child.style.height=`${h}px`);
-				(x!=null) && (child.style.transform = `translate(${x}px, ${y}px)`);
-			}
-			
-			interact(container)
-			  .resizable({
-			    // resize from all edges and corners
-			    edges: { left: true, right: true, bottom: true, top: true },
-
-			    listeners: {
-			      move (event) {
-				var target = event.target
-				var x = (Math.floor(parseFloat(target.getAttribute('data-x'))) || 0)
-				var y = (Math.floor(parseFloat(target.getAttribute('data-y'))) || 0)
-
-				// update the element's style
-				let w = Math.floor(event.rect.width)
-				let h = Math.floor(event.rect.height)
-				target.style.width=`${w}px`;
-				target.style.height=`${h}px`;
-				      
-				// translate when resizing from top or left edges
-				x += event.deltaRect.left
-				y += event.deltaRect.top
-
-				target.style.transform = `translate(${x}px, ${y}px)`
-
-				target.setAttribute('data-x', x)
-				target.setAttribute('data-y', y)
-				      
-				snapVideoToContainer(x,y,w,h)
-			      }
-			    },
-			    modifiers: [
-				interact.modifiers.aspectRatio({
-					// make sure the width is always double the height
-					ratio: aspectRatio,
-					// also restrict the size by nesting another modifier
-				modifiers: [
-					//interact.modifiers.restrictSize({ max: 'parent' }),
-					// keep the edges inside the parent
-					interact.modifiers.restrictEdges({
-						outer: 'parent'
-					}),
-
-					// minimum size
-					let factor = 50/aspectRaio //dont go smaller than 50 pixels either width or height
-					let minWidth = width/factor
-					let minHeighgt = height/factor
-					
-					interact.modifiers.restrictSize({
-						min: { width: minWidth, height: minHeight }
-					})
-					],
-				}),
-			    ],
-			    inertia: true
-			  })
-			  .draggable({
-			    listeners: { move: function(event){
-				  var target = event.target
-				  // keep the dragged position in the data-x/data-y attributes
-				  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-				  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-
-				  // translate the element
-				  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
-
-				  // update the posiion attributes
-				  target.setAttribute('data-x', x)
-				  target.setAttribute('data-y', y)
-				  snapVideoToContainer(x,y)
-			} },
-			    inertia: true,
-			    modifiers: [
-			      interact.modifiers.restrictRect({
-				restriction: 'parent',
-				endOnly: true
-			      })
-			    ]
-			  })
-			}
 
 		let handleMediaQuery=async function(list){
 			for(var i=0,l=list.length;i<l;i++){
@@ -524,6 +437,93 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		
 		navigator.mediaDevices.enumerateDevices().then(handleMediaQuery,console.error)
 
+	}
+							  
+	SourceManager.draggableStage=function(container,child,width,height){
+			let aspectRatio = width/height;
+			function snapVideoToContainer(x,y,w,h){
+				console.log('resizing video');
+				(w!=null) && (child.style.width=`${w}px`);
+				(h!=null) && (child.style.height=`${h}px`);
+				(x!=null) && (child.style.transform = `translate(${x}px, ${y}px)`);
+			}
+			
+			// minimum size
+			let factor = 50/aspectRaio //dont go smaller than 50 pixels either width or height
+			let minWidth = width/factor
+			let minHeighgt = height/factor
+			interact(container)
+			  .resizable({
+			    // resize from all edges and corners
+			    edges: { left: true, right: true, bottom: true, top: true },
+
+			    listeners: {
+			      move (event) {
+				var target = event.target
+				var x = (Math.floor(parseFloat(target.getAttribute('data-x'))) || 0)
+				var y = (Math.floor(parseFloat(target.getAttribute('data-y'))) || 0)
+
+				// update the element's style
+				let w = Math.floor(event.rect.width)
+				let h = Math.floor(event.rect.height)
+				target.style.width=`${w}px`;
+				target.style.height=`${h}px`;
+				      
+				// translate when resizing from top or left edges
+				x += event.deltaRect.left
+				y += event.deltaRect.top
+
+				target.style.transform = `translate(${x}px, ${y}px)`
+
+				target.setAttribute('data-x', x)
+				target.setAttribute('data-y', y)
+				      
+				snapVideoToContainer(x,y,w,h)
+			      }
+			    },
+			    modifiers: [
+				interact.modifiers.aspectRatio({
+					// make sure the width is always double the height
+					ratio: aspectRatio,
+					// also restrict the size by nesting another modifier
+				modifiers: [
+					//interact.modifiers.restrictSize({ max: 'parent' }),
+					// keep the edges inside the parent
+					interact.modifiers.restrictEdges({
+						outer: 'parent'
+					}),
+					interact.modifiers.restrictSize({
+						min: { width: minWidth, height: minHeight }
+					})
+					],
+				}),
+			    ],
+			    inertia: true
+			  })
+			  .draggable({
+			    listeners: { move: function(event){
+				  var target = event.target
+				  // keep the dragged position in the data-x/data-y attributes
+				  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+				  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+				  // translate the element
+				  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+				  // update the posiion attributes
+				  target.setAttribute('data-x', x)
+				  target.setAttribute('data-y', y)
+				  snapVideoToContainer(x,y)
+			} },
+			    inertia: true,
+			    modifiers: [
+			      interact.modifiers.restrictRect({
+				restriction: 'parent',
+				endOnly: true
+			      })
+			    ]
+			  })
+			}
 	}
 	SourceManager.loadComponents=function(options){
 
