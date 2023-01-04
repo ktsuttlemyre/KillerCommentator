@@ -60,7 +60,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 			entries.forEach(function(entry,index){
 				const [id, data] = entry;
 				let elem=data.elem;
-				if(id.startsWith('stage_fullscreen'){return}
+				if(id.startsWith('stage_fullscreen')){return}
 				elem.style.background=selectColor(index,.5)
 				if(data.secondary){
 					elem = document.getElementById(id+"_secondary")
