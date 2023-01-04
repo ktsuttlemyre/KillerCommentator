@@ -24,7 +24,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			challonge:function(){
 				let arg = arguments[0]||config.urls.challonge[0];
 				return `https://challonge.com/${arg}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
-			}
+			},
+			chat:'https://nightdev.com/hosted/obschat/?theme=dark&channel=kqsfl&fade=false&bot_activity=false&prevent_clipping=false'
+			
 		},
 		whiteboards: {
 			kqday:{
@@ -99,8 +101,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			className:'',
 		},
 		'stage_cam_team_blue':{
-			top:'587px',
-			left:'140px',
+			top:'881px',
+			left:'1208px',
 			width:'426px',
 			height:'240px',
 			className:'',
@@ -113,8 +115,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			},
 		},
 		'stage_cam_team_gold':{
-			top:'586px',
-			left:'934px',
+			top:'881px',
+			left:'5px',
 			width:'426px',
 			height:'240px',
 			className:'',
@@ -183,7 +185,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			},
 		},
 		'stage_chat':{
-			top:'800px',
+			top:'883px',
 			left:'1580px',
 			width:'335px',
 			height:'180px',
