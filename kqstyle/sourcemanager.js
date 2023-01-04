@@ -281,8 +281,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			kqstyle_viewport.style.top=0 //oY*yAspect+"px"
 			kqstyle_viewport.style.left=offsetX+"px"
 
-			
-			########################
+
 			Object.entries(SourceManager.stagesData).forEach(function(entry){
 				const [id, data] = entry;
 				let elem=data.elem;
@@ -298,9 +297,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			    style.top=offsetY+"px"
 			    style.left=offsetX+"px"
 			})
-			#########################
-			
-			
+
 			
 		//alert(`${canvas1.width} ${canvas1.height} ${aspect}`)
 		})
