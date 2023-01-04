@@ -199,26 +199,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	});
 							  
 	SourceManager.stages={}
-						
-	let stageParser=function(entry){
-		const [id, obj] = entry;
-		let stage = document.createElement('div');
-		stage.id=id;
-		stage.style.position='absolute'
-		Object.keys(obj).forEach(function(key){
-			//filter out secondary
-			if(key == 'secondary'){return}
-			stage.style[key]=obj[key]
-		})
-		stage.className+=' kc-stage'
-		
-		appendTo(document.body,stage)
-		SourceManager.stages[id]=stage;
-		if(obj.secondary){
-			stageParser([`${id}_secondary`,obj.secondary])
-		}
-	}
-	Object.entries(window.api.stages).forEach(stageParser)
+	SourceManager.stagesData={}
+				
+
 	
 	initStages=function(){
 		//takeawy srollbars cause fuck those!
@@ -250,7 +233,33 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		st.width=st.height='100%'
 		st.padding=st.margin='0'
 	    }
+		
 
+		//attach all the stages to the kqstyle-viewport-body
+		let stageParser=function(entry){
+			const [id, obj] = entry;
+			let stage = document.createElement('div');
+			stage.id=id;
+			stage.style.position='absolute'
+			Object.keys(obj).forEach(function(key){
+				//filter out secondary
+				if(key == 'secondary'){return}
+				stage.style[key]=obj[key]
+			})
+			stage.className+=' kc-stage'
+
+			appendTo(inner,stage)
+			SourceManager.stages[id]=stage;
+			obj.elem=stage
+			SourceManager.stagesData[id]=obj
+
+			if(obj.secondary){
+				stageParser([`${id}_secondary`,obj.secondary])
+			}
+		}
+		Object.entries(window.api.stages).forEach(stageParser)
+
+		//resize all stages with the window resize action
 		window.addEventListener('resize',function(){
 		    let kqStyleHeight=1080
 		    let kqStyleWidth=1920
@@ -271,7 +280,28 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			kqstyle_viewport.style.height=newHeight+"px"
 			kqstyle_viewport.style.top=0 //oY*yAspect+"px"
 			kqstyle_viewport.style.left=offsetX+"px"
-			window.resizeKqStyleChildren && resizeKqStyleChildren(ratioWidth,ratioHeight,ratioAspect)
+
+			
+			########################
+			Object.entries(SourceManager.stagesData).forEach(function(entry){
+				const [id, data] = entry;
+				let elem=data.elem;
+
+			    var newWidth    = data.width / ratioHeight,
+				newHeight   = data.height / ratioHeight;
+			    var offsetX     = data.top / ratioHeight,
+				offsetY     = data.left / ratioHeight;
+				
+			    let style=elem.style;
+			    style.width=newWidth+"px"
+			    style.height=newHeight+"px"
+			    style.top=offsetY+"px"
+			    style.left=offsetX+"px"
+			})
+			#########################
+			
+			
+			
 		//alert(`${canvas1.width} ${canvas1.height} ${aspect}`)
 		})
 		window.dispatchEvent(new Event('resize'));
