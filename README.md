@@ -2,7 +2,7 @@ How to use:
 Install bookmarlket
 Create a bookmark in your browser with the following code
 ```
-javascript:(function(b){var a=b.createElement("script");a.type="text/javascript";a.async=!0;a.onload=function(){};a.src="https://ktsuttlemyre.github.io/KillerCommentator/killer-commentator.js";b.getElementsByTagName("head")[0].appendChild(a)})(document);
+javascript:(function(b,a,d,c){b.getElementsByTagName(a);if(b.getElementById(d))return eval("KillerCommentator."+prompt("send a kc command")),0;a=b.createElement(a);c&&(a.onload=c);a.src="https://ktsuttlemyre.github.io/KillerCommentator/killer-commentator.js";b.getElementsByTagName("head")[0].appendChild(a)})(document,"script","killer-commentator",function(b){return console.log("loaded kc")});
 ```
 
 Go to https://kq.style/bigoverlay/sfl/glitch/ or any other kq.style website
