@@ -6,7 +6,7 @@
 (function(d, s, id, cb){
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)){ eval('KillerCommentator.'+prompt('send a kc command')); return 0 }
-    js = d.createElement(s);
+    js = d.createElement(s); js.id=id;
     if(cb){js.onload = cb;};
     js.src = "https://ktsuttlemyre.github.io/KillerCommentator/killer-commentator.js";
     d.getElementsByTagName('head')[0].appendChild(js);
