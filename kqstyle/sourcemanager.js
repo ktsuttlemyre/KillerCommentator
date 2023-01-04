@@ -201,14 +201,52 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	SourceManager.stages={}
 	SourceManager.stagesData={}
 				
+	SourceManager.resize=function(e){
+		let kqStyleHeight=1080
+		let kqStyleWidth=1920
 
-	
-	initStages=function(){
+		var ctxWidth    = window.innerWidth,
+		    ctxHeight   = window.innerHeight;
+		var imgWidth    = kqStyleWidth,
+		    imgHeight   = kqStyleHeight;
+		var ratioWidth  = imgWidth  / ctxWidth,
+		    ratioHeight = imgHeight / ctxHeight,
+		    ratioAspect = Math.max(ratioWidth,ratioHeight);
+		var newWidth    = imgWidth / ratioHeight,
+		    newHeight   = imgHeight / ratioHeight;
+		 var offsetX     = (ctxWidth /2 ) - (newWidth/2 ),
+		    offsetY     = (ctxHeight /2) - (newHeight /2);
+
+		kqstyle_viewport.style.width=newWidth+"px"
+		kqstyle_viewport.style.height=newHeight+"px"
+		kqstyle_viewport.style.top=0 //oY*yAspect+"px"
+		kqstyle_viewport.style.left=offsetX+"px"
+
+
+		Object.entries(SourceManager.stagesData).forEach(function(entry){
+			const [id, data] = entry;
+			let elem=data.elem;
+			if(id=="stage_fullscreen"){return}
+
+		    var newWidth    = parseFloat(data.width) / ratioHeight,
+			newHeight   = parseFloat(data.height) / ratioHeight;
+		    var offsetX     = parseFloat(data.top) / ratioHeight,
+			offsetY     = parseFloat(data.left) / ratioHeight;
+
+		    let style=elem.style;
+		    style.width=newWidth+"px"
+		    style.height=newHeight+"px"
+		    style.top=offsetY+"px"
+		    style.left=offsetX+"px"
+		})
+	}
+	let kqstyle_viewport;
+	let initStages=function(){
 		//takeawy srollbars cause fuck those!
 		document.body.style.overflow="hidden"
 		
 	    let id="kqstyle-viewport"
-	    let kqstyle_viewport=document.getElementById(id)
+	    kqstyle_viewport=document.getElementById(id)
 	    if(!kqstyle_viewport){
 		kqstyle_viewport=document.createElement('div');
 		document.body.appendChild(kqstyle_viewport)
@@ -258,49 +296,19 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			}
 		}
 		Object.entries(window.api.stages).forEach(stageParser)
-
+		let resizeDebounceTimer;
 		//resize all stages with the window resize action
 		window.addEventListener('resize',function(){
-		    let kqStyleHeight=1080
-		    let kqStyleWidth=1920
+			// If there's a timer, cancel it
+			if (resizeDebounceTimer) {
+				window.cancelAnimationFrame(resizeDebounceTimer);
+			}
 
-			var ctxWidth    = window.innerWidth,
-			    ctxHeight   = window.innerHeight;
-			var imgWidth    = kqStyleWidth,
-			    imgHeight   = kqStyleHeight;
-			var ratioWidth  = imgWidth  / ctxWidth,
-			    ratioHeight = imgHeight / ctxHeight,
-			    ratioAspect = Math.max(ratioWidth,ratioHeight);
-			var newWidth    = imgWidth / ratioHeight,
-			    newHeight   = imgHeight / ratioHeight;
-			 var offsetX     = (ctxWidth /2 ) - (newWidth/2 ),
-			    offsetY     = (ctxHeight /2) - (newHeight /2);
-
-			kqstyle_viewport.style.width=newWidth+"px"
-			kqstyle_viewport.style.height=newHeight+"px"
-			kqstyle_viewport.style.top=0 //oY*yAspect+"px"
-			kqstyle_viewport.style.left=offsetX+"px"
-
-
-			Object.entries(SourceManager.stagesData).forEach(function(entry){
-				const [id, data] = entry;
-				let elem=data.elem;
-				if(id=="stage_fullscreen"){return}
-
-			    var newWidth    = data.width / ratioHeight,
-				newHeight   = data.height / ratioHeight;
-			    var offsetX     = data.top / ratioHeight,
-				offsetY     = data.left / ratioHeight;
-				
-			    let style=elem.style;
-			    style.width=newWidth+"px"
-			    style.height=newHeight+"px"
-			    style.top=offsetY+"px"
-			    style.left=offsetX+"px"
-			})
-
-			
-		//alert(`${canvas1.width} ${canvas1.height} ${aspect}`)
+		    	// Setup the new requestAnimationFrame()
+			resizeDebounceTimer = window.requestAnimationFrame(function () {
+				//debounced call
+				SourceManager.resize()
+			});
 		})
 		window.dispatchEvent(new Event('resize'));
 	}
