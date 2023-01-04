@@ -230,8 +230,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 
 		    var newWidth    = parseFloat(data.width) / ratioHeight,
 			newHeight   = parseFloat(data.height) / ratioHeight;
-		    var offsetX     = parseFloat(data.top) / ratioHeight,
-			offsetY     = parseFloat(data.left) / ratioHeight;
+		    var offsetX     = parseFloat(data.left) / ratioHeight,
+			offsetY     = parseFloat(data.top) / ratioHeight;
 
 		    let style=elem.style;
 		    style.width=newWidth+"px"
