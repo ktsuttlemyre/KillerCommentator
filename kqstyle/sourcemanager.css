@@ -28,12 +28,9 @@
 }
 
 .kc-stage {
-			position:absolute;
+      position:absolute;
       border:0;
       padding:0;
 }
-.debug .kc-stage {
-  background:blue;
-  opacity:50%
-}
+
 
