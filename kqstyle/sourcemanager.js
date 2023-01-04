@@ -276,7 +276,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			const [id, obj] = entry;
 			let stage = document.createElement('div');
 			stage.id=id;
-			stage.style.position='absolute'
 			Object.keys(obj).forEach(function(key){
 				//filter out secondary
 				if(key == 'secondary'){return}
