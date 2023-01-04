@@ -3,7 +3,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		urls:{
 			challonge:['HCC_2022'],
 		},
-		twitch:{video:'1686476519'}
+		twitch:{
+			//video:'1686476519'
+			channel:'kqsfl'
+		}
 	}
 
 	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
