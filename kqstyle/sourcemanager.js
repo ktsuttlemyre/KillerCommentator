@@ -59,14 +59,14 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			ifrm.setAttribute("is","x-frame-bypass") //https://github.com/niutech/x-frame-bypass
 			ifrm.allowtransparency="true"
 			ifrm.style.width = "100%";
-			ifrm.style.height = "80%";
+			ifrm.style.height = "100%";
 			ifrm.frameBorder = "0";
 			return ifrm;
 		},
 		twitch:function(options){
 			options=Object.assign({
 				width: "100%",
-				height: "80%",
+				height: "100%",
 				// only needed if your site is also embedded on embed.example.com and othersite.example.com
 				parent: [location.host,"kq.style","ktsuttlemyre.github.io"]
 				},options)
