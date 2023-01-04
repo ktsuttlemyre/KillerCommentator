@@ -31,10 +31,12 @@
       position:absolute;
       border:0;
       padding:0;
-  pointer-events:none;
 }
 
-.debug .kc-stage {
+.kqstyle-viewport {
+  pointer-events:none;
+}
+.debug .kqstyle-viewport {
    pointer-events:all;
 }
 
