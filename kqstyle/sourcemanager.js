@@ -220,7 +220,63 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	}
 	Object.entries(window.api.stages).forEach(stageParser)
 	
+	initStages=function(){
+		//takeawy srollbars cause fuck those!
+		document.body.style.overflow="hidden"
+		
+	    let id="kqstyle-viewport"
+	    let kqstyle_viewport=document.getElementById(id)
+	    if(!kqstyle_viewport){
+		kqstyle_viewport=document.createElement('div');
+		document.body.appendChild(kqstyle_viewport)
+		kqstyle_viewport.id=id
 
+		let s=kqstyle_viewport.style
+		s.position='absolute'
+		s.background="red"
+		s.opacity="50%"
+		s.border=s.padding="0"
+	    }
+
+	    let id2="kqstyle-viewport-body"
+	    let inner = document.getElementById('')
+	    let kqstyle_viewport=document.getElementById(id2)
+	    if(!kqstyle_viewport){
+		kqstyle_viewport=document.createElement('div');
+		kqstyle_viewport.appendChild(inner)
+		inner.id=id2
+		let st=inner.style
+		st.position="relative"
+		st.top=st.bottom=st.left=st.right="0"
+		st.width=st.height='100%'
+		st.padding=st.margin='0'
+	    }
+
+		window.addEventListener('resize',function(){
+		    let kqStyleHeight=1080
+		    let kqStyleWidth=1920
+
+			var ctxWidth    = window.innerWidth,
+			    ctxHeight   = window.innerHeight;
+			var imgWidth    = kqStyleWidth,
+			    imgHeight   = kqStyleHeight;
+			var ratioWidth  = imgWidth  / ctxWidth,
+			    ratioHeight = imgHeight / ctxHeight,
+			    ratioAspect = Math.max(ratioWidth,ratioHeight);
+			var newWidth    = imgWidth / ratioHeight,
+			    newHeight   = imgHeight / ratioHeight;
+			 var offsetX     = (ctxWidth /2 ) - (newWidth/2 ),
+			    offsetY     = (ctxHeight /2) - (newHeight /2);
+
+			kqstyle_viewport.style.width=newWidth+"px"
+			kqstyle_viewport.style.height=newHeight+"px"
+			kqstyle_viewport.style.top=0 //oY*yAspect+"px"
+			kqstyle_viewport.style.left=offsetX+"px"
+			window.resizeKqStyleChildren && resizeKqStyleChildren(ratioWidth,ratioHeight,ratioAspect)
+		//alert(`${canvas1.width} ${canvas1.height} ${aspect}`)
+		})
+		window.dispatchEvent(new Event('resize'));
+	}
 							  
 	SourceManager.load=function(source,stage,player){
 		if(!source){return}
@@ -473,6 +529,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	//init
 	appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
 		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
+			initStages()
 			SourceManager.cmd("twitch")
 		}));
 	}));
