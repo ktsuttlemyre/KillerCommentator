@@ -413,8 +413,12 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 					}),
 
 					// minimum size
+					let factor = 50/aspectRaio //dont go smaller than 50 pixels either width or height
+					let minWidth = width/factor
+					let minHeighgt = height/factor
+					
 					interact.modifiers.restrictSize({
-						min: { width: width/10, height: height/10 }
+						min: { width: minWidth, height: minHeight }
 					})
 					],
 				}),
@@ -450,6 +454,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			for(var i=0,l=list.length;i<l;i++){
 				let item=list[i]
 				console.log(item)
+				//dont duplicate inputs
+				if(document.getElementById(item.id)){
+					return
+				}
 				if(item.kind!='videoinput'){
 					continue
 				}
@@ -481,6 +489,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				let button = document.createElement('a')
 				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 				var video = document.createElement('video');
+				id = `device-${item-id}`
 				video.className='resize-drag-video'
 				video.addEventListener( "loadedmetadata", function (e) {
 					createDOMSizer(div,this,this.videoWidth,this.videoHeight)
