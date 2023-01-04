@@ -52,6 +52,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		return `hsl(${hue},50%,75%)`;
 	}						  
 	KillerCommentator.debug=function(type){
+		document.body.className+=' debug'
 		if(!type || type == 'stage'){
 			let kqstyle = document.getElementById('kqstyle-viewport')
 			kqstyle.style.background=`rgba(255,255,255,.5)`
