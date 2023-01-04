@@ -27,4 +27,13 @@
   left:0;
 }
 
+.kc-stage {
+			position:absolute;
+      border:0;
+      padding:0;
+}
+.debug .kc-stage {
+  background:blue;
+  opacity:50%
+}
 
