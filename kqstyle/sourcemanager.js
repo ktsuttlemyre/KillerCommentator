@@ -239,11 +239,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	    }
 
 	    let id2="kqstyle-viewport-body"
-	    let inner = document.getElementById('')
-	    let kqstyle_viewport=document.getElementById(id2)
-	    if(!kqstyle_viewport){
-		kqstyle_viewport=document.createElement('div');
-		kqstyle_viewport.appendChild(inner)
+	    let inner=document.getElementById(id2)
+	    if(!inner){
+		inner=document.createElement('div');
+		inner.appendChild(inner)
 		inner.id=id2
 		let st=inner.style
 		st.position="relative"
