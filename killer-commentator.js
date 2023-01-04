@@ -44,6 +44,28 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		SVGScribble.toggle();
 	}
 
+	function selectColor(number) {
+		const hue = number * 137.508; // use golden angle approximation
+		return `hsl(${hue},50%,75%)`;
+	}						  
+	KillerCommentator.debug=function(type){
+		if(type == 'stage'){
+			let entries = Object.entries(SourceManager.stagesData)
+			entries.forEach(function(entry,index){
+				const [id, data] = entry;
+				let elem=data.elem;
+				elem.style.background=selectColor(index)
+				if(data.secondary){
+					elem = document.getElementById(id+"_secondary")
+					elem.style.background=selectColor(index)
+					elem.innerHTML="secondary"
+				}
+			})
+		}
+		
+	}
+
+
 	let main = function(){
 		//add speech commands 
 		interact('.killer-commentator')
