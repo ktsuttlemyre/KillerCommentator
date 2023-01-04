@@ -285,6 +285,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			Object.entries(SourceManager.stagesData).forEach(function(entry){
 				const [id, data] = entry;
 				let elem=data.elem;
+				if(id=="stage_fullscreen"){return}
 
 			    var newWidth    = data.width / ratioHeight,
 				newHeight   = data.height / ratioHeight;
