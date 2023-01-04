@@ -31,6 +31,10 @@
       position:absolute;
       border:0;
       padding:0;
+  pointer-events:none;
 }
 
+.debug .kc-stage {
+   pointer-events:all;
+}
 
