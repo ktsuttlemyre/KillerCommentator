@@ -254,8 +254,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 
 		let s=kqstyle_viewport.style
 		s.position='absolute'
-		s.background="red"
-		s.opacity="50%"
 		s.border=s.padding="0"
 	    }
 
