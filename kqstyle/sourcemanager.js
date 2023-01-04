@@ -82,7 +82,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		'stage_main':{
 			top:'0px',
 			left:'0px',
-			width:'1600px',
+			width:'1590px',
 			height:'874px',
 			className:'',
 			secondary:{
@@ -103,7 +103,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		'stage_cam_team_blue':{
 			top:'881px',
 			left:'5px',
-			width:'347px',
+			width:'348px',
 			height:'193px',
 			className:'',
 			secondary:{
@@ -117,8 +117,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		'stage_cam_team_gold':{
 			top:'881px',
 			left:'1208px',
-			width:'347px',
-			height:'343px',
+			width:'348px',
+			height:'193px',
 			className:'',
 			secondary:{
 				top:'0px',
