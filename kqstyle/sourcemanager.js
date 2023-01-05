@@ -382,8 +382,11 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		
 		let list;
 		try{
-			list = navigator.mediaDevices.enumerateDevices();
+			list = await navigator.mediaDevices.enumerateDevices();
 		}catch(e){console.error(e)}
+		if(!list || !list.length){
+			alert('no devices found')
+		}
 		
 		for(var i=0,l=list.lenght;i<l;i++){
 			let item = list[i]
