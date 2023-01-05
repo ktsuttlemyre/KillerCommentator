@@ -72,6 +72,26 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		}
 		
 	}
+	
+	let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')
+	var ctx = canvas.getContext('2d');
+	function isTransparent(x, y) { // x, y coordinate of pixel
+		// returns true if pixel is fully transparent
+	    return ctx.getImageData(x, y, 1, 1).data[3] === 0; // 4th byte is alpha
+	}
+	let gameStarted=false
+	setInterval(function(){
+		if(isTransparent(100,100)!=gameStarted){
+			if(gameStarted){
+				//game was started now its off
+				console.log('stats screen showing')
+			}else{
+				//game was off now started
+				console.log('game started')
+			}
+			gameStarted=!gameStarted
+		}
+	},7500)
 
 
 	let main = function(){
