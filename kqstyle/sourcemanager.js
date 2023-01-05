@@ -467,7 +467,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			// minimum size
 			let factor = 50/aspectRatio //dont go smaller than 50 pixels either width or height
 			let minWidth = width/factor
-			let minHeighgt = height/factor
+			let minHeight = height/factor
 			interact(container)
 			  .resizable({
 			    // resize from all edges and corners
