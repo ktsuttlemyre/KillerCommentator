@@ -384,11 +384,11 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 					  video: {
 						width: {
 							ideal: 1920,
-							max: 2560,
+//							max: 2560,
 						},
 						height: {
 							ideal: 1080,
-							max: 1440
+//							max: 1440
 						},
 						deviceId: {
 							exact:  item.deviceId
