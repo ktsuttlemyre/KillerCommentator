@@ -385,7 +385,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			list = navigator.mediaDevices.enumerateDevices();
 		}catch(e){console.error(e)}
 		
-		list.forEach(function(item){
+		for(var i=0,l=list.lenght;i<l;i++){
+			let item = list[i]
 			console.log('found item',item)
 			
 			//dont duplicate inputs
@@ -447,11 +448,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 
 				    });
 				}
-			}
-
-
-			
-		})
+			}	
+		}
 	}
 							  
 	SourceManager.draggableStage=function(container,child,width,height){
