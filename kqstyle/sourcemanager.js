@@ -424,7 +424,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				let button = document.createElement('a')
 				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 				var video = document.createElement('video');
-				video.id = `device-${item-id}`
+				video.id = `device-${item.id}`
 				video.className='resize-drag-video'
 				video.addEventListener( "loadedmetadata", function (e) {
 					SourceManager.draggableStage(div,this,this.videoWidth,this.videoHeight)
