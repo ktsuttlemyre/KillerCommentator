@@ -463,7 +463,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	}
 	
 	SourceManager.autoCroppingCraft=function(container,child,aspectRatio){
-
+		container.appendChild(child)
+		return craft(container,aspectRatio)
 	}
 					  
 	SourceManager.draggableCraft=function(container,child,aspectRatio){
