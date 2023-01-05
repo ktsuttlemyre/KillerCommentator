@@ -364,40 +364,55 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			return SourceManager.load(source)
 		}
 	}
-	SourceManager.discoverComponents=function(){
-
-		let handleMediaQuery=async function(list){
-			for(var i=0,l=list.length;i<l;i++){
-				let item=list[i]
-				console.log(item)
-				//dont duplicate inputs
-				if(document.getElementById(`device-${item.id}`)){
-					return
-				}
-				if(item.kind!='videoinput'){
-					continue
-				}
-				
+	SourceManager.discoverComponents=async function(constraints){
+		constraints = Object.assign({},constraints)
+		if (!'mediaDevices' in navigator && !navigator.mediaDevices.getUserMedia){
+			alert('this broswer doesn\'t have access to navigator.medaDevices api')
+			return
+		}
+		
+		let stream;
+		try{
+			stream = await navigator.mediaDevices.getUserMedia({
+				video:true,
+				audio:true
+			});
+		}catch(e){console.error(e)}
+		if(!stream){alert('Please accept the security prompt')}
+		
+		let list;
+		try{
+			list = navigator.mediaDevices.enumerateDevices();
+		}catch(e){console.error(e)}
+		
+		list.forEach(function(item){
+			console.log('found item',item)
+			
+			//dont duplicate inputs
+			if(document.getElementById(`device-${item.id}`)){
+				return
+			}
+			if(item.kind=='videoinput'){
 				let stream = null;
 				try{
-					stream = await navigator.mediaDevices.getUserMedia({
+					stream = await navigator.mediaDevices.getUserMedia(Object.assign({
 					  video: {
-						width: {
-							ideal: 1920,
-//							max: 2560,
-						},
-						height: {
-							ideal: 1080,
-//							max: 1440
-						},
+// 						width: {
+// 							ideal: 1920,
+// 		//							max: 2560,
+// 						},
+// 						height: {
+// 							ideal: 1080,
+// 		//							max: 1440
+// 						},
 						deviceId: {
 							exact:  item.deviceId
 						}
 					  }
-					});
+					},constraints));
 				}catch(e){console.error(e)}
 				if(!stream){continue}
-				
+
 				let div = document.createElement('div')
 				div.className='resize-drag'
 				let id = generateId()
@@ -410,17 +425,17 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				video.addEventListener( "loadedmetadata", function (e) {
 					createDOMSizer(div,this,this.videoWidth,this.videoHeight)
 				}, false )
-				
+
 				button.onclick=function(){video.play();button.parentNode.removeChild(button)}
 				prependTo(document.body,video)
 				prependTo(div,button)
 				prependTo(document.body,div);
-				
-				
+
+
 				video.srcObject = stream
 				//video.autoplay=true
 				video.playsinline=true
-				
+
 				let promise = video.play();
 				if (promise !== undefined) {
 				    promise.then(_ => {
@@ -433,10 +448,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				    });
 				}
 			}
-		}
-		
-		navigator.mediaDevices.enumerateDevices().then(handleMediaQuery,console.error)
 
+
+			
+		})
 	}
 							  
 	SourceManager.draggableStage=function(container,child,width,height){
