@@ -427,7 +427,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				video.id = `device-${item-id}`
 				video.className='resize-drag-video'
 				video.addEventListener( "loadedmetadata", function (e) {
-					createDOMSizer(div,this,this.videoWidth,this.videoHeight)
+					SourceManager.draggableStage(div,this,this.videoWidth,this.videoHeight)
 				}, false )
 
 				button.onclick=function(){video.play();button.parentNode.removeChild(button)}
