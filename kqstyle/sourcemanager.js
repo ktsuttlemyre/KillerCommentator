@@ -417,6 +417,13 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				}catch(e){console.error(e)}
 				if(!stream){continue}
 
+				//quick note about archeteture design
+				// stages are designate parking spaces for crafts
+				// crafts have not children and crafts do not attach to stages via document.node interactions
+				// the just hover over via css translation(x,y) and style.width style.height
+				// craft_cropping_viewport is the viewport that will ensure video stays within stage bounds
+				// video attaches to craft_cropping_viewport only and is centered via flexbox
+
 				let div = document.createElement('div')
 				div.className='resize-drag'
 				let id = generateId()
@@ -427,7 +434,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				video.id = `device-${item.id}`
 				video.className='resize-drag-video'
 				video.addEventListener( "loadedmetadata", function (e) {
-					SourceManager.draggableStage(div,this,this.videoWidth,this.videoHeight)
+					SourceManager.draggableCraft(div,this,this.videoWidth/this.videoHeight)
 				}, false )
 
 				button.onclick=function(){video.play();button.parentNode.removeChild(button)}
@@ -454,9 +461,13 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			}	
 		}
 	}
-							  
-	SourceManager.draggableStage=function(container,child,width,height){
-			let aspectRatio = width/height;
+	
+	SourceManager.autoCroppingCraft=function(container,child,aspectRatio){
+
+	}
+					  
+	SourceManager.draggableCraft=function(container,child,aspectRatio){
+			//let aspectRatio = width/height;
 			function snapVideoToContainer(x,y,w,h){
 				console.log('resizing video');
 				(w!=null) && (child.style.width=`${w}px`);
@@ -465,9 +476,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			}
 			
 			// minimum size
-			let factor = 50/aspectRatio //dont go smaller than 50 pixels either width or height
-			let minWidth = width/factor
-			let minHeight = height/factor
+			// let factor = 50/aspectRatio //dont go smaller than 50 pixels either width or height
+			// let minWidth = width/factor
+			// let minHeight = height/factor
 			interact(container)
 			  .resizable({
 			    // resize from all edges and corners
@@ -509,7 +520,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 						outer: 'parent'
 					}),
 					interact.modifiers.restrictSize({
-						min: { width: minWidth, height: minHeight }
+						min: { width: 50, height: 50 }
 					})
 					],
 				}),
@@ -540,52 +551,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			    ]
 			  })
 			}
-	SourceManager.loadComponents=function(options){
-
-		var constraints = {
-		  audio: true,
-		  video: {
-		    width: { ideal: 800 },
-		    height: { ideal: 600 }
-		  }
-		};
-
-		let game_stage = document.createElement("video", { id: "game_stage", autoplay:true, playsinline:true, width:"900px", height:"550px"});
-		game_stage.style.position="absolute"
-		game_stage.style.top=0
-		game_stage.style.left=0
-		game_stage.autoplay=true
-		game_stage.playsinline=true
-		document.body.insertBefore(game_stage, document.body.firstChild);
-
-		let cam1 = document.createElement("video", { id: "cam1", autoplay:true, playsinline:true, width:"900px", height:"550px"});
-		cam1.style.position="absolute"
-		cam1.style.bottom=0
-		cam1.style.left=0
-		cam1.autoplay=true
-		cam1.playsinline=true
-		document.body.appendChild(cam1);
-
-
-		function attachSourceToStream(elem){
-			function handleError(error) {
-			  console.log('getUserMedia error: ', error);
-			}
-
-			function handleSuccess(stream) {
-				window.stream = stream; // only to make stream available to console
-				elem.srcObject = stream;
-			}
-
-			navigator.mediaDevices.getUserMedia(constraints).
-			  then(handleSuccess).catch(handleError);
-		}
-		attachSourceToStream(game_stage)
-		attachSourceToStream(cam1)
-
-
-	}
-
 
 	//init
 	appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
