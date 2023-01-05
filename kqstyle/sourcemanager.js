@@ -388,7 +388,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			alert('no devices found')
 		}
 		
-		for(var i=0,l=list.lenght;i<l;i++){
+		for(var i=0,l=list.length;i<l;i++){
 			let item = list[i]
 			console.log('found item',item)
 			
