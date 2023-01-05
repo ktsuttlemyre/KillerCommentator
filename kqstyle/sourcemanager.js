@@ -524,7 +524,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			    ]
 			  })
 			}
-	}
 	SourceManager.loadComponents=function(options){
 
 		var constraints = {
