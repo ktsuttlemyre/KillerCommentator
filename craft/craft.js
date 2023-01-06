@@ -120,8 +120,8 @@ let craft = function(target){
     })  .gesturable({
       listeners: {
         start:function(event){
-          currentWidth=parseFloat(mediaElem.style.width)||0
-          currentHeight=parseFloat(mediaElem.style.height)||0
+          currentWidth=parseFloat(mediaElem.style.width)||mediaElem.videoWidth||0
+          currentHeight=parseFloat(mediaElem.style.height)||mediaElem.videoHeight||0
           
           if((isNaN(currentWidth)||
              currentWidth==''||
@@ -132,7 +132,7 @@ let craft = function(target){
              currentHeight==''||
              currentHeight==null||
              parseFloat(currentHeight<=0))){
-             currentWidth=0
+             currentWidth=300
              }
           
           initGestDist=event.distance
