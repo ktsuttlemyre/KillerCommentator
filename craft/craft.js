@@ -156,7 +156,8 @@ let craft = function(target){
     })  .gesturable({
         modifiers: [
           interact.modifiers.restrictRect({
-            restriction: target
+            restriction: mediaElem,
+            endOnly:true
           })
         ],
       listeners: {
