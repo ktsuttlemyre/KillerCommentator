@@ -161,21 +161,22 @@ let craft = function(target){
 //         ],
       listeners: {
         start:function(event){
-          mediaPos.width=parseFloat(mediaElem.style.width)||mediaElem.videoWidth||0
-          mediaPos.height=parseFloat(mediaElem.style.height)||mediaElem.videoHeight||0
+          let box = mediaElem.getBoundingClientRect()
+          mediaPos.width=box.width || mediaElem.videoWidth || 0
+          mediaPos.height=box.height || mediaElem.videoHeight || 0
           
-          if((isNaN(mediaPos.width)||
-             mediaPos.width==''||
-             mediaPos.width==null||
-             mediaPos.width<=0)
-            &&
-             (isNaN(mediaPos.height)||
-             mediaPos.height==''||
-             mediaPos.height==null||
-             parseFloat(mediaPos.height<=0))){
-                //technically i should wait for video.loadeddata or video.loadedmetadata event and read video.videoWidth
-                mediaPos.width=300
-             }
+//           if((isNaN(mediaPos.width)||
+//              mediaPos.width==''||
+//              mediaPos.width==null||
+//              mediaPos.width<=0)
+//             &&
+//              (isNaN(mediaPos.height)||
+//              mediaPos.height==''||
+//              mediaPos.height==null||
+//              parseFloat(mediaPos.height<=0))){
+//                 //technically i should wait for video.loadeddata or video.loadedmetadata event and read video.videoWidth
+//                 mediaPos.width=300
+//              }
           
           initGestDist=event.distance
         startFn()
@@ -189,7 +190,7 @@ let craft = function(target){
           let initGestDelta=event.distance-initGestDist
           console.log(mediaPos.width,initGestDist-event.distance,style.height)
           //let vector = (Math.abs(event.dy)>Math.abs(event.dx))?event.dy:event.dx;
-          if(style.height=="auto"||style.height==''||style.height==null||parseFloat(style.height<=0)){
+          if(style.height=="auto" || style.height=='' || style.height==null || parseFloat(style.height<=0 )){
             style.width=mediaPos.width+initGestDelta+'px'
              if(gappingOnSide(target,mediaElem)){
                style.width=mediaPos.width+'px'
@@ -207,8 +208,9 @@ let craft = function(target){
            }
         },
         end:function(){
-          mediaPos.width=parseFloat(mediaElem.style.width)||0
-          mediaPos.height=parseFloat(mediaElem.style.height)||0
+          let box=mediaElem.getBoundingClientRect()
+          mediaPos.width=box.width || 0
+          mediaPos.height=box.height || 0
           endFn()
         }
       }
