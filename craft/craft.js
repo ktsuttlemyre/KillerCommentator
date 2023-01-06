@@ -1,4 +1,22 @@
 
+let ensureOverlap=function(elem1,elem2){
+  let rect1=elem1.getBoundingClientRect()
+  let rect2=elem2.getBoundingClientRect()
+  let notCollide=false
+  if(rect1.right < rect2.left){
+    notCollide='right'
+  }
+  if(rect1.left > rect2.right){
+    notCollide='left'
+  } 
+  if(rect1.bottom < rect2.top){
+    notCollide='top'
+  }
+  if(rect1.top > rect2.bottom){
+    notCollide='bottom'
+  }
+  console.log('notColliding=',notCollide)
+}
 
 let craft = function(target){
   target.classList.add('events-none')
@@ -18,6 +36,8 @@ let craft = function(target){
     clearTimeout(debounceId)
   }
   let endFn=function(event) {
+    ensureOverlap(target,mediaElem)
+    
     debounceId = setTimeout(endEditMode, resetDebounce)
   }
   let endEditMode=function(){
@@ -33,6 +53,7 @@ let craft = function(target){
           if(!editMode){
             return
           }
+    
     // keep the dragged position in the data-x/data-y attributes
     var x = (parseFloat(target.getAttribute('data-x')) || 0) + dx
     var y = (parseFloat(target.getAttribute('data-y')) || 0) + dy
