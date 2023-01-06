@@ -156,7 +156,7 @@ let craft = function(target){
     }).gesturable({
         modifiers: [
         interact.modifiers.restrictEdges({
-          outer: target
+          inner: target
         }),
         ],
       listeners: {
