@@ -15,6 +15,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 			"https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js",
 			base_site+"svgscribble.js",
 			base_site+"kqstyle/sourcemanager.js",
+			base_site+"craft.js",
 			base_site+"speechcommands.js",function(){
 			//add logo and activate
 			//add scribble toolbar
