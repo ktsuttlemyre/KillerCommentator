@@ -79,7 +79,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 	    return ctx.getImageData(x, y, 1, 1).data[3] === 0; // 4th byte is alpha
 	};
 	!(function(){ //attach to canvas to get events
-		let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')
+		let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')[0]
 		if(!canvas){return}
 		var ctx = canvas.getContext('2d');
 		let gameStarted=false
