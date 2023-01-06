@@ -393,7 +393,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			console.log('found item',item)
 			
 			//dont duplicate inputs
-			if(document.getElementById(`device-${item.id}`)){
+			if(document.getElementById(`device-${item.deviceId}`)){
 				return
 			}
 			if(item.kind=='videoinput'){
@@ -430,7 +430,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				let button = document.createElement('a')
 				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 				var video = document.createElement('video');
-				video.id = `device-${item.id}`
+				video.id = `device-${item.deviceId}`
 				video.className='resize-drag-video'
 				video.addEventListener( "loadedmetadata", function (e) {
 					//SourceManager.draggableCraft(div,this,this.videoWidth/this.videoHeight)
