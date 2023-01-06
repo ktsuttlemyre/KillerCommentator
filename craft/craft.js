@@ -17,13 +17,17 @@ let craft = function(target,stage){
     clearTimeout(debounceId)
   }
   let endFn=function(event) {
-    debounceId = setTimeout(staticMode, resetDebounce)
+    debounceId = setTimeout(endEditMode, resetDebounce)
   }
-  let staticMode=function(){
+  let endEditMode=function(){
     clearTimeout(debounceId)
       editMode=false
       target.classList.remove('edit-mode')
     }
+  let startEditMode=function(){
+    editMode=true
+    target.classList.add('edit-mode')
+  }
   let dragMoveFn=function (target,dx,dy) {
           if(!editMode){
             return
@@ -111,8 +115,7 @@ let craft = function(target,stage){
       clearTimeout(debounceId)
       return
     }
-    editMode=true
-    target.classList.add('edit-mode')
+  startEditMode()
     })  .gesturable({
       listeners: {
         start:function(event){
@@ -157,6 +160,7 @@ let craft = function(target,stage){
         }
       }
   })
+  startEditMode()
 }
 
 
