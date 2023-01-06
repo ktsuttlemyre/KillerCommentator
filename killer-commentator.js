@@ -15,7 +15,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 			"https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js",
 			base_site+"svgscribble.js",
 			base_site+"kqstyle/sourcemanager.js",
-			base_site+"craft.js",
+			base_site+"/craft/craft.js",
 			base_site+"speechcommands.js",function(){
 			//add logo and activate
 			//add scribble toolbar
@@ -35,6 +35,8 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		appendTo('head',inject('link',{href:"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
 		//inject logo
 		appendTo('head',inject('link',{href:base_site+"logo/index.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
+		appendTo('head',inject('link',{href:base_site+"craft/craft.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"}))
+
 	});
 
 	//this is the call for entry point where we set up base envrionment
