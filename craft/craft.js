@@ -153,10 +153,11 @@ let craft = function(target){
       return
     }
   startEditMode()
-    })  .gesturable({
+    })
+    interact(mediaElem).gesturable({
         modifiers: [
           interact.modifiers.restrictRect({
-            restriction: mediaElem,
+            restriction: 'parent',
             endOnly:true
           })
         ],
