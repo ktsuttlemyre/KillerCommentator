@@ -435,7 +435,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				video.className='resize-drag-video'
 				video.addEventListener( "loadedmetadata", function (e) {
 					//SourceManager.draggableCraft(div,this,this.videoWidth/this.videoHeight)
-					autoCroppingCraft(div,this,this.videoWidth/this.videoHeight)
+					SourceManager.autoCroppingCraft(div,this,this.videoWidth/this.videoHeight)
 				}, false )
 
 				button.onclick=function(){video.play();button.parentNode.removeChild(button)}
