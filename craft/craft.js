@@ -1,6 +1,7 @@
 
 
 let craft = function(target,stage){
+  target.classList.add('events-none')
   let debounceId;
   let resetDebounce=5000
   let editMode=false
