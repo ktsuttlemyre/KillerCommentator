@@ -154,6 +154,11 @@ let craft = function(target){
     }
   startEditMode()
     })  .gesturable({
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: target
+          })
+        ],
       listeners: {
         start:function(event){
           mediaPos.width=parseFloat(mediaElem.style.width)||mediaElem.videoWidth||0
@@ -186,20 +191,20 @@ let craft = function(target){
           //let vector = (Math.abs(event.dy)>Math.abs(event.dx))?event.dy:event.dx;
           if(style.height=="auto"||style.height==''||style.height==null||parseFloat(style.height<=0)){
             style.width=mediaPos.width+initGestDelta+'px'
-            if(gappingOnSide(target,mediaElem)){
-              style.width=mediaPos.width+'px'
-             }
+//             if(gappingOnSide(target,mediaElem)){
+//               style.width=mediaPos.width+'px'
+//              }
           }else{
             style.height=mediaPos.height+initGestDelta+'px'
-            if(gappingOnSide(target,mediaElem)){
-              style.width=mediaPos.height+'px'
-             }
+//             if(gappingOnSide(target,mediaElem)){
+//               style.width=mediaPos.height+'px'
+//              }
           }
 
           dragMoveFn(mediaElem,event.dx,event.dy)
-          if(gappingOnSide(target,mediaElem)){
-            dragMoveFn(mediaElem,event.dx*-1,event.dy*-1)
-          }
+//           if(gappingOnSide(target,mediaElem)){
+//             dragMoveFn(mediaElem,event.dx*-1,event.dy*-1)
+//           }
         },
         end:function(){
           mediaPos.width=parseFloat(target.style.width)||0
