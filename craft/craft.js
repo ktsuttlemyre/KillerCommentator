@@ -2,20 +2,20 @@
 let ensureOverlap=function(elem1,elem2){
   let rect1=elem1.getBoundingClientRect()
   let rect2=elem2.getBoundingClientRect()
-  let notCollide=false
-  if(rect1.right < rect2.left){
-    notCollide='right'
+  let notCollide=''
+  if(rect1.left < rect2.left){
+    notCollide+='right'
   }
-  if(rect1.left > rect2.right){
-    notCollide='left'
+  if(rect1.left > rect2.left){
+    notCollide+='left'
   } 
-  if(rect1.bottom < rect2.top){
-    notCollide='top'
+  if(rect1.bottom > rect2.bottom){
+    notCollide+='bottom'
   }
-  if(rect1.top > rect2.bottom){
-    notCollide='bottom'
+  if(rect1.top < rect2.top){
+    notCollide+='top'
   }
-  console.log('notColliding=',notCollide)
+  console.log('need to fix=',notCollide)
 }
 
 let craft = function(target){
