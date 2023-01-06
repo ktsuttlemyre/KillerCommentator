@@ -20,7 +20,7 @@ let gappingOnSide=function(elem1,elem2){
     //dems.y=rec1.dataset.y
   }
   
-  console.log('need to fix=',notCollide)
+  console.log('need to fix=',notCovering)
   return notCovering
 }
 
