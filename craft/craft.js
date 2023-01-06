@@ -155,10 +155,9 @@ let craft = function(target){
   startEditMode()
     }).gesturable({
         modifiers: [
-          interact.modifiers.restrictRect({
-            restriction: mediaElem,
-            endOnly:true
-          })
+        interact.modifiers.restrictEdges({
+          outer: target
+        }),
         ],
       listeners: {
         start:function(event){
