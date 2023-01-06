@@ -425,7 +425,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				// video attaches to craft_cropping_viewport only and is centered via flexbox
 
 				let div = document.createElement('div')
-				div.className='resize-drag'
 				let id = generateId()
 				div.id=id
 				let button = document.createElement('a')
@@ -469,6 +468,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	}
 					  
 	SourceManager.draggableCraft=function(container,child,aspectRatio){
+			container.className='resize-drag'
+
 			//let aspectRatio = width/height;
 			function snapVideoToContainer(x,y,w,h){
 				console.log('resizing video');
