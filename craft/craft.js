@@ -153,7 +153,8 @@ let craft = function(target){
       return
     }
   startEditMode()
-    })
+    });
+  
     interact(mediaElem).gesturable({
         modifiers: [
           interact.modifiers.restrictRect({
@@ -209,8 +210,8 @@ let craft = function(target){
 //           }
         },
         end:function(){
-          mediaPos.width=parseFloat(target.style.width)||0
-          mediaPos.height=parseFloat(target.style.height)||0
+          mediaPos.width=parseFloat(mediaElem.style.width)||0
+          mediaPos.height=parseFloat(mediaElem.style.height)||0
           endFn()
         }
       }
