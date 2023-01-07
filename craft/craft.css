@@ -30,27 +30,26 @@
     right: 0px;
 } */
 .craft .handle{
-  position:absolute;
   display:none;
-  width:20px;
-  height:20px;
-  border-radius: 50%;
-  background-color:#29e
+
 }
 .craft.edit-mode .handle{
   display:block;
 }
 
 .craft .ball{
-
+  position:absolute;
+  background-color:#29e;
+  width:20px;
+  height:20px;
+  border-radius: 50%;
 }
 .craft .corner{
-
-}
-.craft .tl{
   border-radius: 0;
   width: 0 !important;
   height: 0 !important;
+}
+.craft .tl{
   border-top: 20px solid #29e;
   border-right: 20px solid transparent;
   top:0;
@@ -85,19 +84,15 @@
 }
 
 .craft .ml{
-  margin-right: auto;
-  left: 5px;
-  top: 0;
-  bottom: 0;
-  text-align: left;
+   left:0;
+   top: 50%;
+   transform: translate(0%,-50%);
 }
 
 .craft .mr{
-  margin-left: auto;
-  top: 0;
-  right: 5px;
-  bottom: 0;
-  text-align: right;
+   right:0;
+   top: 50%;
+   transform: translate(0%,-50%);
 }
 
 
