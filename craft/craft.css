@@ -31,21 +31,19 @@
 } */
 .craft .handle{
   display:none;
-
+  position:absolute;
 }
 .craft.edit-mode .handle{
   display:block;
 }
 
 .craft .ball{
-  position:absolute;
   background-color:#29e;
   width:20px;
   height:20px;
   border-radius: 50%;
 }
 .craft .corner{
-  position:absolute;
   border-radius: 0;
   width: 0 !important;
   height: 0 !important;
