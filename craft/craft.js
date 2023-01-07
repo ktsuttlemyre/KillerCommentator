@@ -56,7 +56,7 @@ let craft = function(target,options){
     editDebounceId = setTimeout(endEditMode, resetDebounce)
   }
   let endEditMode=function(){
-    clearTimeout(editDebounceId)
+      clearTimeout(editDebounceId)
       editMode=false
       target.classList.remove('edit-mode')
     }
@@ -221,6 +221,7 @@ let craft = function(target,options){
               name: 'resize',
               edges: { left: true, bottom: true },
             })
+           endFn()
         },
         end:function(){
 //           let style = mediaElem.style
