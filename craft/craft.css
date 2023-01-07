@@ -30,6 +30,7 @@
     right: 0px;
 } */
 .craft .handle{
+  postion:absolute;
   display:none;
   width:5px;
   height:5px;
