@@ -34,6 +34,7 @@ let craft = function(target,options){
   target.classList.add('craft')
   let editDebounceIds=[];
   let resetDebounce=5000
+  let resetDebounceCustom
   let editMode=false
 
   let initGestDist=0
@@ -48,15 +49,17 @@ let craft = function(target,options){
     // then calculate difference to move the elemet to proper position
     //gappingOnSide(target,mediaElem)
     
-    editDebounceIds.push(setTimeout(endEditMode, resetDebounce))
+    editDebounceIds.push(setTimeout(endEditMode, resetDebounceCustom || resetDebounce))
   }
   let endEditMode=function(){
+    resetDebounceCustom=0 
        editDebounceIds.forEach(_ => clearTimeout)
     editDebounceIds=[]
       editMode=false
       target.classList.remove('edit-mode')
     }
-  let startEditMode=function(){
+  let startEditMode=function(inital){
+    resetDebounceCustom=inital
     editMode=true
     target.classList.add('edit-mode')
   }
@@ -69,20 +72,6 @@ let craft = function(target,options){
           target.setAttribute('data-y', y)
         }
   let handles={tl:null,tr:null,bl:null,br:null}
-  
-    let mediaElem=target.querySelector('video')
-  if(mediaElem){
-    if(!mediaElem.videoWidth || mediaElem.videoWidth==null){
-      mediaElem.addEventListener( "loadedmetadata", function (e) {
-        init()
-      })
-    }else{
-      init()
-    }
-  }else{
-      mediaElem=target.querySelector('img,canvas')
-      init()
-  }
 
  
   let init = function(){
@@ -288,7 +277,22 @@ let craft = function(target,options){
           }
         }
     })
-    startEditMode()
+    startEditMode(20000)
+  }
+  
+  
+  let mediaElem=target.querySelector('video')
+  if(mediaElem){
+    if(!mediaElem.videoWidth || mediaElem.videoWidth==null){
+      mediaElem.addEventListener( "loadedmetadata", function (e) {
+        init()
+      })
+    }else{
+      init()
+    }
+  }else{
+      mediaElem=target.querySelector('img,canvas')
+      init()
   }
 }
 
