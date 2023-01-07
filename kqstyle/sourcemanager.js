@@ -431,7 +431,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 				var video = document.createElement('video');
 				video.id = `device-${item.deviceId}`
-				video.className='resize-drag-video'
+				//video.className='resize-drag-video'
 				video.addEventListener( "loadedmetadata", function (e) {
 					//SourceManager.draggableCraft(div,this,this.videoWidth/this.videoHeight)
 					SourceManager.autoCroppingCraft(div,this,this.videoWidth/this.videoHeight)
