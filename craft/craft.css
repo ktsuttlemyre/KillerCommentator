@@ -48,13 +48,9 @@
   width: 0 !important;
   height: 0 !important;
 }
-
-.craft .tl:after {
-  content: "";
+.craft .tl{
   border-top: 20px solid red;
   border-right: 20px solid transparent;
-}
-.craft .tl{
   top:0;
   left:0;
 }
@@ -67,8 +63,10 @@
   left:5px;
 }
 .craft .br{
-  bottom:5px;
-  right:5px;
+  border-bottom: 20px solid red;
+  border-left: 20px solid transparent;
+  bottom:0;
+  right:0;
 }
 
 .craft .mt{
