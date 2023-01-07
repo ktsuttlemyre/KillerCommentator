@@ -68,7 +68,8 @@ let craft = function(target,options){
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
         }
-  let handles={left:null,right:null,top:null,bottom:null}
+  let handles={tl:null,tr:null,bl:null,br:null}
+  
     let mediaElem=target.querySelector('video')
   if(mediaElem){
     if(!mediaElem.videoWidth || mediaElem.videoWidth==null){
@@ -92,7 +93,7 @@ let craft = function(target,options){
     //add handles
     Object.keys(handles).forEach(function(key){
       let elem = document.createElement('div')
-      elem.className=key
+      elem.className=key+' handle'
       target.appendChild(elem)
     }
     
