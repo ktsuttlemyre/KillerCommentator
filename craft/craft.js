@@ -1,7 +1,6 @@
 //to gesture move the inside use "options.panMedia"
 //that option is buggy though so its optional
-let gappingOnSide=function(elem1,elem2,options){
-  options = Object.assign({panMedia:false},options||{})
+let gappingOnSide=function(elem1,elem2){
   let rect1=elem1.getBoundingClientRect()
   let rect2=elem2.getBoundingClientRect()
   let notCovering=''
@@ -26,7 +25,8 @@ let gappingOnSide=function(elem1,elem2,options){
   return notCovering
 }
 
-let craft = function(target){
+let craft = function(target,options){
+  options = Object.assign({panMedia:false},options||{})
   target.classList.add('events-none')
   target.classList.add('craft')
   let editDebounceId;
