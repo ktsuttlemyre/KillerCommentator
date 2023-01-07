@@ -84,13 +84,13 @@
 }
 
 .craft .ml{
-   left:0;
+   left:5px;
    top: 50%;
    transform: translate(0%,-50%);
 }
 
 .craft .mr{
-   right:0;
+   right:5px;
    top: 50%;
    transform: translate(0%,-50%);
 }
