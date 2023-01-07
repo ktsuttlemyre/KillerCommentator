@@ -149,11 +149,10 @@ let craft = function(target,options){
 //         inertia: true
 //       })
         .resizable({
-        // resize from all edges and corners
-        edges: { left: handles.ml,
-                right: handles.mr,
-                bottom: handles.mb,
-                top: handles.mt },
+        edges: { left: true,//handles.ml,
+                right: true,//handles.mr,
+                bottom: true,//handles.mb,
+                top: true,//handles.mt },
 
         listeners: {
           start:startFn,
