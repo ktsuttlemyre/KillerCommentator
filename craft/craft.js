@@ -62,12 +62,7 @@ let craft = function(target){
     editMode=true
     target.classList.add('edit-mode')
   }
-  let dragMoveFn=function (target,x,y,exactCoords) {
-          if(!exactCoords){
-            // keep the dragged position in the data-x/data-y attributes
-            x = (parseFloat(target.getAttribute('data-x')) || 0) + x
-            y = (parseFloat(target.getAttribute('data-y')) || 0) + y
-          }
+  let dragMoveFn=function (target,x,y) {
           // translate the element
           target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
 
@@ -128,7 +123,10 @@ let craft = function(target){
           if(!editMode){
             return
           }
-          dragMoveFn(target,event.dx,event.dy)
+          // keep the dragged position in the data-x/data-y attributes
+          let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+          let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+          dragMoveFn(target,x,y)
         },
         end:endFn
   },
@@ -202,8 +200,10 @@ let craft = function(target){
             style.height=mediaPos.height+initGestDelta+'px'
              isGap+=gappingOnSide(target,mediaElem)
           }
-
-          dragMoveFn(mediaElem,event.dx,event.y)
+            // keep the dragged position in the data-x/data-y attributes
+          let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+          let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+          dragMoveFn(mediaElem,x,y)
            isGap+=gappingOnSide(target,mediaElem)
           if(!isGap){
             let box=mediaElem.getBoundingClientRect()
@@ -218,7 +218,7 @@ let craft = function(target){
           let style = mediaElem.style
           style.width = lastSafe.width
           style.height = lastSafe.height
-          dragMoveFn(mediaElem,lastSafe.x,lastSafe.y,true)
+          dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
           endFn()
         }
       }
