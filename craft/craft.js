@@ -27,7 +27,7 @@ let gappingOnSide=function(elem1,elem2){
 let craft = function(target){
   target.classList.add('events-none')
   target.classList.add('craft')
-  let debounceId;
+  let editDebounceId;
   let resetDebounce=5000
   let editMode=false
 
@@ -44,17 +44,17 @@ let craft = function(target){
   let lastSafe=Object.assign({},mediaPos)
   
   let startFn=function(event) {
-    clearTimeout(debounceId)
+    clearTimeout(editDebounceId)
   }
   let endFn=function(event) {
     //TODO future optimization. Only check for collision at the end of the move
     // then calculate difference to move the elemet to proper position
     //gappingOnSide(target,mediaElem)
     
-    debounceId = setTimeout(endEditMode, resetDebounce)
+    editDebounceId = setTimeout(endEditMode, resetDebounce)
   }
   let endEditMode=function(){
-    clearTimeout(debounceId)
+    clearTimeout(editDebounceId)
       editMode=false
       target.classList.remove('edit-mode')
     }
@@ -153,6 +153,7 @@ let craft = function(target){
     }
   startEditMode()
     }).gesturable({
+    inertia:false,
 //         modifiers: [
 //         interact.modifiers.restrictEdges({
 //           inner: mediaElem
