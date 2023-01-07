@@ -57,6 +57,45 @@
   right:5px;
 }
 
+.craft .mt{
+  margin: auto;
+  left: 0;
+  right: 0;
+  top:0;
+  text-align: center;
+}
+.craft .mb{
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+.craft .ml{
+  margin-right: auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  text-align: left;
+}
+
+.craft .mr{
+  margin-left: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  text-align: right;
+}
+
+
+.craft .mc{
+    margin: auto;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+
+
+
 
 .no-events{
   pointer-events:none;
