@@ -277,7 +277,7 @@ let craft = function(target,options){
               // start a drag action
               interactable.reflow({
                 name: 'resize',
-                edges: { left: true, bottom: true, right: true, top:true },
+                edges: { left: true, bottom: true, right: true },
               })
           },
           end:function(){
