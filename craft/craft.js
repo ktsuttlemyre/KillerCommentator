@@ -150,11 +150,7 @@ let craft = function(target,options){
       console.log('trigger lockin',event)
     })
     .on('hold', function (event) {
-    if(editMode==true){
-      clearTimeout(debounceId)
-      return
-    }
-  startEditMode()
+    startEditMode()
     }).gesturable({
 //         modifiers: [
 //           interact.modifiers.restrictRect({
