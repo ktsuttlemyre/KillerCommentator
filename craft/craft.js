@@ -214,7 +214,8 @@ let craft = function(target,options){
             lastSafe=Object.assign(lastSafe,mediaElem.getBoundingClientRect())
           }
             //interactable.reflow({ name: 'drag', axis: 'xy' })
-
+            target.style.width=window.innerWidth
+            target.style.height=window.innerHeight
             // start a drag action
             interactable.reflow({
               name: 'resize',
