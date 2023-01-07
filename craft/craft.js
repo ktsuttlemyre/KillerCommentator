@@ -201,8 +201,8 @@ let craft = function(target){
              isGap+=gappingOnSide(target,mediaElem)
           }
             // keep the dragged position in the data-x/data-y attributes
-          let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-          let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+          let x = (parseFloat(mediaElem.getAttribute('data-x')) || 0) + event.dx
+          let y = (parseFloat(mediaElem.getAttribute('data-y')) || 0) + event.dy
           dragMoveFn(mediaElem,x,y)
            isGap+=gappingOnSide(target,mediaElem)
           if(!isGap){
@@ -211,10 +211,10 @@ let craft = function(target){
           }
         },
         end:function(){
-          //let style = mediaElem.style
-          //style.width = lastSafe.width
-          //style.height = lastSafe.height
-          //dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
+          let style = mediaElem.style
+          style.width = lastSafe.width
+          style.height = lastSafe.height
+          dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
           endFn()
         }
       }
