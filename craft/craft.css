@@ -36,7 +36,7 @@
   border-radius: 50%;
   background-color:#29e
 }
-.craft .edit-mode .handle{
+.craft.edit-mode .handle{
   display:block;
 }
 .craft .tl{
