@@ -83,7 +83,7 @@ let craft = function(target,options){
     Object.keys(handles).forEach(function(key){
       let elem = document.createElement('div')
       elem.className=key+' handle'
-      elem.text("&nbsp;");
+      elem.textContent="&nbsp;";
       target.insertBefore(elem,target.firstChild)
     })
     
