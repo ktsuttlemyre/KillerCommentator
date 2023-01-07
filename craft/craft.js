@@ -95,7 +95,7 @@ let craft = function(target,options){
       let elem = document.createElement('div')
       elem.className=key+' handle'
       target.appendChild(elem)
-    }
+    })
     
     let interactable = interact(target).pointerEvents({
     holdDuration: 5000,
