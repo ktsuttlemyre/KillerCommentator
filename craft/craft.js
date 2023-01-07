@@ -77,13 +77,14 @@ let craft = function(target,options){
   let init = function(){
       let mediaPos=Object.assign({angle:0,scale:0},mediaElem.getBoundingClientRect())
       let lastSafe=Object.assign({},mediaPos)
+      let aspectRatio=(mediaElem.videoWidth||mediaPos.width) / (mediaElem.videoHeight||mediaPos.height)
   
   
     //add handles
     Object.keys(handles).forEach(function(key){
       let elem = document.createElement('div')
       elem.className=key+' handle'
-      elem.textContent="&nbsp;";
+      //elem.textContent="&nbsp;";
       target.insertBefore(elem,target.firstChild)
     })
     
@@ -123,16 +124,26 @@ let craft = function(target,options){
           },end:endFn
         },
         modifiers: [
-          // keep the edges inside the parent
-          interact.modifiers.restrictEdges({
-            outer: mediaElem
-          }),
-
-          // minimum size
-          interact.modifiers.restrictSize({
-            min: { width: 100, height: 50 },
-           // max: mediaElem
-          })
+          
+          
+        interact.modifiers.aspectRatio({
+					// make sure the width is always double the height
+					ratio: aspectRatio,
+					// also restrict the size by nesting another modifier
+				modifiers: [
+					//interact.modifiers.restrictSize({ max: 'parent' }),
+					// keep the edges inside the parent
+					interact.modifiers.restrictEdges({
+						outer: mediaElem
+					}),
+					interact.modifiers.restrictSize({
+						min: { width: 50, height: 50 }
+					})
+					],
+				}),
+     		interact.modifiers.restrictEdges({
+						outer: 'parent'
+					}),
         ],
         inertia: true
       })
