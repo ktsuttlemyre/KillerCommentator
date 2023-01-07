@@ -41,6 +41,10 @@
   display:block;
 }
 .craft .tl{
+  width: 0 !important;
+  height: 0 !important;
+  border-top: 40px solid red;
+  border-right: 40px solid transparent;
   top:5px;
   left:5px;
 }
