@@ -113,7 +113,7 @@ let craft = function(target,options){
         // minimum size
         interact.modifiers.restrictSize({
           min: { width: 100, height: 50 },
-          max: mediaElem
+         // max: mediaElem
         })
       ],
 
@@ -213,6 +213,13 @@ let craft = function(target,options){
           if(!isGap){
             lastSafe=Object.assign(lastSafe,mediaElem.getBoundingClientRect())
           }
+            //interactable.reflow({ name: 'drag', axis: 'xy' })
+
+            // start a drag action
+            interactable.reflow({
+              name: 'resize',
+              edges: { left: true, bottom: true, top:true, left:true },
+            })
         },
         end:function(){
 //           let style = mediaElem.style
@@ -220,13 +227,7 @@ let craft = function(target,options){
 //           style.height = lastSafe.height
 //           dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
             // start a resize action and wait for inertia to finish
-            interactable.reflow({ name: 'drag', axis: 'xy' })
 
-            // start a drag action
-            interactable.reflow({
-              name: 'resize',
-              edges: { left: true, bottom: true, top:true, left:true },
-            })
           endFn()
         }
       }
