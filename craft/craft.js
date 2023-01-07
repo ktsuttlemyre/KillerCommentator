@@ -154,11 +154,11 @@ let craft = function(target){
   startEditMode()
     }).gesturable({
     inertia:false,
-//         modifiers: [
-//         interact.modifiers.restrictEdges({
-//           inner: mediaElem
-//         }),
-//         ],
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: mediaElem
+          })
+        ],
       listeners: {
         start:function(event){
           let box = mediaElem.getBoundingClientRect()
@@ -211,10 +211,10 @@ let craft = function(target){
           }
         },
         end:function(){
-          let style = mediaElem.style
-          style.width = lastSafe.width
-          style.height = lastSafe.height
-          dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
+//           let style = mediaElem.style
+//           style.width = lastSafe.width
+//           style.height = lastSafe.height
+//           dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
           endFn()
         }
       }
