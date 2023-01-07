@@ -110,7 +110,8 @@ let craft = function(target){
 
         // minimum size
         interact.modifiers.restrictSize({
-          min: { width: 100, height: 50 }
+          min: { width: 100, height: 50 },
+          max: mediaElem
         })
       ],
 
