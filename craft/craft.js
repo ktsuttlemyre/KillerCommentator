@@ -84,7 +84,7 @@ let craft = function(target,options){
       let elem = document.createElement('div')
       elem.className=key+' handle'
       elem.text("&nbsp;");
-      target.appendChild(elem)
+      target.insertBefore(elem,target.firstChild)
     })
     
     let interactable = interact(target).pointerEvents({
