@@ -277,7 +277,7 @@ let craft = function(target,options){
               // start a drag action
               interactable.reflow({
                 name: 'resize',
-                edges: { left: true, bottom: true, right: true },
+                edges: { left: true, bottom: true,},
               })
           },
           end:function(){
@@ -286,7 +286,10 @@ let craft = function(target,options){
   //           style.height = lastSafe.height
   //           dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
               // start a resize action and wait for inertia to finish
-
+		interactable.reflow({
+			name: 'resize',
+			edges: { right: true, top: true,},
+		      })
             endFn()
           }
         }
