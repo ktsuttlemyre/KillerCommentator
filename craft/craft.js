@@ -91,69 +91,13 @@ let craft = function(target,options){
     
     let interactable = interact(target).pointerEvents({
     holdDuration: 5000,
-    })
-      .resizable({
-        // resize from all edges and corners
-        edges: { left: handles.left,
-                right: handles.right,
-                bottom: handles.bottom,
-                top: handles.top},
-
-        listeners: {
-          start:startFn,
-          move (event) {
-            if(!editMode){
-              return
-            }
-            var x = (parseFloat(target.getAttribute('data-x')) || 0)
-            var y = (parseFloat(target.getAttribute('data-y')) || 0)
-
-            // translate when resizing from top or left edges
-            x += event.deltaRect.left
-            y += event.deltaRect.top
-
-
-            // update the element's style
-            target.style.width = event.rect.width + 'px'
-            target.style.height = event.rect.height + 'px'
-
-            target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-
-            target.setAttribute('data-x', x)
-            target.setAttribute('data-y', y)
-
-          },end:endFn
-        },
-        modifiers: [
-          
-          
-        interact.modifiers.aspectRatio({
-					// make sure the width is always double the height
-					ratio: aspectRatio,
-					// also restrict the size by nesting another modifier
-				modifiers: [
-					//interact.modifiers.restrictSize({ max: 'parent' }),
-					// keep the edges inside the parent
-					interact.modifiers.restrictEdges({
-						outer: mediaElem
-					}),
-					interact.modifiers.restrictSize({
-						min: { width: 50, height: 50 }
-					})
-					],
-				}),
-     		interact.modifiers.restrictEdges({
-						outer: 'parent'
-					}),
-        ],
-        inertia: true
-      })
-//         .resizable({
+    }) .styleCursor(false)
+//       .resizable({
 //         // resize from all edges and corners
-//         edges: { left: true,
-//                 right: true,
-//                 bottom: true,
-//                 top: true },
+//         edges: { left: handles.tl,
+//                 right: handles.br,
+//                 bottom: handles.br,
+//                 top: handles.tl},
 
 //         listeners: {
 //           start:startFn,
@@ -181,19 +125,75 @@ let craft = function(target,options){
 //           },end:endFn
 //         },
 //         modifiers: [
-//           // keep the edges inside the parent
-//           interact.modifiers.restrictEdges({
-//             outer: mediaElem
-//           }),
-
-//           // minimum size
-//           interact.modifiers.restrictSize({
-//             min: { width: 100, height: 50 },
-//            // max: mediaElem
-//           })
+          
+          
+//         interact.modifiers.aspectRatio({
+// 					// make sure the width is always double the height
+// 					ratio: aspectRatio,
+// 					// also restrict the size by nesting another modifier
+// 				modifiers: [
+// 					//interact.modifiers.restrictSize({ max: 'parent' }),
+// 					// keep the edges inside the parent
+// 					interact.modifiers.restrictEdges({
+// 						outer: mediaElem
+// 					}),
+// 					interact.modifiers.restrictSize({
+// 						min: { width: 50, height: 50 }
+// 					})
+// 					],
+// 				}),
+//      		interact.modifiers.restrictEdges({
+// 						outer: 'parent'
+// 					}),
 //         ],
 //         inertia: true
 //       })
+        .resizable({
+        // resize from all edges and corners
+        edges: { left: handles.ml,
+                right: handles.mr,
+                bottom: handles.mb,
+                top: handles.mt },
+
+        listeners: {
+          start:startFn,
+          move (event) {
+            if(!editMode){
+              return
+            }
+            var x = (parseFloat(target.getAttribute('data-x')) || 0)
+            var y = (parseFloat(target.getAttribute('data-y')) || 0)
+
+            // translate when resizing from top or left edges
+            x += event.deltaRect.left
+            y += event.deltaRect.top
+
+
+            // update the element's style
+            target.style.width = event.rect.width + 'px'
+            target.style.height = event.rect.height + 'px'
+
+            target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+            target.setAttribute('data-x', x)
+            target.setAttribute('data-y', y)
+
+          },end:endFn
+        },
+        modifiers: [
+          // keep the edges inside the parent
+          interact.modifiers.restrictEdges({
+            outer: mediaElem
+          }),
+
+          // minimum size
+          interact.modifiers.restrictSize({
+            min: { width: 100, height: 50 },
+           // max: mediaElem
+          })
+        ],
+        inertia: true
+      })
 
       .draggable({
         listeners: {
