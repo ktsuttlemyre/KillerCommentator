@@ -291,7 +291,7 @@ let craft = function(target,options){
           }
         }
     })
-    startEditMode(20000)
+    startEditMode(120000)
   }
   
   
