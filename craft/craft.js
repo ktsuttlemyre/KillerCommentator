@@ -105,7 +105,7 @@ let craft = function(target){
       modifiers: [
         // keep the edges inside the parent
         interact.modifiers.restrictEdges({
-          outer: 'parent'
+          outer: mediaElem
         }),
 
         // minimum size
@@ -153,12 +153,11 @@ let craft = function(target){
     }
   startEditMode()
     }).gesturable({
-    inertia:false,
-        modifiers: [
-          interact.modifiers.restrictRect({
-            restriction: mediaElem
-          })
-        ],
+//         modifiers: [
+//           interact.modifiers.restrictRect({
+//             restriction: mediaElem
+//           })
+//         ],
       listeners: {
         start:function(event){
           let box = mediaElem.getBoundingClientRect()
