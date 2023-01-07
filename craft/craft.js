@@ -71,7 +71,8 @@ let craft = function(target,options){
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
         }
-  let handles={tl:null,tr:null,bl:null,br:null}
+  let handles={tl:0,tr:0,bl:0,br:0,
+	       mr:0,ml:0,mt:0,mb:0,mc:0}
 
  
   let init = function(){
