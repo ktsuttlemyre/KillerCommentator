@@ -207,18 +207,14 @@ let craft = function(target){
            isGap+=gappingOnSide(target,mediaElem)
           if(!isGap){
             let box=mediaElem.getBoundingClientRect()
-            lastSafe.width=box.width || 0
-            lastSafe.height=box.height || 0
-            lastSafe.x=x
-            lastSafe.y=y
-              
+            lastSafe=Object.assign(lastSafe,box)
           }
         },
         end:function(){
-          let style = mediaElem.style
-          style.width = lastSafe.width
-          style.height = lastSafe.height
-          dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
+          //let style = mediaElem.style
+          //style.width = lastSafe.width
+          //style.height = lastSafe.height
+          //dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
           endFn()
         }
       }
