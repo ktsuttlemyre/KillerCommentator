@@ -152,7 +152,8 @@ let craft = function(target,options){
         edges: { left: true,//handles.ml,
                 right: true,//handles.mr,
                 bottom: true,//handles.mb,
-                top: true,//handles.mt },
+                top: true,//handles.mt
+	       },
 
         listeners: {
           start:startFn,
