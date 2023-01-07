@@ -204,10 +204,9 @@ let craft = function(target){
           let x = (parseFloat(mediaElem.getAttribute('data-x')) || 0) + event.dx
           let y = (parseFloat(mediaElem.getAttribute('data-y')) || 0) + event.dy
           dragMoveFn(mediaElem,x,y)
-           isGap+=gappingOnSide(target,mediaElem)
+          isGap+=gappingOnSide(target,mediaElem)
           if(!isGap){
-            let box=mediaElem.getBoundingClientRect()
-            lastSafe=Object.assign(lastSafe,box)
+            lastSafe=Object.assign(lastSafe,mediaElem.getBoundingClientRect())
           }
         },
         end:function(){
