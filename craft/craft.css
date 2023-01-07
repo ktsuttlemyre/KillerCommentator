@@ -30,14 +30,14 @@
     right: 0px;
 } */
 .craft .handle{
-  display:none
-}
-.craft .edit-mode .handle{
-  display:block;
+  display:none;
   width:5px;
   height:5px;
   border-radius: 50%;
   background-color:#29e
+}
+.craft .edit-mode .handle{
+  display:block;
 }
 .craft .tl{
   top:5px;
@@ -45,7 +45,7 @@
 }
 .craft .tr{
   top:5px;
-  rightt:5px;
+  right:5px;
 }
 .craft .bl{
   bottom:5px;
