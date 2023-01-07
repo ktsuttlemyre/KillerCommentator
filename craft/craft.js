@@ -1,6 +1,7 @@
 //to gesture move the inside use "options.panMedia"
 //that option is buggy though so its optional
 let gappingOnSide=function(elem1,elem2,options){
+  options = Object.assign({panMedia:false},options||{})
   let rect1=elem1.getBoundingClientRect()
   let rect2=elem2.getBoundingClientRect()
   let notCovering=''
