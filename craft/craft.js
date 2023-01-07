@@ -71,8 +71,8 @@ let craft = function(target,options){
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
         }
-  let handles={tl:0,tr:0,bl:0,br:0,
-	       mr:0,ml:0,mt:0,mb:0,mc:0}
+  let handles={tl:'corner',tr:'corner',bl:'corner',br:'corner',
+	       mr:'ball',ml:'ball',mt:'ball',mb:'ball',mc:'ball'}
 
  
   let init = function(){
@@ -84,9 +84,10 @@ let craft = function(target,options){
     //add handles
     Object.keys(handles).forEach(function(key){
       let elem = document.createElement('div')
-      elem.className=key+' handle'
+      elem.className='handle' +((key||'').strip()+' '+(handles[key]||'').strip()).strip()
       //elem.textContent="&nbsp;";
       target.insertBefore(elem,target.firstChild)
+      handles[key]=elem;
     })
     
     let interactable = interact(target).pointerEvents({
@@ -149,10 +150,10 @@ let craft = function(target,options){
 //         inertia: true
 //       })
         .resizable({
-        edges: { left: true,//handles.ml,
-                right: true,//handles.mr,
-                bottom: true,//handles.mb,
-                top: true,//handles.mt
+        edges: { left: handles.ml,
+                right: handles.mr,
+                bottom: handles.mb,
+                top: handles.mt
 	       },
 
         listeners: {
