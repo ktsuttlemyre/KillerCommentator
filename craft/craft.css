@@ -40,14 +40,21 @@
 .craft.edit-mode .handle{
   display:block;
 }
+
+.craft .ball{
+
+}
+.craft .corner{
+
+}
 .craft .tl{
   border-radius: 0;
   width: 0 !important;
   height: 0 !important;
-  border-top: 20px solid red;
+  border-top: 20px solid #29e;
   border-right: 20px solid transparent;
-  top:5px;
-  left:5px;
+  top:0;
+  left:0;
 }
 .craft .tr{
   top:5px;
