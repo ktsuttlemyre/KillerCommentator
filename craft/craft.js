@@ -34,14 +34,14 @@ let craft = function(target){
   let initGestDist=0
   let mediaElem=target.querySelector('video,img')
   let targetPos={}
-  let mediaPos={x:0,y:0,width:0,height:0,angle:0,scale:0}
+  let mediaPos=Object.assign({angle:0,scale:0},mediaElem.getBoundingClientRect())
                         //x:0,
                         //y:0,
                         //width:mediaElem.style.width||mediaElem.videoWidth,
                         //height:mediaElem.style.height||mediaElem.videoHeight
                        //}
   
-  
+  let lastSafe=Object.assign({},mediaPos)
   
   let startFn=function(event) {
     clearTimeout(debounceId)
@@ -62,16 +62,12 @@ let craft = function(target){
     editMode=true
     target.classList.add('edit-mode')
   }
-  let dragMoveFn=function (target,dx,dy,force) {
-          if(!force){
-            if(!editMode){
-            return
-          }}
-
-          // keep the dragged position in the data-x/data-y attributes
-          var x = (parseFloat(target.getAttribute('data-x')) || 0) + dx
-          var y = (parseFloat(target.getAttribute('data-y')) || 0) + dy
-
+  let dragMoveFn=function (target,x,y,exactCoords) {
+          if(!exactCoords){
+            // keep the dragged position in the data-x/data-y attributes
+            x = (parseFloat(target.getAttribute('data-x')) || 0) + x
+            y = (parseFloat(target.getAttribute('data-y')) || 0) + y
+          }
           // translate the element
           target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
 
@@ -128,7 +124,12 @@ let craft = function(target){
     .draggable({
       listeners: {
         start:startFn,
-        move: function(event){dragMoveFn(target,event.dx,event.dy)},
+        move: function(event){
+          if(!editMode){
+            return
+          }
+          dragMoveFn(target,event.dx,event.dy)
+        },
         end:endFn
   },
       inertia: true,
@@ -182,6 +183,9 @@ let craft = function(target){
         startFn()
         },
         move (event) {
+          if(!editMode){
+            return
+          }
           let style = mediaElem.style
           //let angleDelta = currentAngle-event.angle
           //let vector = angleDelta
@@ -190,27 +194,31 @@ let craft = function(target){
           let initGestDelta=event.distance-initGestDist
           console.log(mediaPos.width,initGestDist-event.distance,style.height)
           //let vector = (Math.abs(event.dy)>Math.abs(event.dx))?event.dy:event.dx;
+          let isGap=''
           if(style.height=="auto" || style.height=='' || style.height==null || parseFloat(style.height<=0 )){
             style.width=mediaPos.width+initGestDelta+'px'
-             if(gappingOnSide(target,mediaElem)){
-               style.width=mediaPos.width+'px'
-              }
+             isGap+=gappingOnSide(target,mediaElem)
           }else{
             style.height=mediaPos.height+initGestDelta+'px'
-             if(gappingOnSide(target,mediaElem)){
-               style.width=mediaPos.height+'px'
-              }
+             isGap+=gappingOnSide(target,mediaElem)
           }
 
-          dragMoveFn(mediaElem,event.dx,event.dy)
-           if(gappingOnSide(target,mediaElem)){
-             dragMoveFn(mediaElem,event.dx*-1,event.dy*-1)
-           }
+          dragMoveFn(mediaElem,event.dx,event.y)
+           isGap+=gappingOnSide(target,mediaElem)
+          if(!isGap){
+            let box=mediaElem.getBoundingClientRect()
+            lastSafe.width=box.width || 0
+            lastSafe.height=box.height || 0
+            lastSafe.x=x
+            lastSafe.y=y
+              
+          }
         },
         end:function(){
-          let box=mediaElem.getBoundingClientRect()
-          mediaPos.width=box.width || 0
-          mediaPos.height=box.height || 0
+          let style = mediaElem.style
+          style.width = lastSafe.width
+          style.height = lastSafe.height
+          dragMoveFn(mediaElem,lastSafe.x,lastSafe.y,true)
           endFn()
         }
       }
