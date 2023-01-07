@@ -86,7 +86,7 @@ let craft = function(target,options){
       let elem = document.createElement('div')
       elem.className='handle ' +((key||'').trim()+' '+(handles[key]||'').trim()).trim()
       //elem.textContent="&nbsp;";
-      target.insertBefore(elem,target.firstChild)
+      target.appendChild(elem) //.insertBefore(elem,target.firstChild)
       handles[key]=elem;
     })
     
