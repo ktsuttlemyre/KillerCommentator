@@ -32,6 +32,8 @@
 .craft .handle{
   display:none;
   position:absolute;
+  width:20px;
+  height:20px;
 }
 .craft.edit-mode .handle{
   display:block;
@@ -39,8 +41,6 @@
 
 .craft .ball{
   background-color:#29e;
-  width:20px;
-  height:20px;
   border-radius: 50%;
 }
 .craft .corner{
@@ -48,9 +48,13 @@
   width: 0 !important;
   height: 0 !important;
 }
-.craft .tl{
-  border-top: 20px solid #29e;
+
+.craft .tl:after {
+  content: "";
+  border-top: 20px solid red;
   border-right: 20px solid transparent;
+}
+.craft .tl{
   top:0;
   left:0;
 }
