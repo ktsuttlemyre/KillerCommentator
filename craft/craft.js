@@ -1,5 +1,6 @@
-
-let gappingOnSide=function(elem1,elem2){
+//to gesture move the inside use "options.panMedia"
+//that option is buggy though so its optional
+let gappingOnSide=function(elem1,elem2,options){
   let rect1=elem1.getBoundingClientRect()
   let rect2=elem2.getBoundingClientRect()
   let notCovering=''
@@ -70,7 +71,7 @@ let craft = function(target){
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
         }
-  interact(target).pointerEvents({
+  let interactable = interact(target).pointerEvents({
   holdDuration: 5000,
   })
     .resizable({
@@ -135,7 +136,7 @@ let craft = function(target){
       modifiers: [
         interact.modifiers.restrictRect({
           restriction: 'parent',
-          endOnly: true
+//           endOnly: true
         })
       ]
     })
@@ -202,9 +203,11 @@ let craft = function(target){
              isGap+=gappingOnSide(target,mediaElem)
           }
             // keep the dragged position in the data-x/data-y attributes
-          let x = (parseFloat(mediaElem.getAttribute('data-x')) || 0) + event.dx
-          let y = (parseFloat(mediaElem.getAttribute('data-y')) || 0) + event.dy
-          dragMoveFn(mediaElem,x,y)
+          if(options.panMedia){
+            let x = (parseFloat(mediaElem.getAttribute('data-x')) || 0) + event.dx
+            let y = (parseFloat(mediaElem.getAttribute('data-y')) || 0) + event.dy
+            dragMoveFn(mediaElem,x,y)
+          }
           isGap+=gappingOnSide(target,mediaElem)
           if(!isGap){
             lastSafe=Object.assign(lastSafe,mediaElem.getBoundingClientRect())
@@ -215,6 +218,14 @@ let craft = function(target){
 //           style.width = lastSafe.width
 //           style.height = lastSafe.height
 //           dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
+            // start a resize action and wait for inertia to finish
+            interactable.reflow({ name: 'drag', axis: 'xy' })
+
+            // start a drag action
+            interactable.reflow({
+              name: 'resize',
+              edges: { left: true, bottom: true, top:true, left:true },
+            })
           endFn()
         }
       }
