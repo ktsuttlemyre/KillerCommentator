@@ -92,7 +92,7 @@ let craft = function(target,options){
   
   let videoGhost=document.createElement('div')
   videoGhost.className='video-ghost'
-  document.body.prependBefore(videoGhost,target)
+  document.body.insertBefore(videoGhost,target)
   
 
  let mediaPos;
