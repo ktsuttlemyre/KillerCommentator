@@ -42,6 +42,19 @@
 .craft.edit-mode:after {
     right: 0px;
 } */
+
+
+.craft .edit-mode img:after, .craft .edit-mode video:after{
+  content: "";
+  width:20px;
+  height:20px;
+  border: 2px solid red;
+  box-sizing:content-box;
+  position:absolute;
+  left:50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
 .craft .handle{
   display:none;
   position:absolute;
