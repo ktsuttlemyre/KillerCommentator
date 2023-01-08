@@ -72,7 +72,8 @@ let craft = function(target,options){
           target.setAttribute('data-y', y)
         }
   let handles={tl:'corner',tr:'corner',bl:'corner',br:'corner',
-	       mr:'circle',ml:'circle',mt:'circle',mb:'circle',mc:'cross'}
+	       mr:'circle',ml:'circle',mt:'circle',mb:'circle',
+	       mc:'cross',transitionIndicator:'cross'}
 
  
   let init = function(){
