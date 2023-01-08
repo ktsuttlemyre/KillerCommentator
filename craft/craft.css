@@ -49,7 +49,7 @@
   height: 0 !important;
 }
 .craft .tl{
-  border-top: 20px solid red;
+  border-top: 20px solid #29e;
   border-right: 20px solid transparent;
   top:0;
   left:0;
@@ -63,7 +63,7 @@
   left:5px;
 }
 .craft .br{
-  border-bottom: 20px solid red;
+  border-bottom: 20px solid #29e;
   border-left: 20px solid transparent;
   bottom:0;
   right:0;
