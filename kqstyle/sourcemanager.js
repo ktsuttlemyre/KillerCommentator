@@ -292,20 +292,20 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			SourceManager.stages[id]=stage;
 			obj.elem=stage
 			SourceManager.stagesData[id]=obj
-
+			//add craft logic
+			craftStage(stage)
+			
 			if(obj.secondary){
 				stageParser([`${id}_secondary`,obj.secondary])
 			}
 		}
 		Object.entries(window.api.stages).forEach(stageParser)
-		let resizeDebounceTimer;
+		let resizeDebounceTimer=0;
 		//resize all stages with the window resize action
 		window.addEventListener('resize',function(){
 			// If there's a timer, cancel it
-			if (resizeDebounceTimer) {
-				window.cancelAnimationFrame(resizeDebounceTimer);
-			}
-
+			window.cancelAnimationFrame(resizeDebounceTimer);
+			
 		    	// Setup the new requestAnimationFrame()
 			resizeDebounceTimer = window.requestAnimationFrame(function () {
 				//debounced call
