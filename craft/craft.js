@@ -68,13 +68,11 @@ let craft = function(target,options){
     let updateGhost=function () {
 		if(!editMode){return}
 		let box = mediaElem.getBoundingClientRect()
-		mediaPos.width=box.width || mediaElem.videoWidth || 0
-		mediaPos.height=box.height || mediaElem.videoHeight || 0
 		let style = videoGhost.style
-		style.left=mediaPos.left
-		style.right=mediaPos.right
-		style.width=mediaPos.width
-		style.height=mediaPos.height
+		style.left=(box.left)+'px'
+		style.right=(box.right)+'px'
+		style.width=(box.width || mediaElem.videoWidth || 20)+'px'
+		style.height=(box.height || mediaElem.videoHeight || 20)+'px';
 		
 		return setTimeout(function() {
 			requestAnimationFrame(updateGhost)
