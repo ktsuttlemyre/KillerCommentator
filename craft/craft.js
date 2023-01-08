@@ -76,7 +76,7 @@ let craft = function(target,options){
 		
 		return setTimeout(function() {
 			requestAnimationFrame(updateGhost)
-		}, 500)
+		}, 1)
 	}
     updateGhost()
   }
