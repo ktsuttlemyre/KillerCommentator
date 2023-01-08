@@ -98,12 +98,12 @@
 }
 
 .craft .handle.cross{
-  background: red;
+  background: #29e;
   height: 20px;
   width: 2px;
 }
 .craft .handle.cross:after {
-  background: red;
+  background: #29e;
   content: "";
   height: 2px;
   left: -9px;
