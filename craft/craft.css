@@ -130,6 +130,34 @@
 
 
 
+/******************************
+         Drop areas
+*******************************/
+.craft-dropzone {
+  background-color: #bfe4ff;
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  width: 80%;
+  transition: background-color 0.3s;
+}
+
+.active {
+  border-color: #aaa;
+}
+
+.targeted {
+  background-color: #29e;
+  border-color: #fff;
+  border-style: solid;
+}
+
+.can-drop {
+  color: #000;
+  background-color: #4e4;
+}
+
 
 .no-events{
   pointer-events:none;
