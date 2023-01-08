@@ -448,8 +448,8 @@ window.addEventListener('resize', function() {
     cancelAnimationFrame(animationFrameId)
     window.requestAnimationFrame(function() {
         Object.keys(craft.instances).forEach(function(key){
-		let craft = craft.instances[key]
-		craft.reflow()
+		let inst = craft.instances[key]
+		inst.reflow()
 	})
     });
 }, true);
