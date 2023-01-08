@@ -293,7 +293,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			obj.elem=stage
 			SourceManager.stagesData[id]=obj
 			//add craft logic
-			craftStage(stage)
+			craftZone(stage)
 			
 			if(obj.secondary){
 				stageParser([`${id}_secondary`,obj.secondary])
