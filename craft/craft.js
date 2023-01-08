@@ -1,3 +1,84 @@
+let stage = function(target){
+	// enable draggables to be dropped into this
+	interact(target).dropzone({
+	  // only accept elements matching this CSS selector
+	  accept: '.craft',
+	  // Require a 75% element overlap for a drop to be possible
+	  overlap: 0.75,
+
+	  // listen for drop related events:
+	  ondropactivate: function (event) {
+	    // add active dropzone feedback
+	    event.target.classList.add('active')
+	  },
+	  ondragenter: function (event) {
+	    var draggableElement = event.relatedTarget
+	    var dropzoneElement = event.target
+
+	    // feedback the possibility of a drop
+	    dropzoneElement.classList.add('targeted')
+	    draggableElement.classList.add('can-drop')
+	  },
+	  ondragleave: function (event) {
+	    // remove the drop feedback style
+	    event.target.classList.remove('targeted')
+	    event.relatedTarget.classList.remove('can-drop')
+	  },
+	  ondrop: function (event) {
+	    // attach the zone with the view
+	    var elem = event.relatedTarget
+	    var video = elem.getElementByTag('video')
+	    var zone = event.target
+	    let associated = craft.instances[zone.dataset.craft]
+	    associated.free()
+	    
+	    
+	    let id = elem.id
+	    let opts = JSON.parse(localStorage.getItem(zone.id+"."+id))||{}
+	    opts = Object.assign(JSON.parse(zone.dataset.defaultOpts)||{},opts)
+	    let zDems = zone.getBoundingClientRect()
+	    elem.left=zDems.left
+	    elem.top=zDems.top
+	    elem.width=zDems.width
+	    elem.height=zDems.height
+
+	    elem.classList.add('animate-transition') 
+	    video.classList.add('animate-transition')
+	    
+	    
+	    if((video.width||video.videoWidth)>(video.height||video.videoHeight)){
+		video.style.width=zDems.width
+	    }else{
+		video.style.height=zDems.height
+	    }
+	
+	    //associate them
+	    zone.dataset.craft=zone.id
+	    craft.dataset.zone=craft.id
+
+	  },
+	  ondropdeactivate: function (event) {
+	    // remove active dropzone feedback
+	    event.target.classList.remove('active')
+	    event.target.classList.remove('target')
+	  }
+	})
+
+}
+
+
+let animationFrameId=0
+window.addEventListener('resize', function() {
+    cancelAnimationFrame(animationFrameId)
+    window.requestAnimationFrame(function() {
+        Object.keys(craft.instances).forEach(function(key){
+		let craft = craft.instances[key]
+		craft.reflow()
+	})
+    });
+}, true);
+
+
 //to gesture move the inside use "options.panMedia"
 //that option is buggy though so its optional
 
@@ -59,12 +140,18 @@ let craft = function(target,options){
     resetDebounceCustom=0 
     clearTimeout(editDebounceId)
       editMode=false
+      target.dataset.editmode=false
       target.classList.remove('edit-mode')
+      target.classList.add('animate-transition') 
+      mediaElem.classList.add('animate-transition')
     }
   let startEditMode=function(inital){
     resetDebounceCustom=inital
     editMode=true
+    target.dataset.editmode=true
     target.classList.add('edit-mode')
+    target.classList.remove('animate-transition') 
+    mediaElem.classList.remove('animate-transition')
     let updateGhost=function () {
 		if(!editMode){return}
 		let box = mediaElem.getBoundingClientRect()
@@ -88,7 +175,7 @@ let craft = function(target,options){
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
         }
-  let handles={tl:'circle',/*tr:'corner',bl:'corner',*/br:'circle',
+  let handles={/*tl:'circle',br:'circle',tr:'corner',bl:'corner',*/
 	       mr:'circle',ml:'circle',mt:'circle',mb:'circle',
 	       mc:'cross','transition-indicator':'cross'}
   
@@ -324,6 +411,28 @@ let craft = function(target,options){
         }
     })
     startEditMode(120000)
+    craft.instances[target.id]={
+	free:function(){
+		let zone = target.dataset.zone
+	    	if(zone && zone.dataset.craft && zone.dataset.craft==target.id){
+			//free them
+			alert('requested to free a craft from a zone/stage')
+		
+		}
+	},
+	edit:function(){
+		alert('edit on craft public interface not implmeneted')
+	},
+	reflow:function(){
+		let zone = target.dataset.zone
+	    	if(zone && zone.dataset.craft && zone.dataset.craft==target.id ){
+			//free them
+			alert('craft reflow needs fleshed out')
+		
+		}		
+		
+	}
+    }
   }
   
   
