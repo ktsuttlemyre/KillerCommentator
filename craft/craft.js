@@ -27,7 +27,7 @@ let craftZone = function(target){
 	  ondrop: function (event) {
 	    // attach the zone with the view
 	    var elem = event.relatedTarget
-	    var video = elem.querySelector('craft-cargo')[0]
+	    var video = elem.querySelector('.craft-cargo')
 	    var zone = event.target
 	    let associated = craft.instances[zone.dataset.craft]
 	    associated.free()
