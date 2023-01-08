@@ -77,7 +77,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 	}
 	
 
-	function isTransparent(x, y) { // x, y coordinate of pixel
+	function isTransparent(ctx, x, y) { // x, y coordinate of pixel
 		// returns true if pixel is fully transparent
 	    return ctx.getImageData(x, y, 1, 1).data[3] === 0; // 4th byte is alpha
 	};
@@ -87,7 +87,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		var ctx = canvas.getContext('2d');
 		let gameStarted=false
 		setInterval(function(){
-			if(isTransparent(100,100)!=gameStarted){
+			if(isTransparent(ctx,100,100)!=gameStarted){
 				if(gameStarted){
 					//game was started now its off
 					console.log('stats screen showing')
