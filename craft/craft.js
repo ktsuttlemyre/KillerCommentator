@@ -1,5 +1,4 @@
 let stage = function(target){
-let landingZone=function(){
 	// enable draggables to be dropped into this
 	interact(target).dropzone({
 	  // only accept elements matching this CSS selector
@@ -64,8 +63,8 @@ let landingZone=function(){
 	    event.target.classList.remove('target')
 	  }
 	})
-     }
 }
+
 
 let animationFrameId=0
 window.addEventListener('resize', function() {
