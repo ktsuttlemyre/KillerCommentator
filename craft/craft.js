@@ -65,7 +65,7 @@ let craft = function(target,options){
     resetDebounceCustom=inital
     editMode=true
     target.classList.add('edit-mode')
-	function loopKeyFrame() {
+    let updateGhost=function () {
 		if(!editMode){return}
 		let style = videoGhost.style
 		style.left=mediaPos.left
@@ -74,9 +74,10 @@ let craft = function(target,options){
 		style.height=mediaPos.height
 		
 		return setTimeout(function() {
-			requestAnimationFrame(loopKeyFrame)
+			requestAnimationFrame(updateGhost)
 		}, 500)
 	}
+    updateGhost()
   }
   let dragMoveFn=function (target,x,y) {
           // translate the element
