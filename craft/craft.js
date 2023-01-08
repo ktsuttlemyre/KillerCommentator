@@ -27,7 +27,7 @@ let craftZone = function(target){
 	  ondrop: function (event) {
 	    // attach the zone with the view
 	    var elem = event.relatedTarget
-	    var video = elem.getElementByTag('video')
+	    var video = elem.querySelector('craft-cargo')[0]
 	    var zone = event.target
 	    let associated = craft.instances[zone.dataset.craft]
 	    associated.free()
@@ -424,7 +424,9 @@ let craft = function(target,options){
   
   let mediaElem=target.querySelector('video')
   if(mediaElem){
+    mediaElem.classList.add('craft-cargo')
     if(!mediaElem.videoWidth || mediaElem.videoWidth==null){
+	    
       mediaElem.addEventListener( "loadedmetadata", function (e) {
         init()
       })
@@ -433,6 +435,7 @@ let craft = function(target,options){
     }
   }else{
       mediaElem=target.querySelector('img,canvas')
+      mediaElem.classList.add('craft-cargo')
       init()
   }
 }
