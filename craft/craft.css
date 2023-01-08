@@ -44,7 +44,7 @@
 } */
 
 
-.craft .edit-mode craft-cargo:after{
+.craft.edit-mode .craft-cargo:after{
   content: "";
   width:20px;
   height:20px;
