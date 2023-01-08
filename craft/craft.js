@@ -1,4 +1,4 @@
-let stage = function(target){
+let craftZone = function(target){
 	// enable draggables to be dropped into this
 	interact(target).dropzone({
 	  // only accept elements matching this CSS selector
