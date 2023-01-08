@@ -39,11 +39,11 @@
   display:block;
 }
 
-.craft .ball{
+.craft .handle.ball{
   background-color:#29e;
   border-radius: 50%;
 }
-.craft .corner{
+.craft .handle.corner{
   border-radius: 0;
   width: 0 !important;
   height: 0 !important;
@@ -96,7 +96,21 @@
    transform: translate(0%,-50%);
 }
 
-
+.craft .handle.cross{ {
+  background: red;
+  height: 20px;
+  position: relative;
+  width: 2px;
+}
+.craft .handle.cross:after {
+  background: red;
+  content: "";
+  height: 2px;
+  left: -10px;
+  position: absolute;
+  top: 10px;
+  width: 20px;
+}
 .craft .mc{
     margin: auto;
     top: 0; left: 0; bottom: 0; right: 0;
