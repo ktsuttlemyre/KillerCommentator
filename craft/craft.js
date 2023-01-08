@@ -66,18 +66,6 @@ let stage = function(target){
 }
 
 
-let animationFrameId=0
-window.addEventListener('resize', function() {
-    cancelAnimationFrame(animationFrameId)
-    window.requestAnimationFrame(function() {
-        Object.keys(craft.instances).forEach(function(key){
-		let craft = craft.instances[key]
-		craft.reflow()
-	})
-    });
-}, true);
-
-
 //to gesture move the inside use "options.panMedia"
 //that option is buggy though so its optional
 
@@ -453,4 +441,16 @@ craft.instances={}
 //document.querySelectorAll('.craft').forEach(craftIt)
 
 
+
+
+let animationFrameId=0
+window.addEventListener('resize', function() {
+    cancelAnimationFrame(animationFrameId)
+    window.requestAnimationFrame(function() {
+        Object.keys(craft.instances).forEach(function(key){
+		let craft = craft.instances[key]
+		craft.reflow()
+	})
+    });
+}, true);
 
