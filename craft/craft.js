@@ -191,7 +191,11 @@ let craft = function(target,options){
           interact.modifiers.restrictSize({
             min: { width: 100, height: 50 },
            // max: mediaElem
+          }),
+	  interact.modifiers.restrictRect({
+            restriction: 'parent',
           })
+		
         ],
         inertia: true
       })
