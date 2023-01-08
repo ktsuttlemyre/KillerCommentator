@@ -197,8 +197,8 @@ let craft = function(target,options){
             min: { width: 100, height: 50 },
            // max: mediaElem
           }),
-	  interact.modifiers.restrictRect({
-            restriction: 'parent',
+	  interact.modifiers.restrictEdges({
+            outer: 'parent',
           })
 		
         ],
