@@ -57,8 +57,7 @@ let craft = function(target,options){
   }
   let endEditMode=function(){
     resetDebounceCustom=0 
-       editDebounceIds.forEach(_ => clearTimeout)
-    editDebounceIds=[]
+    clearTimeout(editDebounceId)
       editMode=false
       target.classList.remove('edit-mode')
     }
@@ -66,6 +65,18 @@ let craft = function(target,options){
     resetDebounceCustom=inital
     editMode=true
     target.classList.add('edit-mode')
+	function loopKeyFrame() {
+		if(!editMode){return}
+		let style = videoGhost.style
+		style.left=mediaPos.left
+		style.right=mediaPos.right
+		style.width=mediaPos.width
+		style.height=mediaPos.height
+		
+		return setTimeout(function() {
+			requestAnimationFrame(loopKeyFrame)
+		}, 500)
+	}
   }
   let dragMoveFn=function (target,x,y) {
           // translate the element
@@ -77,12 +88,18 @@ let craft = function(target,options){
         }
   let handles={tl:'circle',/*tr:'corner',bl:'corner',*/br:'circle',
 	       mr:'circle',ml:'circle',mt:'circle',mb:'circle',
-	       mc:'cross',transitionIndicator:'cross'}
+	       mc:'cross','transition-indicator':'cross'}
+  
+  let videoGhost=document.createElement('div')
+  videoGhost.className='video-ghost'
+  document.body.prependBefore(videoGhost,target)
+  
 
- 
+ let mediaPos;
+ let lastSafe;
   let init = function(){
-      let mediaPos=Object.assign({angle:0,scale:0},mediaElem.getBoundingClientRect())
-      let lastSafe=Object.assign({},mediaPos)
+      mediaPos=Object.assign({angle:0,scale:0},mediaElem.getBoundingClientRect())
+      lastSafe=Object.assign({},mediaPos)
       let aspectRatio=(mediaElem.videoWidth||mediaPos.width) / (mediaElem.videoHeight||mediaPos.height)
   
   
