@@ -32,24 +32,28 @@ let craft = function(target,options){
   options = Object.assign({panMedia:false},options||{})
   target.classList.add('events-none')
   target.classList.add('craft')
-  let editDebounceIds=[];
-  let resetDebounce=5000
-  let resetDebounceCustom
   let editMode=false
 
   let initGestDist=0
 
   
+  let editDebounceId=null;
+  let resetDebounce=5000
+  let resetDebounceCustom
+  let actions=0
   let startFn=function(event) {
-    editDebounceIds.forEach(_ => clearTimeout)
-    editDebounceIds=[]
+    actions++
+    clearTimeout(editDebounceId)
   }
   let endFn=function(event) {
-    //TODO future optimization. Only check for collision at the end of the move
-    // then calculate difference to move the elemet to proper position
-    //gappingOnSide(target,mediaElem)
-    
-    editDebounceIds.push(setTimeout(endEditMode, resetDebounceCustom || resetDebounce))
+    actions--
+    if(actions==1){
+	//TODO future optimization. Only check for collision at the end of the move
+	// then calculate difference to move the elemet to proper position
+	//gappingOnSide(target,mediaElem)
+
+	editDebounceId = setTimeout(endEditMode, resetDebounceCustom || resetDebounce)
+    }
   }
   let endEditMode=function(){
     resetDebounceCustom=0 
