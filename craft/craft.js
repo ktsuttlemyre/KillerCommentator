@@ -67,6 +67,9 @@ let craft = function(target,options){
     target.classList.add('edit-mode')
     let updateGhost=function () {
 		if(!editMode){return}
+		let box = mediaElem.getBoundingClientRect()
+		mediaPos.width=box.width || mediaElem.videoWidth || 0
+		mediaPos.height=box.height || mediaElem.videoHeight || 0
 		let style = videoGhost.style
 		style.left=mediaPos.left
 		style.right=mediaPos.right
