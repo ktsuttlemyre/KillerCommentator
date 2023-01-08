@@ -4,7 +4,7 @@ let craftZone = function(target){
 	  // only accept elements matching this CSS selector
 	  accept: '.craft',
 	  // Require a 75% element overlap for a drop to be possible
-	  overlap: 0.75,
+	  overlap: 0.90,
 
 	  // listen for drop related events:
 	  ondropactivate: function (event) {
@@ -30,8 +30,9 @@ let craftZone = function(target){
 	    var video = elem.querySelector('.craft-cargo')
 	    var zone = event.target
 	    let associated = craft.instances[zone.dataset.craft]
-	    associated.free()
-	    
+	    if(associated){
+	    	associated.free()
+	    }
 	    
 	    let id = elem.id
 	    let opts = JSON.parse(localStorage.getItem(zone.id+"."+id))||{}
@@ -397,28 +398,46 @@ let craft = function(target,options){
         }
     })
     startEditMode(120000)
-    craft.instances[target.id]={
-	free:function(){
-		let zone = target.dataset.zone
-	    	if(zone && zone.dataset.craft && zone.dataset.craft==target.id){
+    let free=function(){
+		let zone = document.getElementById(target.dataset.zone)
+		
+	    	if(zone && zone.dataset.craft==target.id){
 			//free them
-			alert('requested to free a craft from a zone/stage')
+			zone.dataset.craft=''
+			target.dataset.zone=''
+			
+			reflow()
+// 			interactable.fire({
+// 				type: 'dragstart',
+// 				target: element,
+// 				dx: 20,
+// 				dy: 20,
+// 			});
+			
+			
 		
 		}
-	},
-	edit:function(){
-		alert('edit on craft public interface not implmeneted')
-	},
-	reflow:function(){
-		let zone = target.dataset.zone
-	    	if(zone && zone.dataset.craft && zone.dataset.craft==target.id ){
-			//free them
-			alert('craft reflow needs fleshed out')
-		
-		}		
-		
 	}
+    let edit=function(){
+	alert('edit on craft public interface not implmeneted')
+	}
+    let reflow function(){
+	interactable.reflow({
+		name: 'resize',
+		edges: { left: true, top: true,},
+	})
+	interactable.reflow({ name: 'drag', axis: 'xy' })
+	}
+    promise.resolve(
+    craft.instances[target.id]={
+	free:free,
+	edit:edit,
+	reflow:reflow,	
+	}
+      )
     }
+	//let promise=new Promise()
+	//return promise
   }
   
   
