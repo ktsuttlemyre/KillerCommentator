@@ -70,7 +70,7 @@ let craft = function(target,options){
 		let box = mediaElem.getBoundingClientRect()
 		let style = videoGhost.style
 		style.left=(box.left)+'px'
-		style.right=(box.right)+'px'
+		style.top=(box.top)+'px'
 		style.width=(box.width || mediaElem.videoWidth || 20)+'px'
 		style.height=(box.height || mediaElem.videoHeight || 20)+'px';
 		
