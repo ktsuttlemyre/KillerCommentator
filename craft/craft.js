@@ -1,4 +1,5 @@
 let stage = function(target){
+let landingZone=function(){
 	// enable draggables to be dropped into this
 	interact(target).dropzone({
 	  // only accept elements matching this CSS selector
@@ -63,9 +64,8 @@ let stage = function(target){
 	    event.target.classList.remove('target')
 	  }
 	})
-
+     }
 }
-
 
 let animationFrameId=0
 window.addEventListener('resize', function() {
@@ -116,7 +116,6 @@ let craft = function(target,options){
   let editMode=false
 
   let initGestDist=0
-
   
   let editDebounceId=null;
   let resetDebounce=5000
@@ -450,7 +449,7 @@ let craft = function(target,options){
       init()
   }
 }
-
+craft.instances={}
 
 //document.querySelectorAll('.craft').forEach(craftIt)
 
