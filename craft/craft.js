@@ -394,12 +394,8 @@ let craft = function(target,options){
       })
       .on('hold', function (event) {
       startEditMode()
-      }).gesturable({
-  //         modifiers: [
-  //           interact.modifiers.restrictRect({
-  //             restriction: mediaElem
-  //           })
-  //         ],
+      })
+      interact(mediaElem).gesturable({
         listeners: {
           start:function(event){
             	let box = mediaElem.getBoundingClientRect()
