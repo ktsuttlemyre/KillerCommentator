@@ -238,6 +238,7 @@ let craft = function(target,options){
       handles[key]=elem;
     })
     
+    let snappedToMedia=false
     let interactable = interact(target).pointerEvents({
     holdDuration: 5000,
     }) .styleCursor(false)
@@ -401,11 +402,20 @@ let craft = function(target,options){
   //         ],
         listeners: {
           start:function(event){
-            let box = mediaElem.getBoundingClientRect()
-            mediaPos.width=box.width || mediaElem.videoWidth || 0
-            mediaPos.height=box.height || mediaElem.videoHeight || 0
-            initGestDist=event.distance
-          startFn()
+            	let box = mediaElem.getBoundingClientRect()
+            	mediaPos.width=box.width || mediaElem.videoWidth || 0
+            	mediaPos.height=box.height || mediaElem.videoHeight || 0
+            	initGestDist=event.distance
+          	startFn()
+		let box1=target.getBoundingClientRect()
+		let box2=mediaElem.getBoundingClientRect()
+		let toler = 5;
+		if(Math.abs(box1.x - box2.x) <= toler &&
+		   Math.abs(box1.y - box2.y) <= toler &&
+		   Math.abs(box1.width - box2.width) <= toler &&
+		   Math.abs(box1.height - box2.height) <= toler){
+			snappedToMedia=true
+		}
           },
           move (event) {
             if(!editMode){
@@ -438,13 +448,8 @@ let craft = function(target,options){
               lastSafe=Object.assign(lastSafe,mediaElem.getBoundingClientRect())
             }
               //interactable.reflow({ name: 'drag', axis: 'xy' })
-		let box1=target.getBoundingClientRect()
-		let box2=mediaElem.getBoundingClientRect()
-		let toler = 5;
-		if(Math.abs(box1.x - box2.x) <= toler &&
-		   Math.abs(box1.y - box2.y) <= toler &&
-		   Math.abs(box1.width - box2.width) <= toler &&
-		   Math.abs(box1.height - box2.height) <= toler){
+
+		if(snappedToMedia){
 			interactable.fire({
 				type: 'resizestart',
 				target: target,
@@ -459,21 +464,11 @@ let craft = function(target,options){
 				target: target,
 			});
 		}
-              target.style.width=window.innerWidth
-              target.style.height=window.innerHeight
-              // start a drag action
-	      instance.isReflow=true
-              interactable.reflow({
-                name: 'resize',
-                edges: { right: true, bottom: true,},
-              })
           },
           end:function(){
-  //           let style = mediaElem.style
-  //           style.width = lastSafe.width
-  //           style.height = lastSafe.height
-  //           dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
-              // start a resize action and wait for inertia to finish
+		snappedToMedia=false
+
+                // start a resize action and wait for inertia to finish
 		instance.isReflow=true
 		interactable.reflow({
 			name: 'resize',
