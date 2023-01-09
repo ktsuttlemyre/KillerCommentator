@@ -283,7 +283,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			var zone = craftZone(id,style)
 			appendTo(inner,zone.elem)
 			if(zone.secondary){
-				appendTo(inner,zone.secondary)
+				appendTo(inner,zone.secondary.elem)
 			}
 		}
 		Object.entries(window.api.zones).forEach(stageParser)
