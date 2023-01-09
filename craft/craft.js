@@ -567,6 +567,7 @@ let craft = function(target,options){
 	alert('edit on craft public interface not implmeneted')
 	}
     let reflow = function(opts){
+	    return
 	Object.assign(instance,opts)
 	isReflow=true
 	interactable.reflow({
