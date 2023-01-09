@@ -27,12 +27,6 @@
   left:0;
 }
 
-.kc-stage {
-      position:absolute;
-      border:0;
-      padding:0;
-}
-
 #kqstyle-viewport {
   pointer-events:none;
 }
