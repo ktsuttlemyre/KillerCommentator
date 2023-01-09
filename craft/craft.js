@@ -15,7 +15,7 @@ let craftZone = function(id,geometry){
 
 	
 	
-	zone.dataset.geometry=encodeURIComponent(JSON.stringify(geometry))
+	
 	// enable draggables to be dropped into this
 	interact(zone).dropzone({
 	  // only accept elements matching this CSS selector
@@ -59,7 +59,7 @@ let craftZone = function(id,geometry){
 	    
 	    let id = elem.id
 	    let geometry = JSON.parse(localStorage.getItem(zone.id+"."+id)||'{}')
-	    geometry = Object.assign(JSON.parse(decodeURIComponent(zone.dataset.geometry)||'{}'),geometry)
+	    geometry = Object.assign({},face.geometry,geometry)
 	    let zDems = zone.getBoundingClientRect()
 	    elem.left=zDems.left
 	    elem.top=zDems.top
