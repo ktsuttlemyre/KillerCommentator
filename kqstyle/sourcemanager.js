@@ -281,8 +281,11 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			
 			//add craft logic
 			var zone = craftZone(id,style)
+			zone.elem.className='kc-stage'
 			appendTo(inner,zone.elem)
+			
 			if(zone.secondary){
+				zone.secondary.elem.className='kc-stage'
 				appendTo(inner,zone.secondary.elem)
 			}
 		}
