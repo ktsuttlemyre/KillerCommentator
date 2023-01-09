@@ -442,7 +442,7 @@ let craft = function(target,options){
 		if(Math.abs(box1.x - box2.x) <= toler &&
 		   Math.abs(box1.y - box2.y) <= toler &&
 		   Math.abs(box1.width - box2.width) <= toler &&
-		   Math.abs(box1.height - box2.height) <= toler &&){
+		   Math.abs(box1.height - box2.height) <= toler){
 			interactable.fire({
 				type: 'resizestart',
 				target: target,
