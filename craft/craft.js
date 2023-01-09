@@ -1,6 +1,24 @@
-let craftZone = function(target){
+let craftZone = function(id,geometry){
+	
+	let zone = document.createElement('div');
+	zone.id=id;
+	Object.keys(geometry).forEach(function(key){
+		//filter out secondary
+		if(key == 'secondary'){return}
+		zone.style[key]=geometry[key]
+	})
+	zone.className+=' kc-stage'
+
+	let secondary;
+	if(geometry.secondary){
+		secondary = craftZone([`${id}_secondary`,geometry.secondary])
+	}
+
+	
+	
+	zone.dataset.geometry=encodeURIComponent(JSON.stringify(geometry))
 	// enable draggables to be dropped into this
-	interact(target).dropzone({
+	interact(zone).dropzone({
 	  // only accept elements matching this CSS selector
 	  accept: '.craft',
 	  // Require a 75% element overlap for a drop to be possible
@@ -35,8 +53,8 @@ let craftZone = function(target){
 	    }
 	    
 	    let id = elem.id
-	    let opts = JSON.parse(localStorage.getItem(zone.id+"."+id)||'{}')
-	    opts = Object.assign(JSON.parse(zone.dataset.opts||'{}'),opts)
+	    let geometry = JSON.parse(localStorage.getItem(zone.id+"."+id)||'{}')
+	    geometry = Object.assign(JSON.parse(decodeURIComponent(zone.dataset.geometry)||'{}'),geometry)
 	    let zDems = zone.getBoundingClientRect()
 	    elem.left=zDems.left
 	    elem.top=zDems.top
@@ -64,6 +82,19 @@ let craftZone = function(target){
 	    event.target.classList.remove('target')
 	  }
 	})
+	
+	let face = {
+		elem:zone,
+		geometry:geometry,
+		secondary:secondary,
+		saveGeoMods:function(){
+			let geometry = {}
+			let associated = document.getElementById(zone.dataset.craft)
+			localStorage.setItem(id+"."+associated.id,JSON.stringify(geometry))
+		}
+	}
+	craftZone.instances[id]=face
+	return face
 }
 
 
@@ -279,7 +310,10 @@ let craft = function(target,options){
             target.setAttribute('data-y', y)
 
           },end:function(event){
-		  if(target.dataset.
+		  let zone=getZone();
+		  if(zone){
+			 zone.saveGeoMods() 
+		  }
 		  endFn(event)
 	  }
         },
@@ -401,12 +435,17 @@ let craft = function(target,options){
         }
     })
     startEditMode(120000)
+    let getZone = function(){
+	let zone = craftZone.instances[target.dataset.zone]
+	if(zone && zone.dataset.craft==target.id){
+		return zone
+	}
+    }
     let free=function(){
-		let zone = document.getElementById(target.dataset.zone)
-		
-	    	if(zone && zone.dataset.craft==target.id){
+		let zone = getZone()
+		if(zone)(
 			//free them
-			zone.dataset.craft=''
+			zone.elem.dataset.craft=''
 			target.dataset.zone=''
 			
 			reflow()
