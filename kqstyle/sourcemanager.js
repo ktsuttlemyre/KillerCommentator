@@ -81,7 +81,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	}
 							  
 	!window.api && (window.api={});				  
-	!window.api.stages && (window.api.stages={
+	!window.api.zones && (window.api.zones={
 		'stage_main':{
 			top:'0px',
 			left:'0px',
@@ -202,9 +202,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			},
 		},
 	});
-							  
-	SourceManager.stages={}
-	SourceManager.stagesData={}
+
 				
 	SourceManager.resize=function(e){
 		let kqStyleHeight=1080
@@ -228,9 +226,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		kqstyle_viewport.style.left=offsetX+"px"
 
 
-		Object.entries(SourceManager.stagesData).forEach(function(entry){
-			const [id, data] = entry;
-			let elem=data.elem;
+		Object.entries(craftZone.instances).forEach(function(entry){
+			const [id, instance] = entry;
+			let elem=instance.elem;
+			let data = instance.geometry
 			if(id=="stage_fullscreen"){return}
 
 		    var newWidth    = parseFloat(data.width) / ratioHeight,
@@ -278,25 +277,13 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 
 		//attach all the stages to the kqstyle-viewport-body
 		let stageParser=function(entry){
-			const [id, obj] = entry;
-			let stage = document.createElement('div');
-			stage.id=id;
-			Object.keys(obj).forEach(function(key){
-				//filter out secondary
-				if(key == 'secondary'){return}
-				stage.style[key]=obj[key]
-			})
-			stage.className+=' kc-stage'
-
-			appendTo(inner,stage)
-			SourceManager.stages[id]=stage;
-			obj.elem=stage
-			SourceManager.stagesData[id]=obj
-			//add craft logic
-			craftZone(stage)
+			const [id, style] = entry;
 			
-			if(obj.secondary){
-				stageParser([`${id}_secondary`,obj.secondary])
+			//add craft logic
+			var zone = craftZone(id,style)
+			appendTo(inner,zone.elem)
+			if(zone.secondary){
+				appendTo(inner,zone.secondary)
 			}
 		}
 		Object.entries(window.api.stages).forEach(stageParser)
@@ -318,7 +305,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	SourceManager.load=function(source,stage,player){
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
-		stage=stage||SourceManager.stages.stage_main;
+		stage=stage||craftZone.instances['stage_main'].elem;
 		
 		stage.innerHTML = "";
 
@@ -335,9 +322,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		var tmp = source;
 		switch(source){
 			case "whiteboard":
-			return SourceManager.load(SourceManager.sources.urls.whiteboard,SourceManager.stages.stage_main,SourceManager.players.iframe);	
+			return SourceManager.load(SourceManager.sources.urls.whiteboard,craftZone.instances['stage_main'].elem,SourceManager.players.iframe);	
 			case "twitch":
-			return SourceManager.load(config.twitch,SourceManager.stages.stage_main,SourceManager.players.twitch);
+			return SourceManager.load(config.twitch,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
 			default:
 				//is it a whiteboard?
 				source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
