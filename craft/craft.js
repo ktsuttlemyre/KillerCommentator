@@ -78,11 +78,12 @@ let craftZone = function(id,geometry){
 	  },
 	  ondrop: function (event) {
 	    // attach the zone with the view
-	    var elem = event.relatedTarget
+	    let elem = event.relatedTarget
+	    let craft = craft.instances[event.relatedTarget.id]
 	    let zone = event.target
 	    let associated = craft.instances[zone.dataset.craft]
-	    if(!associated.emulateDrop){
-		  if(!associated.isReflow){
+	    if(!craft.emulateDrop){
+		  if(!craft.isReflow){
 		    return
 		  }
 	    }
