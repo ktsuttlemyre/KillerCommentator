@@ -14,14 +14,14 @@ let craftZone = function(id,geometry){
 	}
 
 	let associate=function(zone,elem){
-	    let associated = craft.instances[zone.dataset.craft]
-	    if(!associated.emulateDrop){
-		  if(!associated.isReflow){
+	    let instance = craft.instances[elem.id]
+	    if(instance && !instance.emulateDrop){
+		  if(!instance.isReflow){
 		    return
 		  }
 	    }
 	    var video = elem.querySelector('.craft-cargo')
-
+	    let associated = craft.instances[zone.dataset.craft]
 	    if(associated){
 	    	associated.free()
 	    }
@@ -341,7 +341,7 @@ let craft = function(target,options){
             var y = (parseFloat(target.getAttribute('data-y')) || 0)
 	    let width,height;
 	    if(event.matchRect){
-	    	let box=event.matchElement
+	    	let box=event.matchRect
 		width=box.width
 		height=box.height
 		x=box.x;
