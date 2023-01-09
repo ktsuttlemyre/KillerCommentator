@@ -96,6 +96,7 @@ let craftZone = function(id,geometry){
 	craftZone.instances[id]=face
 	return face
 }
+craftZone.instances={}
 
 
 //to gesture move the inside use "options.panMedia"
