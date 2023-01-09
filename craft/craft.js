@@ -242,7 +242,8 @@ let craft = function(target,options){
   let videoGhost=document.createElement('div')
   videoGhost.className='video-ghost'
   document.body.insertBefore(videoGhost,target)
-  
+  let minWidth=150
+  let minHeight=100
 
  let mediaPos;
  let lastSafe;
@@ -377,7 +378,7 @@ let craft = function(target,options){
 
           // minimum size
           interact.modifiers.restrictSize({
-            min: { width: 200, height: 150 },
+            min: { width: minWidth, height: minHeight },
            // max: mediaElem
           }),
 	  interact.modifiers.restrictEdges({
@@ -571,7 +572,7 @@ let craft = function(target,options){
 		interactable.fire({
 			type: 'resizemove',
 			target: target,
-			matchRect: {x:target.style.left,y:target.style.top,width:0,height:0},
+			matchRect: {x:target.style.left,y:target.style.top,width:minWidth,height:minHeight},
 		});
 		interactable.fire({
 			type: 'resizeend',
