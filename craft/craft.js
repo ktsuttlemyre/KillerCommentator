@@ -94,6 +94,10 @@ let craftZone = function(id,geometry){
 		}
 	}
 	craftZone.instances[id]=face
+	if(secondary){
+		craftZone.instances[secondary.elem.id]=secondary
+		face.secondary=secondary
+	}
 	return face
 }
 craftZone.instances={}
