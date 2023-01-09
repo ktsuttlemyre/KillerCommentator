@@ -60,14 +60,14 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 			let kqstyle = document.getElementById('kqstyle-viewport')
 			kqstyle.style.background=`rgba(255,255,255,.5)`
 			kqstyle.style.opacity="50%"
-			let entries = Object.entries(SourceManager.stagesData)
+			let entries = Object.entries(craftZone.instances)
 			entries.forEach(function(entry,index){
-				const [id, data] = entry;
-				let elem=data.elem;
+				const [id, instance] = entry;
+				let elem=instance.elem;
 				if(id.startsWith('stage_fullscreen')){return}
 				elem.style.background=selectColor(index,.5)
-				if(data.secondary){
-					elem = document.getElementById(id+"_secondary")
+				if(instance.secondary){
+					elem = instance.secondary.elem
 					elem.style.background=selectColor(index,.5)
 					elem.innerHTML="secondary"
 				}
