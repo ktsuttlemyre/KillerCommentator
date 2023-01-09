@@ -205,7 +205,8 @@ let craft = function(target,options){
     updateGhost()
   }
   let dragMoveFn=function (target,x,y) {
-	  if(x==null && y==null){
+	  if(y==null){
+		let event = x
 		x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
               	y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 	  }
@@ -374,7 +375,7 @@ let craft = function(target,options){
             if(!editMode){
               return
             }
-            dragMoveFn(target)
+            dragMoveFn(target,event)
           },
           end:endFn
     },
@@ -436,9 +437,9 @@ let craft = function(target,options){
             }
               // keep the dragged position in the data-x/data-y attributes
             if(options.gesturePansMedia){
-              dragMoveFn(mediaElem)
+              dragMoveFn(mediaElem,event)
             }else if(options.gesturePansCrop){
-              dragMoveFn(target)
+              dragMoveFn(target,event)
 	    }
             isGap+=gappingOnSide(target,mediaElem)
             if(!isGap){
