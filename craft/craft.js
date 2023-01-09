@@ -52,7 +52,16 @@ let craftZone = function(id,geometry){
 	
 	if(!(id.indexOf('secondary')>=0)){
 	// enable draggables to be dropped into this
-	interact(zone).dropzone({
+	interact(zone).snap({
+		//make drag items snap into place
+		//https://github.com/taye/interact.js/issues/79
+	      mode: 'anchor',
+	      anchors: [],
+	      range: Infinity,
+	      elementOrigin: { x: 0.5, y: 0.5 },
+	      //endOnly: true
+	})
+	.dropzone({
 	  // only accept elements matching this CSS selector
 	  accept: '.craft',
 	  // Require a 75% element overlap for a drop to be possible
@@ -70,11 +79,22 @@ let craftZone = function(id,geometry){
 	    // feedback the possibility of a drop
 	    dropzoneElement.classList.add('targeted')
 	    draggableElement.classList.add('can-drop')
+		var dropRect = interact.getElementRect(event.target),
+		dropCenter = {
+		  x: dropRect.left + dropRect.width  / 2,
+		  y: dropRect.top  + dropRect.height / 2
+		};
+
+		event.draggable.snap({
+		 anchors: [ dropCenter ]
+		});
 	  },
 	  ondragleave: function (event) {
 	    // remove the drop feedback style
 	    event.target.classList.remove('targeted')
 	    event.relatedTarget.classList.remove('can-drop')
+	    event.draggable.snap(false);
+
 	  },
 	  ondrop: function (event) {
 	    // attach the zone with the view
