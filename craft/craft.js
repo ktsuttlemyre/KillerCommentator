@@ -173,6 +173,28 @@ let craft = function(target,options){
 	editDebounceId = setTimeout(endEditMode, resetDebounceCustom || resetDebounce)
     }
   }
+  let asIcon=function(bool){
+	  if(bool){
+  		target.classList.add('is-icon')
+		videoGhost.classList.add('d-none')
+		interactable.fire({
+			type: 'resizestart',
+			target: target,
+		});
+		interactable.fire({
+			type: 'resizemove',
+			target: target,
+			matchRect: {x:target.style.left,y:target.style.top,width:0,height:0},
+		});
+		interactable.fire({
+			type: 'resizeend',
+			target: target,
+		});
+	  }else{
+		target.classList.remove('is-icon')
+		videoGhost.classList.remove('d-none')
+	  }
+  }
   let endEditMode=function(){
     resetDebounceCustom=0 
     clearTimeout(editDebounceId)
@@ -320,8 +342,8 @@ let craft = function(target,options){
             var x = (parseFloat(target.getAttribute('data-x')) || 0)
             var y = (parseFloat(target.getAttribute('data-y')) || 0)
 	    let width,height;
-	    if(event.matchElement){
-	    	let box=event.matchElement.getBoundingClientRect();
+	    if(event.matchRect){
+	    	let box=event.matchElement
 		width=box.width
 		height=box.height
 		x=box.x;
@@ -357,7 +379,7 @@ let craft = function(target,options){
 
           // minimum size
           interact.modifiers.restrictSize({
-            min: { width: 100, height: 50 },
+            min: { width: 200, height: 150 },
            // max: mediaElem
           }),
 	  interact.modifiers.restrictEdges({
@@ -455,7 +477,7 @@ let craft = function(target,options){
 			interactable.fire({
 				type: 'resizemove',
 				target: target,
-				matchElement: mediaElem,
+				matchRect: mediaElem.getBoundingClientRect(),
 			});
 			interactable.fire({
 				type: 'resizeend',
@@ -527,6 +549,7 @@ let craft = function(target,options){
 	craft.instances[target.id]=instance
         instance.isReflow=true
 	startEditMode(120000)
+	instance.asIcon(true)
 	instance.isReflow=false
 	//let promise=new Promise()
 	//return promise
