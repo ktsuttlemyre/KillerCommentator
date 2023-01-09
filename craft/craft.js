@@ -438,7 +438,11 @@ let craft = function(target,options){
               //interactable.reflow({ name: 'drag', axis: 'xy' })
 		let box1=target.getBoundingClientRect()
 		let box2=mediaElem.getBoundingClientRect()
-		if(box1.x==box2.x && box1.y==box2.y && box1.width==box2.width && box1.height==box2.height){
+		let toler = 5;
+		if(Math.abs(box1.x - box2.x) <= toler &&
+		   Math.abs(box1.y - box2.y) <= toler &&
+		   Math.abs(box1.width - box2.width) <= toler &&
+		   Math.abs(box1.height - box2.height) <= toler &&){
 			interactable.fire({
 				type: 'resizestart',
 				target: target,
