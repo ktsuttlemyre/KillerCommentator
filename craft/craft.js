@@ -363,27 +363,27 @@ let craft = function(target,options){
         inertia: false
       })
 
-      .draggable({
-        listeners: {
-          start:startFn,
-          move: function(event){
-            if(!editMode){
-              return
-            }
-            // keep the dragged position in the data-x/data-y attributes
-            let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-            let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-            dragMoveFn(target,x,y)
-          },
-          end:endFn
-    },
-        inertia: true,
-        modifiers: [
-          interact.modifiers.restrictRect({
-            restriction: 'parent',
-          })
-        ]
-      })
+//       .draggable({
+//         listeners: {
+//           start:startFn,
+//           move: function(event){
+//             if(!editMode){
+//               return
+//             }
+//             // keep the dragged position in the data-x/data-y attributes
+//             let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+//             let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+//             dragMoveFn(target,x,y)
+//           },
+//           end:endFn
+//     },
+//         inertia: true,
+//         modifiers: [
+//           interact.modifiers.restrictRect({
+//             restriction: 'parent',
+//           })
+//         ]
+//       })
       .on('tap', function (event) {
 
         console.log('move to secondary',event)
