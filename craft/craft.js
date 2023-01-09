@@ -43,6 +43,11 @@ let craftZone = function(id,geometry){
 	    event.relatedTarget.classList.remove('can-drop')
 	  },
 	  ondrop: function (event) {
+	    if(!event.emulateDrop){
+		  if(!event.isTrusted){
+		    return
+		  }
+	    }
 	    // attach the zone with the view
 	    var elem = event.relatedTarget
 	    var video = elem.querySelector('.craft-cargo')
