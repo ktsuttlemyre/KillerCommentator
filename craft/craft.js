@@ -313,23 +313,25 @@ let craft = function(target,options){
             }
             var x = (parseFloat(target.getAttribute('data-x')) || 0)
             var y = (parseFloat(target.getAttribute('data-y')) || 0)
+	    let width,height;
 	    if(event.matchElement){
 	    	let box=event.matchElement.getBoundingClientRect();
-		target.style.width=box.width
-		target.style.height=box.height
-		target.style.transform = 'translate(' + box.x + 'px,' + box.y + 'px)'
+		width=box.width
+		height=box.height
+		x=box.x;
+		y=box.y
 	    }else{
 		    // translate when resizing from top or left edges
 		    x += event.deltaRect.left
 		    y += event.deltaRect.top
 
-
 		    // update the element's style
-		    target.style.width = event.rect.width + 'px'
-		    target.style.height = event.rect.height + 'px'
-
-		    target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+		    width = event.rect.width
+		    height = event.rect.height
 	    }
+	    target.style.width = width + 'px'
+	    target.style.height = height + 'px'
+ 	    target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
             target.setAttribute('data-x', x)
             target.setAttribute('data-y', y)
 
