@@ -44,7 +44,7 @@ let craftZone = function(id,geometry){
 	  },
 	  ondrop: function (event) {
 	    if(!event.emulateDrop){
-		  if(!event.isTrusted){
+		  if(!event.isReflow){
 		    return
 		  }
 	    }
@@ -304,18 +304,23 @@ let craft = function(target,options){
             }
             var x = (parseFloat(target.getAttribute('data-x')) || 0)
             var y = (parseFloat(target.getAttribute('data-y')) || 0)
+	    if(event.matchElement){
+	    	let box=event.matchElement.getBoundingClientRect();
+		target.style.width=box.width
+		target.style.height=box.height
+		target.style.transform = 'translate(' + box.x + 'px,' + box.y + 'px)'
+	    }else{
+		    // translate when resizing from top or left edges
+		    x += event.deltaRect.left
+		    y += event.deltaRect.top
 
-            // translate when resizing from top or left edges
-            x += event.deltaRect.left
-            y += event.deltaRect.top
 
+		    // update the element's style
+		    target.style.width = event.rect.width + 'px'
+		    target.style.height = event.rect.height + 'px'
 
-            // update the element's style
-            target.style.width = event.rect.width + 'px'
-            target.style.height = event.rect.height + 'px'
-
-            target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-
+		    target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+	    }
             target.setAttribute('data-x', x)
             target.setAttribute('data-y', y)
 
@@ -422,6 +427,23 @@ let craft = function(target,options){
               lastSafe=Object.assign(lastSafe,mediaElem.getBoundingClientRect())
             }
               //interactable.reflow({ name: 'drag', axis: 'xy' })
+		let box1=target.getBoundingClientRect()
+		let box2=mediaElem.getBoundingClientRect()
+		if(box1.x==box2.x && box1.y==box2.y && box1.width==box2.width && box1.height==box2.height){
+			interactable.fire({
+				type: 'resizestart',
+				target: target,
+			});
+			interactable.fire({
+				type: 'resizemove',
+				target: target,
+				matchElement=mediaElem,
+			});
+			interactable.fire({
+				type: 'resizeend',
+				target: target,
+			});
+		}
               target.style.width=window.innerWidth
               target.style.height=window.innerHeight
               // start a drag action
@@ -474,18 +496,21 @@ let craft = function(target,options){
 	alert('edit on craft public interface not implmeneted')
 	}
     let reflow = function(){
+	face.reflowing=true
 	interactable.reflow({
 		name: 'resize',
 		edges: { left: true, top: true,},
 	})
 	interactable.reflow({ name: 'drag', axis: 'xy' })
+	face.reflowing=false
 	}
     //promise.resolve(
-    craft.instances[target.id]={
+    letface={
 	free:free,
 	edit:edit,
 	reflow:reflow,	
 	}
+	craft.instances[target.id]=face
    //   )
    // }
 	//let promise=new Promise()
