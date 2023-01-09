@@ -434,11 +434,11 @@ let craft = function(target,options){
                isGap+=gappingOnSide(target,mediaElem)
             }
               // keep the dragged position in the data-x/data-y attributes
-            if(options.panMedia){
+            //if(options.panMedia){
               let x = (parseFloat(mediaElem.getAttribute('data-x')) || 0) + event.dx
               let y = (parseFloat(mediaElem.getAttribute('data-y')) || 0) + event.dy
-              dragMoveFn(mediaElem,x,y)
-            }
+              dragMoveFn(target,x,y)
+            //}
             isGap+=gappingOnSide(target,mediaElem)
             if(!isGap){
               lastSafe=Object.assign(lastSafe,mediaElem.getBoundingClientRect())
