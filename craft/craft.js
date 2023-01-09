@@ -233,6 +233,7 @@ let craft = function(target,options){
 		}
 		target.style.width = width + 'px'
 		target.style.height = height + 'px'
+		dragMoveFn(target,x,y)
 	  }
   let handles={/*tl:'circle',br:'circle',tr:'corner',bl:'corner',*/
 	       mr:'circle',ml:'circle',mt:'circle',mb:'circle',
@@ -335,7 +336,6 @@ let craft = function(target,options){
               return
             }
             resizeMoveFn(target,event)
-	    dragMoveFn(target,x,y)
 
           },end:function(event){
 		  let zone=getZone();
