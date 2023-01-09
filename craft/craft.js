@@ -35,8 +35,8 @@ let craftZone = function(target){
 	    }
 	    
 	    let id = elem.id
-	    let opts = JSON.parse(localStorage.getItem(zone.id+"."+id))||{}
-	    opts = Object.assign(JSON.parse(zone.dataset.defaultOpts)||{},opts)
+	    let opts = JSON.parse(localStorage.getItem(zone.id+"."+id)||'{}')
+	    opts = Object.assign(JSON.parse(zone.dataset.opts||'{}'),opts)
 	    let zDems = zone.getBoundingClientRect()
 	    elem.left=zDems.left
 	    elem.top=zDems.top
@@ -278,7 +278,10 @@ let craft = function(target,options){
             target.setAttribute('data-x', x)
             target.setAttribute('data-y', y)
 
-          },end:endFn
+          },end:function(event){
+		  if(target.dataset.
+		  endFn(event)
+	  }
         },
         modifiers: [
           // keep the edges inside the parent
