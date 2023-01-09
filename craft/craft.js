@@ -75,7 +75,8 @@ let craftZone = function(id,geometry){
 
 		event.draggable.draggable({
 		  snap: {
-		    targets: [dropCenter]
+		    targets: [dropCenter],
+		    range:craft.dropSnapRange,
 		  }
 		});
 	  },
@@ -86,7 +87,8 @@ let craftZone = function(id,geometry){
 	    event.relatedTarget.classList.remove('can-drop')
 	    event.draggable.draggable({
 		  snap: {
-		    targets: []
+		    targets: [],
+		    range:craft.dropSnapRange,
 		  }
 		});
 
@@ -410,12 +412,13 @@ let craft = function(target,options){
       .draggable({
       snap: {
         targets: [startPos],
-        range: Infinity,
+        range:craft.dropSnapRange,
         relativePoints: [ { x: 0.5, y: 0.5 } ],
         //endOnly: true
       },
         listeners: {
           start:function(event){
+		var rect = interact.getElementRect(event.target);
 		// record center point when starting the very first a drag
 		startPos = {
 			x: rect.left + rect.width  / 2,
@@ -424,7 +427,8 @@ let craft = function(target,options){
 
 		event.interactable.draggable({
 		  snap: {
-		    targets: [startPos]
+		    targets: [startPos],
+		    range:craft.dropSnapRange,
 		  }
 		});
 
@@ -613,6 +617,7 @@ let craft = function(target,options){
   }
 }
 craft.instances={}
+craft.dropSnapRange=100
 
 //document.querySelectorAll('.craft').forEach(craftIt)
 
