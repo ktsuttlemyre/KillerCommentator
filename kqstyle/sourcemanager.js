@@ -229,7 +229,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		Object.entries(craftZone.instances).forEach(function(entry){
 			const [id, instance] = entry;
 			let elem=instance.elem;
-			let data = instance.geometry
+			let data = instance.geometry;
 			if(id=="stage_fullscreen"){return}
 
 		    var newWidth    = parseFloat(data.width) / ratioHeight,
@@ -289,17 +289,17 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		Object.entries(window.api.zones).forEach(stageParser)
 		let resizeDebounceTimer=0;
 		//resize all stages with the window resize action
-		window.addEventListener('resize',function(){
-			// If there's a timer, cancel it
-			window.cancelAnimationFrame(resizeDebounceTimer);
+// 		window.addEventListener('resize',function(){
+// 			// If there's a timer, cancel it
+// 			window.cancelAnimationFrame(resizeDebounceTimer);
 			
-		    	// Setup the new requestAnimationFrame()
-			resizeDebounceTimer = window.requestAnimationFrame(function () {
-				//debounced call
-				SourceManager.resize()
-			});
-		})
-		window.dispatchEvent(new Event('resize'));
+// 		    	// Setup the new requestAnimationFrame()
+// 			resizeDebounceTimer = window.requestAnimationFrame(function () {
+// 				//debounced call
+// 				SourceManager.resize()
+// 			});
+// 		})
+// 		window.dispatchEvent(new Event('resize'));
 	}
 							  
 	SourceManager.load=function(source,stage,player){
