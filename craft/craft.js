@@ -395,7 +395,7 @@ let craft = function(target,options){
       .on('hold', function (event) {
       startEditMode()
       })
-      interact(mediaElem).gesturable({
+      .gesturable({
         listeners: {
           start:function(event){
             	let box = mediaElem.getBoundingClientRect()
@@ -460,12 +460,6 @@ let craft = function(target,options){
 				target: target,
 			});
 		}
-		instance.isReflow=true
-		interactable.reflow({
-			name: 'resize',
-			edges: { right: true, bottom: true,},
-		})
-		instance.isReflow=false
           },
           end:function(){
 		snappedToMedia=false
