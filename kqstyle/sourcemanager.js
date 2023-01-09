@@ -285,7 +285,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			appendTo(inner,zone.elem)
 			
 			if(zone.secondary){
-				zone.secondary.elem.className='kc-stage'
+				zone.secondary.elem.className='kc-zone'
 				appendTo(inner,zone.secondary.elem)
 			}
 		}
