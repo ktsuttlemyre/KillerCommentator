@@ -212,6 +212,28 @@ let craft = function(target,options){
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
         }
+	let resizeMoveFn=function(target,event){
+		var x = (parseFloat(target.getAttribute('data-x')) || 0)
+		var y = (parseFloat(target.getAttribute('data-y')) || 0)
+		let width,height;
+		if(event.matchElement){
+			let box=event.matchElement.getBoundingClientRect();
+			width=box.width
+			height=box.height
+			x=box.x;
+			y=box.y
+		}else{
+			// translate when resizing from top or left edges
+			x += event.deltaRect.left
+			y += event.deltaRect.top
+
+			// update the element's style
+			width = event.rect.width
+			height = event.rect.height
+		}
+		target.style.width = width + 'px'
+		target.style.height = height + 'px'
+	  }
   let handles={/*tl:'circle',br:'circle',tr:'corner',bl:'corner',*/
 	       mr:'circle',ml:'circle',mt:'circle',mb:'circle',
 	       mc:'cross','transition-indicator':'cross'}
@@ -312,29 +334,8 @@ let craft = function(target,options){
             if(!editMode){
               return
             }
-            var x = (parseFloat(target.getAttribute('data-x')) || 0)
-            var y = (parseFloat(target.getAttribute('data-y')) || 0)
-	    let width,height;
-	    if(event.matchElement){
-	    	let box=event.matchElement.getBoundingClientRect();
-		width=box.width
-		height=box.height
-		x=box.x;
-		y=box.y
-	    }else{
-		    // translate when resizing from top or left edges
-		    x += event.deltaRect.left
-		    y += event.deltaRect.top
-
-		    // update the element's style
-		    width = event.rect.width
-		    height = event.rect.height
-	    }
-	    target.style.width = width + 'px'
-	    target.style.height = height + 'px'
- 	    target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-            target.setAttribute('data-x', x)
-            target.setAttribute('data-y', y)
+            resizeMoveFn(target,event)
+	    dragMoveFn(target,x,y)
 
           },end:function(event){
 		  let zone=getZone();
@@ -450,18 +451,8 @@ let craft = function(target,options){
               //interactable.reflow({ name: 'drag', axis: 'xy' })
 
 		if(snappedToMedia){
-			interactable.fire({
-				type: 'resizestart',
-				target: target,
-			});
-			interactable.fire({
-				type: 'resizemove',
-				target: target,
+			resizeMoveFn(target,{
 				matchElement: mediaElem,
-			});
-			interactable.fire({
-				type: 'resizeend',
-				target: target,
 			});
 		}
           },
