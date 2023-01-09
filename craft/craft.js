@@ -435,7 +435,7 @@ let craft = function(target,options){
 	reflow:reflow,	
 	}
    //   )
-    }
+   // }
 	//let promise=new Promise()
 	//return promise
   }
