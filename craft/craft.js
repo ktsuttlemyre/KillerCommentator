@@ -582,6 +582,7 @@ let craft = function(target,options){
 	free:free,
 	edit:edit,
 	reflow:reflow,	
+	asIcon:asIcon,
 	}
 	craft.instances[target.id]=instance
         instance.isReflow=true
