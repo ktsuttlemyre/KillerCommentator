@@ -99,12 +99,28 @@ let craftZone = function(id,geometry){
 	    let craftInstance = craft.instances[event.relatedTarget.id]
 	    let zone = event.target
 	    let associated = craft.instances[zone.dataset.craft]
-	    if(!craftInstance.emulateDrop){
-		  if(!craftInstance.isReflow){
-		    return
-		  }
+// 	    if(!craftInstance.emulateDrop){
+// 		  if(craftInstance.isReflow){
+// 		    return
+// 		  }
+// 	    }
+	    
+		let rect = interact.getElementRect(event.target);
+		// record center point when starting the very first a drag
+		let center1 = {
+			x: rect.left + rect.width  / 2,
+			y: rect.top  + rect.height / 2
+		}
+		rect = interact.getElementRect(event.relatedTarget);
+		// record center point when starting the very first a drag
+		let center2 = {
+			x: rect.left + rect.width  / 2,
+			y: rect.top  + rect.height / 2
+		}
+		  
+	    if(center1.x == center2.x && center1.y == center2.y){
+		associate(zone,elem)
 	    }
-	    associate(zone,elem)
 	  },
 	  ondropdeactivate: function (event) {
 	    // remove active dropzone feedback
