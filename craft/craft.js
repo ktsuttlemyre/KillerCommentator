@@ -13,9 +13,44 @@ let craftZone = function(id,geometry){
 		secondary = craftZone(`${id}_secondary`,geometry.secondary)
 	}
 
+	let associate=function(zone,elem){
+	    let associated = craft.instances[zone.dataset.craft]
+	    if(!associated.emulateDrop){
+		  if(!associated.isReflow){
+		    return
+		  }
+	    }
+	    var video = elem.querySelector('.craft-cargo')
+
+	    if(associated){
+	    	associated.free()
+	    }
+	    
+	    let id = elem.id
+	    let geometry = JSON.parse(localStorage.getItem(zone.id+"."+id)||'{}')
+	    geometry = Object.assign({},face.geometry,geometry)
+	    let zDems = zone.getBoundingClientRect()
+	    elem.left=zDems.left
+	    elem.top=zDems.top
+	    elem.width=zDems.width
+	    elem.height=zDems.height
+
+	    elem.classList.add('animate-transition') 
+	    video.classList.add('animate-transition')
+	    
+	    
+	    if((video.width||video.videoWidth)>(video.height||video.videoHeight)){
+		video.style.width=zDems.width
+	    }else{
+		video.style.height=zDems.height
+	    }
 	
+	    //associate them
+	    zone.dataset.craft=zone.id
+	    craft.dataset.zone=craft.id
+	}
 	
-	
+	if(!(id.indexOf('secondary')>=0)){
 	// enable draggables to be dropped into this
 	interact(zone).dropzone({
 	  // only accept elements matching this CSS selector
@@ -51,35 +86,7 @@ let craftZone = function(id,geometry){
 		    return
 		  }
 	    }
-	    var video = elem.querySelector('.craft-cargo')
-
-	    if(associated){
-	    	associated.free()
-	    }
-	    
-	    let id = elem.id
-	    let geometry = JSON.parse(localStorage.getItem(zone.id+"."+id)||'{}')
-	    geometry = Object.assign({},face.geometry,geometry)
-	    let zDems = zone.getBoundingClientRect()
-	    elem.left=zDems.left
-	    elem.top=zDems.top
-	    elem.width=zDems.width
-	    elem.height=zDems.height
-
-	    elem.classList.add('animate-transition') 
-	    video.classList.add('animate-transition')
-	    
-	    
-	    if((video.width||video.videoWidth)>(video.height||video.videoHeight)){
-		video.style.width=zDems.width
-	    }else{
-		video.style.height=zDems.height
-	    }
-	
-	    //associate them
-	    zone.dataset.craft=zone.id
-	    craft.dataset.zone=craft.id
-
+	    associate(zone,elem)
 	  },
 	  ondropdeactivate: function (event) {
 	    // remove active dropzone feedback
@@ -87,6 +94,7 @@ let craftZone = function(id,geometry){
 	    event.target.classList.remove('target')
 	  }
 	})
+	}
 	
 	let face = {
 		elem:zone,
