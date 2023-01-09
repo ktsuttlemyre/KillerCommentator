@@ -52,15 +52,7 @@ let craftZone = function(id,geometry){
 	
 	if(!(id.indexOf('secondary')>=0)){
 	// enable draggables to be dropped into this
-	interact(zone).snap({
-		//make drag items snap into place
-		//https://github.com/taye/interact.js/issues/79
-	      mode: 'anchor',
-	      anchors: [],
-	      range: Infinity,
-	      elementOrigin: { x: 0.5, y: 0.5 },
-	      //endOnly: true
-	})
+	interact(zone)
 	.dropzone({
 	  // only accept elements matching this CSS selector
 	  accept: '.craft',
@@ -73,27 +65,30 @@ let craftZone = function(id,geometry){
 	    event.target.classList.add('active')
 	  },
 	  ondragenter: function (event) {
-	    var draggableElement = event.relatedTarget
-	    var dropzoneElement = event.target
+		var draggableElement = event.relatedTarget,
+		    dropzoneElement  = event.target,
+		    dropRect         = interact.getElementRect(dropzoneElement),
+		    dropCenter       = {
+		      x: dropRect.left + dropRect.width  / 2,
+		      y: dropRect.top  + dropRect.height / 2
+		    };
 
-	    // feedback the possibility of a drop
-	    dropzoneElement.classList.add('targeted')
-	    draggableElement.classList.add('can-drop')
-		var dropRect = interact.getElementRect(event.target),
-		dropCenter = {
-		  x: dropRect.left + dropRect.width  / 2,
-		  y: dropRect.top  + dropRect.height / 2
-		};
-
-		event.draggable.snap({
-		 anchors: [ dropCenter ]
+		event.draggable.draggable({
+		  snap: {
+		    targets: [dropCenter]
+		  }
 		});
 	  },
 	  ondragleave: function (event) {
+		  
 	    // remove the drop feedback style
 	    event.target.classList.remove('targeted')
 	    event.relatedTarget.classList.remove('can-drop')
-	    event.draggable.snap(false);
+	    event.draggable.draggable({
+		  snap: {
+		    targets: []
+		  }
+		});
 
 	  },
 	  ondrop: function (event) {
@@ -285,6 +280,8 @@ let craft = function(target,options){
       handles[key]=elem;
     })
     
+	  
+    let startPos=null	  
     let snappedToMedia=false
     let interactable = interact(target).pointerEvents({
     holdDuration: 5000,
@@ -411,8 +408,28 @@ let craft = function(target,options){
       })
 
       .draggable({
+      snap: {
+        targets: [startPos],
+        range: Infinity,
+        relativePoints: [ { x: 0.5, y: 0.5 } ],
+        endOnly: true
+      }
         listeners: {
-          start:startFn,
+          start:function(event){
+		// record center point when starting the very first a drag
+		startPos = {
+			x: rect.left + rect.width  / 2,
+			y: rect.top  + rect.height / 2
+		}
+
+		event.interactable.draggable({
+		  snap: {
+		    targets: [startPos]
+		  }
+		});
+
+	      startFn(event)
+      },
           move: function(event){
             if(!editMode){
               return
