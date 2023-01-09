@@ -447,6 +447,7 @@ let craft = function(target,options){
               target.style.width=window.innerWidth
               target.style.height=window.innerHeight
               // start a drag action
+	      face.isReflow=true
               interactable.reflow({
                 name: 'resize',
                 edges: { right: true, bottom: true,},
@@ -458,6 +459,7 @@ let craft = function(target,options){
   //           style.height = lastSafe.height
   //           dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
               // start a resize action and wait for inertia to finish
+		face.isReflow=true
 		interactable.reflow({
 			name: 'resize',
 			edges: { left: true, top: true,},
@@ -466,7 +468,8 @@ let craft = function(target,options){
           }
         }
     })
-    startEditMode(120000)
+    
+
     let getZone = function(){
 	let zone = craftZone.instances[target.dataset.zone]
 	if(zone && zone.dataset.craft==target.id){
@@ -480,7 +483,7 @@ let craft = function(target,options){
 			zone.elem.dataset.craft=''
 			target.dataset.zone=''
 			
-			reflow()
+			reflow({emulateDrop:false})
 // 			interactable.fire({
 // 				type: 'dragstart',
 // 				target: element,
@@ -495,26 +498,30 @@ let craft = function(target,options){
     let edit=function(){
 	alert('edit on craft public interface not implmeneted')
 	}
-    let reflow = function(){
-	face.isReflow=true
+    let reflow = function(opts){
+	Object.assign(face,opts)
+	isReflow=true
 	interactable.reflow({
 		name: 'resize',
 		edges: { left: true, top: true,},
 	})
 	interactable.reflow({ name: 'drag', axis: 'xy' })
 	face.isReflow=false
+	face.emulateDrop=false
 	}
     //promise.resolve(
-    letface={
+    let face={
 	free:free,
 	edit:edit,
 	reflow:reflow,	
 	}
 	craft.instances[target.id]=face
-   //   )
-   // }
+        face.isReflow=true
+	startEditMode(120000)
+	face.isReflow=false
 	//let promise=new Promise()
 	//return promise
+	  
   }
   
   
@@ -548,7 +555,7 @@ window.addEventListener('resize', function() {
     window.requestAnimationFrame(function() {
         Object.keys(craft.instances).forEach(function(key){
 		let inst = craft.instances[key]
-		inst.reflow()
+		inst.reflow({emulateDrop:false})
 	})
     });
 }, true);
