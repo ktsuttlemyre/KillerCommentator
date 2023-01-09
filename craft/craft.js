@@ -437,7 +437,7 @@ let craft = function(target,options){
 			interactable.fire({
 				type: 'resizemove',
 				target: target,
-				matchElement=mediaElem,
+				matchElement: mediaElem,
 			});
 			interactable.fire({
 				type: 'resizeend',
