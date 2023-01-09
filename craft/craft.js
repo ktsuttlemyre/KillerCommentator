@@ -443,7 +443,7 @@ let craft = function(target,options){
     }
     let free=function(){
 		let zone = getZone()
-		if(zone)(
+		if(zone){
 			//free them
 			zone.elem.dataset.craft=''
 			target.dataset.zone=''
