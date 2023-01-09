@@ -421,20 +421,20 @@ let craft = function(target,options){
     let edit=function(){
 	alert('edit on craft public interface not implmeneted')
 	}
-    let reflow function(){
+    let reflow = function(){
 	interactable.reflow({
 		name: 'resize',
 		edges: { left: true, top: true,},
 	})
 	interactable.reflow({ name: 'drag', axis: 'xy' })
 	}
-    promise.resolve(
+    //promise.resolve(
     craft.instances[target.id]={
 	free:free,
 	edit:edit,
 	reflow:reflow,	
 	}
-      )
+   //   )
     }
 	//let promise=new Promise()
 	//return promise
