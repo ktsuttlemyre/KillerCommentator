@@ -190,28 +190,7 @@ let craft = function(target,options){
 	editDebounceId = setTimeout(endEditMode, resetDebounceCustom || resetDebounce)
     }
   }
-  let asIcon=function(bool){
-	  if(bool){
-  		target.classList.add('is-icon')
-		videoGhost.classList.add('d-none')
-		interactable.fire({
-			type: 'resizestart',
-			target: target,
-		});
-		interactable.fire({
-			type: 'resizemove',
-			target: target,
-			matchRect: {x:target.style.left,y:target.style.top,width:0,height:0},
-		});
-		interactable.fire({
-			type: 'resizeend',
-			target: target,
-		});
-	  }else{
-		target.classList.remove('is-icon')
-		videoGhost.classList.remove('d-none')
-	  }
-  }
+
   let endEditMode=function(){
     resetDebounceCustom=0 
     clearTimeout(editDebounceId)
@@ -581,6 +560,28 @@ let craft = function(target,options){
 	instance.isReflow=false
 	instance.emulateDrop=false
 	}
+      let asIcon=function(bool){
+	  if(bool){
+		target.classList.add('is-icon')
+		videoGhost.classList.add('d-none')
+		interactable.fire({
+			type: 'resizestart',
+			target: target,
+		});
+		interactable.fire({
+			type: 'resizemove',
+			target: target,
+			matchRect: {x:target.style.left,y:target.style.top,width:0,height:0},
+		});
+		interactable.fire({
+			type: 'resizeend',
+			target: target,
+		});
+	  }else{
+		target.classList.remove('is-icon')
+		videoGhost.classList.remove('d-none')
+	  }
+  	}
     //promise.resolve(
     let instance={
 	free:free,
