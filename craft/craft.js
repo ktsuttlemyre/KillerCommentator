@@ -412,8 +412,8 @@ let craft = function(target,options){
         targets: [startPos],
         range: Infinity,
         relativePoints: [ { x: 0.5, y: 0.5 } ],
-        endOnly: true
-      }
+        //endOnly: true
+      },
         listeners: {
           start:function(event){
 		// record center point when starting the very first a drag
