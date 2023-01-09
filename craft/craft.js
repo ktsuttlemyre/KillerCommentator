@@ -11,7 +11,7 @@ let craftZone = function(id,geometry){
 
 	let secondary;
 	if(geometry.secondary){
-		secondary = craftZone([`${id}_secondary`,geometry.secondary])
+		secondary = craftZone(`${id}_secondary`,geometry.secondary)
 	}
 
 	
