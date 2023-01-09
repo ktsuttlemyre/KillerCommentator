@@ -28,7 +28,7 @@ let craftZone = function(id,geometry){
 	    
 	    let id = elem.id
 	    let geometry = JSON.parse(localStorage.getItem(zone.id+"."+id)||'{}')
-	    geometry = Object.assign({},face.geometry,geometry)
+	    geometry = Object.assign({},instance.geometry,geometry)
 	    let zDems = zone.getBoundingClientRect()
 	    elem.left=zDems.left
 	    elem.top=zDems.top
@@ -79,11 +79,11 @@ let craftZone = function(id,geometry){
 	  ondrop: function (event) {
 	    // attach the zone with the view
 	    let elem = event.relatedTarget
-	    let craft = craft.instances[event.relatedTarget.id]
+	    let craftInstance = craft.instances[event.relatedTarget.id]
 	    let zone = event.target
 	    let associated = craft.instances[zone.dataset.craft]
-	    if(!craft.emulateDrop){
-		  if(!craft.isReflow){
+	    if(!craftInstance.emulateDrop){
+		  if(!craftInstance.isReflow){
 		    return
 		  }
 	    }
@@ -97,7 +97,7 @@ let craftZone = function(id,geometry){
 	})
 	}
 	
-	let face = {
+	let instance = {
 		elem:zone,
 		geometry:geometry,
 		secondary:secondary,
@@ -107,12 +107,12 @@ let craftZone = function(id,geometry){
 			localStorage.setItem(id+"."+associated.id,JSON.stringify(geometry))
 		}
 	}
-	craftZone.instances[id]=face
+	craftZone.instances[id]=instance
 	if(secondary){
 		craftZone.instances[secondary.elem.id]=secondary
-		face.secondary=secondary
+		instance.secondary=secondary
 	}
-	return face
+	return instance
 }
 craftZone.instances={}
 
@@ -456,7 +456,7 @@ let craft = function(target,options){
               target.style.width=window.innerWidth
               target.style.height=window.innerHeight
               // start a drag action
-	      face.isReflow=true
+	      instance.isReflow=true
               interactable.reflow({
                 name: 'resize',
                 edges: { right: true, bottom: true,},
@@ -468,7 +468,7 @@ let craft = function(target,options){
   //           style.height = lastSafe.height
   //           dragMoveFn(mediaElem,lastSafe.x,lastSafe.y)
               // start a resize action and wait for inertia to finish
-		face.isReflow=true
+		instance.isReflow=true
 		interactable.reflow({
 			name: 'resize',
 			edges: { left: true, top: true,},
@@ -508,26 +508,26 @@ let craft = function(target,options){
 	alert('edit on craft public interface not implmeneted')
 	}
     let reflow = function(opts){
-	Object.assign(face,opts)
+	Object.assign(instance,opts)
 	isReflow=true
 	interactable.reflow({
 		name: 'resize',
 		edges: { left: true, top: true,},
 	})
 	interactable.reflow({ name: 'drag', axis: 'xy' })
-	face.isReflow=false
-	face.emulateDrop=false
+	instance.isReflow=false
+	instance.emulateDrop=false
 	}
     //promise.resolve(
-    let face={
+    let instance={
 	free:free,
 	edit:edit,
 	reflow:reflow,	
 	}
-	craft.instances[target.id]=face
-        face.isReflow=true
+	craft.instances[target.id]=instance
+        instance.isReflow=true
 	startEditMode(120000)
-	face.isReflow=false
+	instance.isReflow=false
 	//let promise=new Promise()
 	//return promise
 	  
