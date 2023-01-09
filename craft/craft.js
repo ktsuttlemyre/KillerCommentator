@@ -7,7 +7,6 @@ let craftZone = function(id,geometry){
 		if(key == 'secondary'){return}
 		zone.style[key]=geometry[key]
 	})
-	zone.className+=' kc-stage'
 
 	let secondary;
 	if(geometry.secondary){
@@ -43,16 +42,17 @@ let craftZone = function(id,geometry){
 	    event.relatedTarget.classList.remove('can-drop')
 	  },
 	  ondrop: function (event) {
-	    if(!event.emulateDrop){
-		  if(!event.isReflow){
+	    // attach the zone with the view
+	    var elem = event.relatedTarget
+	    let zone = event.target
+	    let associated = craft.instances[zone.dataset.craft]
+	    if(!associated.emulateDrop){
+		  if(!associated.isReflow){
 		    return
 		  }
 	    }
-	    // attach the zone with the view
-	    var elem = event.relatedTarget
 	    var video = elem.querySelector('.craft-cargo')
-	    var zone = event.target
-	    let associated = craft.instances[zone.dataset.craft]
+
 	    if(associated){
 	    	associated.free()
 	    }
@@ -496,13 +496,13 @@ let craft = function(target,options){
 	alert('edit on craft public interface not implmeneted')
 	}
     let reflow = function(){
-	face.reflowing=true
+	face.isReflow=true
 	interactable.reflow({
 		name: 'resize',
 		edges: { left: true, top: true,},
 	})
 	interactable.reflow({ name: 'drag', axis: 'xy' })
-	face.reflowing=false
+	face.isReflow=false
 	}
     //promise.resolve(
     letface={
