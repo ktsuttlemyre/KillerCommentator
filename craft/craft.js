@@ -460,6 +460,12 @@ let craft = function(target,options){
 				target: target,
 			});
 		}
+		instance.isReflow=true
+		interactable.reflow({
+			name: 'resize',
+			edges: { right: true, bottom: true,},
+		})
+		instance.isReflow=false
           },
           end:function(){
 		snappedToMedia=false
@@ -468,8 +474,9 @@ let craft = function(target,options){
 		instance.isReflow=true
 		interactable.reflow({
 			name: 'resize',
-			edges: { left: true, top: true,},
+			edges: { right: true, bottom: true,},
 		      })
+		  instance.isReflow=false
             endFn()
           }
         }
