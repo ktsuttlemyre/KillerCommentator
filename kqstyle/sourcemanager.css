@@ -27,6 +27,10 @@
   left:0;
 }
 
+.kc-zone {
+      position:absolute;
+}
+
 #kqstyle-viewport {
   pointer-events:none;
 }
