@@ -1,5 +1,5 @@
 let craftZone = function(id,geometry){
-	
+	let dropSnapRange = 300
 	let zone = document.createElement('div');
 	zone.id=id;
 	Object.keys(geometry).forEach(function(key){
