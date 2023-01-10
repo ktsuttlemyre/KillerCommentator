@@ -404,7 +404,7 @@ let craft = function(target,options){
 			    };
 			zones.push(dropCenter)
 		})
-		event.draggable.draggable({
+		event.interactable.draggable({
 		  snap: {
 		    targets: zones,
 		    range:dropSnapRange,
