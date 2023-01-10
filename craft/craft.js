@@ -389,7 +389,8 @@ let craft = function(target,options){
         listeners: {
           start:function(event){
 		  let zones=[]
-		Object.keys(craftZone.instances).forEach(function(instance){
+		Object.keys(craftZone.instances).forEach(function(key){
+			let instance=craftZone.instances[key]
 			
 			var dropzoneElement  = instance.elem;
 			if(dropzoneElement.id.indexOf('secondary')>=0){
