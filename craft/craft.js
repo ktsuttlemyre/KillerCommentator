@@ -72,13 +72,6 @@ let craftZone = function(id,geometry){
 	    // remove the drop feedback style
 	    event.target.classList.remove('targeted')
 	    event.relatedTarget.classList.remove('can-drop')
-	    event.draggable.draggable({
-		  snap: {
-		    targets: [],
-		    range:dropSnapRange,
-		  }
-		});
-
 	  },
 	  ondrop: function (event) {
 	    // attach the zone with the view
@@ -424,7 +417,15 @@ let craft = function(target,options){
             }
             dragMoveFn(target,event)
           },
-          end:endFn
+          end:function(event){
+		event.draggable.draggable({
+		  snap: {
+		    targets: zones,
+		    range:dropSnapRange,
+		  }
+		});
+		endFn(event)
+	  }
     },
         inertia: true,
         modifiers: [
