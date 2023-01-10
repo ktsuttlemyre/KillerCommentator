@@ -420,7 +420,7 @@ let craft = function(target,options){
             dragMoveFn(target,event)
           },
           end:function(event){
-		event.draggable.draggable({
+		event.interactable.draggable({
 		  snap: {
 		    targets: zones,
 		    range:dropSnapRange,
