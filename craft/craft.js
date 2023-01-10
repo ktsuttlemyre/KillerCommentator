@@ -76,7 +76,7 @@ let craftZone = function(id,geometry){
 		event.draggable.draggable({
 		  snap: {
 		    targets: [dropCenter],
-		    range:craft.dropSnapRange,
+		    range:dropSnapRange,
 		  }
 		});
 	  },
@@ -88,7 +88,7 @@ let craftZone = function(id,geometry){
 	    event.draggable.draggable({
 		  snap: {
 		    targets: [],
-		    range:craft.dropSnapRange,
+		    range:dropSnapRange,
 		  }
 		});
 
@@ -187,7 +187,7 @@ let craft = function(target,options){
   let editMode=false
 
   let initGestDist=0
-  
+  let dropSnapRange=300
   let editDebounceId=null;
   let resetDebounce=5000
   let resetDebounceCustom
@@ -408,7 +408,7 @@ let craft = function(target,options){
       .draggable({
       snap: {
         targets: [startPos],
-        range:craft.dropSnapRange,
+        range:dropSnapRange,
         relativePoints: [ { x: 0.5, y: 0.5 } ],
         //endOnly: true
       },
@@ -424,7 +424,7 @@ let craft = function(target,options){
 		event.interactable.draggable({
 		  snap: {
 		    targets: [startPos],
-		    range:craft.dropSnapRange,
+		    range:dropSnapRange,
 		  }
 		});
 
@@ -636,7 +636,6 @@ let craft = function(target,options){
   }
 }
 craft.instances={}
-craft.dropSnapRange=100
 
 //document.querySelectorAll('.craft').forEach(craftIt)
 
