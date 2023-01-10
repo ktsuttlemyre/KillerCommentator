@@ -65,20 +65,7 @@ let craftZone = function(id,geometry){
 	    event.target.classList.add('active')
 	  },
 	  ondragenter: function (event) {
-		var draggableElement = event.relatedTarget,
-		    dropzoneElement  = event.target,
-		    dropRect         = interact.getElementRect(dropzoneElement),
-		    dropCenter       = {
-		      x: dropRect.left + dropRect.width  / 2,
-		      y: dropRect.top  + dropRect.height / 2
-		    };
 
-		event.draggable.draggable({
-		  snap: {
-		    targets: [dropCenter],
-		    range:dropSnapRange,
-		  }
-		});
 	  },
 	  ondragleave: function (event) {
 		  
@@ -406,24 +393,25 @@ let craft = function(target,options){
       })
 
       .draggable({
-      snap: {
-        targets: [startPos],
-        range:dropSnapRange,
-        relativePoints: [ { x: 0.5, y: 0.5 } ],
-        //endOnly: true
-      },
         listeners: {
           start:function(event){
-		var rect = interact.getElementRect(event.target);
-		// record center point when starting the very first a drag
-		startPos = {
-			x: rect.left + rect.width  / 2,
-			y: rect.top  + rect.height / 2
-		}
-
-		event.interactable.draggable({
+		  let zones=[]
+		Object.keys(craftZone.instances).forEach(function(instance){
+			
+			var dropzoneElement  = instance.elem;
+			if(dropzoneElement.id.indexOf('secondary')>=0){
+				return
+			}
+			   
+			var    dropRect         = interact.getElementRect(dropzoneElement),
+			    dropCenter       = {
+			      x: dropRect.left + dropRect.width  / 2,
+			      y: dropRect.top  + dropRect.height / 2
+			    };
+		})
+		event.draggable.draggable({
 		  snap: {
-		    targets: [startPos],
+		    targets: zones,
 		    range:dropSnapRange,
 		  }
 		});
