@@ -402,6 +402,7 @@ let craft = function(target,options){
 			      x: dropRect.left + dropRect.width  / 2,
 			      y: dropRect.top  + dropRect.height / 2
 			    };
+			zones.push(dropCenter)
 		})
 		event.draggable.draggable({
 		  snap: {
