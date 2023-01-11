@@ -431,6 +431,7 @@ let craft = function(target, options) {
 					}),	
 					interact.modifiers.snap({
 						targets: zones,
+						offset: 'startCoords',
 						relativePoints: [
 							{ x: 0.5, y: 0.5 },   // to the center
 						],
