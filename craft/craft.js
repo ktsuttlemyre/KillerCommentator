@@ -387,6 +387,7 @@ let craft = function(target, options) {
 					}),
 					interact.modifiers.restrictEdges({
 						outer: 'parent',
+						endOnly:true
 					})
 
 				],
@@ -399,7 +400,7 @@ let craft = function(target, options) {
 						if (!editMode) {
 							return
 						}
-						asIcon(true,event,offsetPointer)
+						//asIcon(true,event /*,offsetPointer*/ )
 						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
 							if(key.indexOf('fullscreen')>=0){return}
@@ -429,10 +430,11 @@ let craft = function(target, options) {
 				modifiers: [
 					interact.modifiers.restrictRect({
 						restriction: 'parent',
+						endOnly:true
 					}),	
 					interact.modifiers.snap({
 						targets: zones,
-						offset: offsetPointer,
+						//offset: offsetPointer,
 						relativePoints: [
 							{ x: 0.5, y: 0.5 },   // to the center
 						],
