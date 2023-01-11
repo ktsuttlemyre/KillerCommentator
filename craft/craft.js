@@ -26,6 +26,7 @@ let craftZone = function(id, geometry) {
 		if (associated) {
 			associated.free()
 		}
+		instance.asIcon(false)
 
 		let id = elem.id
 		let geometry = JSON.parse(localStorage.getItem(zone.id + "." + id) || '{}')
@@ -94,8 +95,8 @@ let craftZone = function(id, geometry) {
 						x: rect.left + rect.width / 2,
 						y: rect.top + rect.height / 2
 					}
-
-					if (center1.x == center2.x && center1.y == center2.y) {
+					let tolerance=5;
+					if (Math.abs(center1.x - center2.x) <= tolerance && Math.abs(center1.y - center2.y) <= tolerance) {
 						associate(zone, elem)
 					}
 				},
@@ -121,9 +122,10 @@ let craftZone = function(id, geometry) {
 		geometry: geometry,
 		secondary: secondary,
 		saveGeoMods: function() {
+			alert('alert saving of geeo mods')
 			let geometry = {}
 			let associated = document.getElementById(zone.dataset.craft)
-			localStorage.setItem(id + "." + associated.id, JSON.stringify(geometry))
+			//localStorage.setItem(id + "." + associated.id, JSON.stringify(geometry))
 		}
 	}
 	craftZone.instances[id] = instance
