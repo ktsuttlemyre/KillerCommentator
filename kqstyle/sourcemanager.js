@@ -81,8 +81,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	}
 							  
 	!window.api && (window.api={});				  
-	!window.api.zones && (window.api.zones={
-		'stage_main':{
+	!window.api.zones && (window.api.zones=[
+		{
+			id:'stage_main',
 			top:'0px',
 			left:'0px',
 			width:'1540px',
@@ -96,14 +97,16 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-		'stage_fullscreen':{
+		{
+			id:'stage_fullscreen',
 			top:'0px',
 			left:'0px',
 			width:'100%',
 			height:'100%',
 			className:'',
 		},
-		'stage_cam_team_blue':{
+		{
+			id:'stage_cam_team_blue',
 			top:'881px',
 			left:'5px',
 			width:'348px',
@@ -117,7 +120,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-		'stage_cam_team_gold':{
+		{
+			id:'stage_cam_team_gold',
 			top:'881px',
 			left:'1208px',
 			width:'348px',
@@ -131,7 +135,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-		'stage_advert':{
+		{
+			id:'stage_advert',
 			top:'0px',
 			left:'1580px',
 			width:'335px',
@@ -145,7 +150,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-		'stage_cam_commentator':{ //aspect ratio 1.86111111111
+		{ //aspect ratio 1.86111111111
+			id:'stage_cam_commentator',
 			top:'185px',
 			left:'1580px',
 			width:'335px',
@@ -159,7 +165,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-		'stage_roster_blue':{
+		{
+			id:'stage_roster_blue',
 			top:'430px',
 			left:'1580px',
 			width:'335px',
@@ -173,7 +180,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-		'stage_roster_gold':{
+		{
+			id:'stage_roster_gold',
 			top:'630px',
 			left:'1580px',
 			width:'335px',
@@ -187,7 +195,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-		'stage_chat':{
+		{
+			id:'stage_chat',
 			top:'881px',
 			left:'1575px',
 			width:'335px',
@@ -201,7 +210,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				className:'',
 			},
 		},
-	});
+	]);
 
 				
 	SourceManager.resize=function(e){
@@ -276,10 +285,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		
 
 		//attach all the stages to the kqstyle-viewport-body
-		let stageParser=function(entry){
-			const [id, style] = entry;
-			
+		let stageParser=function(style){
 			//add craft logic
+			let id=style.id
+			delete style.id 
 			var zone = craftZone(id,style)
 			zone.elem.className='kc-zone'
 			appendTo(inner,zone.elem)
@@ -289,7 +298,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				appendTo(inner,zone.secondary.elem)
 			}
 		}
-		Object.entries(window.api.zones.reverse()).forEach(stageParser)
+		window.api.zones.reverse().forEach(stageParser)
 		let resizeDebounceTimer=0;
 		//resize all stages with the window resize action
 		window.addEventListener('resize',function(){
