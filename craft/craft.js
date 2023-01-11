@@ -70,7 +70,7 @@ let craftZone = function(id, geometry) {
 				},
 				ondragenter: function(event) {
 					isOver=true
-					var dropRect = interact.getElementRect(zone)\
+					var dropRect = interact.getElementRect(zone);
 					targetPointer.x=dropRect.left + dropRect.width / 2
 					targetPointer.y= dropRect.top + dropRect.height / 2
 
