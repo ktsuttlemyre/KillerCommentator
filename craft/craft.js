@@ -585,13 +585,16 @@ let craft = function(target, options) {
 			mediaElem.classList.add('animate-transition')
 			
 			mediaRect=interact.getElementRect(mediaElem)
-			let width = mediaElem.videoWidth || mediaRect.width
-			let height = mediaElem.videoHeight || mediaRect.height 
+			//not actaully scalar but pretend it is cause I just want to see which is longer
+			let wScalar = mediaElem.videoWidth || mediaRect.width
+			let hScalar = mediaElem.videoHeight || mediaRect.height 
 			
-			if (width > height) {
-				mediaElem.style.width = `${geometry.mediaWidth || width}px`
+			//if (wScalar > hScalar) {
+			let style = mediaElem.style;
+			if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
+				mediaElem.style.width = `${geometry.mediaWidth || mediaRect.width}px`
 			} else {
-				mediaElem.style.height = `${geometry.mediaHeight || height}px`
+				mediaElem.style.height = `${geometry.mediaHeight || mediaRect.height}px`
 			}
 		}
 		let edit = function() {
