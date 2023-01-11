@@ -102,7 +102,7 @@ let craftZone = function(id, geometry) {
 		geometry: geometry,
 		secondary: secondary,
 		saveGeoMods: function() {
-			alert('alert saving of geeo mods')
+			console.log('alert saving of geeo mods')
 			let geometry = {}
 			let associated = document.getElementById(instance.assCraft)
 			//localStorage.setItem(id + "." + associated.id, JSON.stringify(geometry))
