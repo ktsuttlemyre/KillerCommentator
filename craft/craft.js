@@ -403,7 +403,6 @@ let craft = function(target, options) {
 						zones.length = 0
 						if(!target.classList.contains('is-icon')){
 							resizeTo(asIcon(true,event /*,offsetPointer*/ ),['move','end','start'])
-							return
 						}
 						Object.keys(craftZone.instances).forEach(function(key) {
 							if(key.indexOf('fullscreen')>=0){return}
