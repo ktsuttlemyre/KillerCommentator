@@ -103,7 +103,7 @@ let craftZone = function(id, geometry) {
 		saveGeoMods: function() {
 			alert('alert saving of geeo mods')
 			let geometry = {}
-			let associated = document.getElementById(zone.dataset.craft)
+			let associated = document.getElementById(instance.assCraft)
 			//localStorage.setItem(id + "." + associated.id, JSON.stringify(geometry))
 		}
 	}
@@ -516,8 +516,9 @@ let craft = function(target, options) {
 
 
 		let getZone = function() {
-			let zone = craftZone.instances[target.dataset.zone]
-			if (zone && zone.dataset.craft == target.id) {
+			let zone = instance.assZone
+			if (zone && zone.assCraft && zone.assCraft.elem.
+			    id == target.id) {
 				return zone
 			}
 		}
@@ -525,8 +526,8 @@ let craft = function(target, options) {
 			let zone = getZone()
 			if (zone) {
 				//free them
-				zone.elem.dataset.craft = ''
-				target.dataset.zone = ''
+				zone.assCraft.assZone= = null
+				zone.assCraft= null
 
 				reflow({
 					emulateDrop: false
@@ -643,6 +644,7 @@ let craft = function(target, options) {
 		}
 		//promise.resolve(
 		let instance = {
+			associate:associate,
 			free: free,
 			edit: edit,
 			reflow: reflow,
