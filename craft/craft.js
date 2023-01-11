@@ -628,13 +628,13 @@ let craft = function(target, options) {
 		let asIcon = function(bool,event) {
 			let rec=interact.getElementRect(target)
 
-			if(event){
-				rec.left=rec.x0+rec.dx
-				rec.top=rex.x0+rec.dy
-			}
 			if (bool) {
 				rec.width=minWidth;
 				rec.height=minHeight
+				if(event){
+					rec.left=(rec.x0+rec.dx)-(rec.width/2)
+					rec.top=(rec.x0+rec.dy)-(rec.height/2)
+				}
 				target.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
 				resizeTo(rec)
