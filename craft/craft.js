@@ -19,7 +19,7 @@ let craftZone = function(id, geometry) {
 
 	if (!(id.indexOf('secondary') >= 0)) {
 		// enable draggables to be dropped into this
-		interact(zone)
+		interact(zone).dynamicDrop(true)
 			.dropzone({
 				// only accept elements matching this CSS selector
 				accept: '.craft',
@@ -264,7 +264,7 @@ let craft = function(target, options) {
 		let zones = []
 		let startPos = null
 		let snappedToMedia = false
-		let interactable = interact(target).pointerEvents({
+		let interactable = interact(target).dynamicDrop(true).pointerEvents({
 				holdDuration: 5000,
 			}).styleCursor(false)
 
@@ -642,8 +642,8 @@ let craft = function(target, options) {
 					let diffX=(event.x0+event.dx)-(rec.width/2)
 					let diffY=(event.y0+event.dy)-(rec.height/2)
 		
-					pointer.x=diffX-rec.left
-					pointer.y=diffY-rec.top
+					pointer.x=rec.left-diffX
+					pointer.y=rec.top-diffY
 					
 					rec.left=diffX
 					rec.top=diffY
