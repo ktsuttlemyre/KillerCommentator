@@ -94,6 +94,7 @@ let craftZone = function(id, geometry) {
 // 			}
 // 			return {}
 // 		},
+		id:id,
 		getCenter:getCenter,
 		isSecondary:zone.id.indexOf('secondary') >= 0,
 		elem: zone,
@@ -154,6 +155,7 @@ let craft = function(target, options) {
 	target.classList.add('events-none')
 	target.classList.add('craft')
 	let editMode = false
+	let id=target.id
 
 	let initGestDist = 0
 	let dropSnapRange = 100
@@ -517,8 +519,7 @@ let craft = function(target, options) {
 
 		let getZone = function() {
 			let zone = instance.assZone
-			if (zone && zone.assCraft && zone.assCraft.elem.
-			    id == target.id) {
+			if (zone && zone.assCraft && zone.assCraft.id == instance.id) {
 				return zone
 			}
 		}
@@ -644,6 +645,7 @@ let craft = function(target, options) {
 		}
 		//promise.resolve(
 		let instance = {
+			id:id,
 			associate:associate,
 			free: free,
 			edit: edit,
