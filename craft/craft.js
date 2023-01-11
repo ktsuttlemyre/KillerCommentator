@@ -400,11 +400,11 @@ let craft = function(target, options) {
 						if (!editMode) {
 							return
 						}
+						zones.length = 0
 						if(!target.classList.contains('is-icon')){
-							resizeTo(asIcon(true,event /*,offsetPointer*/ ),['move','end'])
+							resizeTo(asIcon(true,event /*,offsetPointer*/ ),['move','end','start'])
 							return
 						}
-						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
 							if(key.indexOf('fullscreen')>=0){return}
 							let instance = craftZone.instances[key]
