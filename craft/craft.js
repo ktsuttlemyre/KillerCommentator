@@ -400,7 +400,10 @@ let craft = function(target, options) {
 						if (!editMode) {
 							return
 						}
-						//asIcon(true,event /*,offsetPointer*/ )
+						if(!target.classList.contains('is-icon')){
+							resizeTo(asIcon(true,event /*,offsetPointer*/ ),['move','end'])
+							return
+						}
 						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
 							if(key.indexOf('fullscreen')>=0){return}
@@ -554,20 +557,20 @@ let craft = function(target, options) {
 
 			}
 		}
-		let resizeTo=function(matchRect){
-			interactable.fire({
-				type: 'resizestart',
-				target: target,
-			});
-			interactable.fire({
-				type: 'resizemove',
-				target: target,
-				matchRect: matchRect, //magic happens here
-			});
-			interactable.fire({
-				type: 'resizeend',
-				target: target,
-			});
+		let resizeTo=function(matchRect,order){
+			if(!order){
+				order=['start','move','end']
+			}
+			order.forEach(function(action){
+				let obj = {
+					type: `resize${action}`,
+					target: target,
+				}
+				if(action=='move'){
+					obj.matchRect=matchRect
+				}
+				interactable.fire(obj);
+			})
 		}
 		let associate = function(zoneInstance) {
 			
@@ -652,11 +655,11 @@ let craft = function(target, options) {
 				}
 				target.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
-				resizeTo(rec)
 			} else {
 				target.classList.remove('is-icon')
 				videoGhost.classList.remove('d-none')
 			}
+			return rect
 		}
 		//promise.resolve(
 		let instance = {
@@ -670,7 +673,7 @@ let craft = function(target, options) {
 		craft.instances[target.id] = instance
 		instance.isReflow = true
 		startEditMode(120000)
-		instance.asIcon(true)
+		resizeTo(instance.asIcon(true))
 		instance.isReflow = false
 		//let promise=new Promise()
 		//return promise
