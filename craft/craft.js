@@ -403,6 +403,16 @@ let craft = function(target, options) {
 						zones.length = 0
 						if(!target.classList.contains('is-icon')){
 							resizeTo(asIcon(true,event /*,offsetPointer*/ ),['move','end'])
+							event.interactable.draggable({
+								snap: {
+									targets: zones,
+									//offset: offsetPointer,
+									relativePoints: [
+										{ x: 0.5, y: 0.5 },   // to the center
+									],
+									range:dropSnapRange
+								}
+							})
 							interactable.fire(event);
 							return
 						}
