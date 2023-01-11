@@ -584,25 +584,30 @@ let craft = function(target, options) {
 			let geoLocalUserMod = JSON.parse(localStorage.getItem(`${zoneInstance.elem.id} ${instance.id}`) || '{}')
 			let kqStyleGeo = zoneInstance.geometry //The original geometry I used to calculate via a kqstyle aspect ratio
 			let domGeo = interact.getElementRect(zoneInstance.elem)
-			
 			let geometry = Object.assign({}, domGeo, geoLocalUserMod)
-			resizeTo(geometry)
-			    
-			target.classList.add('animate-transition')
-			mediaElem.classList.add('animate-transition')
 			
-			mediaRect=interact.getElementRect(mediaElem)
+			//set media first
+			let mediaRect=interact.getElementRect(mediaElem)
 			//not actaully scalar but pretend it is cause I just want to see which is longer
 			let wScalar = mediaElem.videoWidth || mediaRect.width
 			let hScalar = mediaElem.videoHeight || mediaRect.height 
-			
-			//if (wScalar > hScalar) {
 			let style = mediaElem.style;
+			//if (wScalar > hScalar) {
 			if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
 				mediaElem.style.width = `${geometry.mediaWidth || geometry.width}px`
 			} else {
 				mediaElem.style.height = `${geometry.mediaHeight || geometry.height}px`
 			}
+			
+			// set crop second
+			resizeTo(geometry)
+			    
+			//add animation classes after resize
+			//resize intaractjs has constraints that conflict with animations
+			//so add them after
+			target.classList.add('animate-transition')
+			mediaElem.classList.add('animate-transition')
+			
 		}
 		let edit = function() {
 			alert('edit on craft public interface not implmeneted')
