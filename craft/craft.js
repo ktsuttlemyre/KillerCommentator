@@ -455,7 +455,7 @@ let craft = function(target, options) {
 				modifiers: [
 					interact.modifiers.restrictRect({
 						restriction: 'parent',
-						endOnly:true
+						//endOnly:true
 					}),	
 					interact.modifiers.snap({
 						targets: zones,
