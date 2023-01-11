@@ -1,5 +1,4 @@
 let craftZone = function(id, geometry) {
-	let dropSnapRange = 300
 	let zone = document.createElement('div');
 	zone.id = id;
 	Object.keys(geometry).forEach(function(key) {
@@ -167,7 +166,7 @@ let craft = function(target, options) {
 	let editMode = false
 
 	let initGestDist = 0
-	let dropSnapRange = 300
+	let dropSnapRange = 10
 	let editDebounceId = null;
 	let resetDebounce = 5000
 	let resetDebounceCustom
