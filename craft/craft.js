@@ -420,12 +420,6 @@ let craft = function(target, options) {
 								};
 							zones.push(dropCenter)
 						})
-						event.interactable.draggable({
-							snap: {
-								targets: zones,
-								range: dropSnapRange,
-							}
-						});
 
 						startFn(event)
 					},
@@ -443,6 +437,13 @@ let craft = function(target, options) {
 				modifiers: [
 					interact.modifiers.restrictRect({
 						restriction: 'parent',
+					}),	
+					interact.modifiers.snap({
+						targets: zones,
+						relativePoints: [
+							{ x: 0.5, y: 0.5 },   // to the center
+						],
+						range:dropSnapRange
 					})
 				]
 			})
