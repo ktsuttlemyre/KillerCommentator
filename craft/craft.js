@@ -19,7 +19,7 @@ let craftZone = function(id, geometry) {
 
 	if (!(id.indexOf('secondary') >= 0)) {
 		// enable draggables to be dropped into this
-		interact(zone).dynamicDrop(true)
+		interact(zone)
 			.dropzone({
 				// only accept elements matching this CSS selector
 				accept: '.craft',
