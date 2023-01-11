@@ -395,6 +395,10 @@ let craft = function(target, options) {
 			.draggable({
 				listeners: {
 					start: function(event) {
+						if (!editMode) {
+							return
+						}
+						asIcon(true)
 						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
 							if(key.indexOf('fullscreen')>=0){return}
@@ -414,6 +418,9 @@ let craft = function(target, options) {
 						dragMoveFn(target, event)
 					},
 					end: function(event) {
+						if (!editMode) {
+							return
+						}
 						endFn(event)
 					}
 				},
