@@ -647,8 +647,8 @@ let craft = function(target, options) {
 					let diffX=(event.x0+event.dx)-(rec.width/2)
 					let diffY=(event.y0+event.dy)-(rec.height/2)
 		
-					pointer.x=rec.left-diffX
-					pointer.y=rec.top-diffY
+					pointer && pointer.x=rec.left-diffX
+					pointer && pointer.y=rec.top-diffY
 					
 					rec.left=diffX
 					rec.top=diffY
