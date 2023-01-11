@@ -592,9 +592,9 @@ let craft = function(target, options) {
 			//if (wScalar > hScalar) {
 			let style = mediaElem.style;
 			if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
-				mediaElem.style.width = `${geometry.mediaWidth || mediaRect.width}px`
+				mediaElem.style.width = `${geometry.mediaWidth || geometry.width}px`
 			} else {
-				mediaElem.style.height = `${geometry.mediaHeight || mediaRect.height}px`
+				mediaElem.style.height = `${geometry.mediaHeight || geometry.height}px`
 			}
 		}
 		let edit = function() {
