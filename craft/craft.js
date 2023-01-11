@@ -77,8 +77,8 @@ let craftZone = function(id, geometry) {
 				},
 				ondragleave: function(event) {
 					isOver=false
-					targetPointer.x=NaN
-					targetPointer.y=NaN
+					targetPointer.x=0
+					targetPointer.y=0
 
 					// remove the drop feedback style
 					event.target.classList.remove('targeted')
@@ -117,20 +117,20 @@ let craftZone = function(id, geometry) {
 			})
 	}
 
-	let getCenter = function(){
+	let getCenter = function(obj){
 		var dropRect = interact.getElementRect(zone)
-		return {
-				x: dropRect.left + dropRect.width / 2,
-				y: dropRect.top + dropRect.height / 2
-			};
+		obj=obj||{}
+		obj.x=dropRect.left + dropRect.width / 2
+		obj.y=dropRect.top + dropRect.height / 2
+		return obj
 	}
 	let instance = {
-		targetGetter:function(){
-			if(isOver){
-				return getCenter()
-			}
-			return {}
-		},
+// 		targetGetter:function(){
+// 			if(isOver){
+// 				return getCenter()
+// 			}
+// 			return {}
+// 		},
 		getCenter:getCenter,
 		isSecondary:zone.id.indexOf('secondary') >= 0,
 		elem: zone,
@@ -437,7 +437,7 @@ let craft = function(target, options) {
 							if (instance.isSecondary) {
 								return
 							}
-							zones.push(instance.targetPointer)
+							zones.push(instance.getCenter(instance.targetPointer))
 						})
 
 						startFn(event)
