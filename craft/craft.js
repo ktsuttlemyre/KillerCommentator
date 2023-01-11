@@ -575,7 +575,7 @@ let craft = function(target, options) {
 			instance.assZone=zoneInstance
 			asIcon(false)
 
-			let geoLocalUserMod = JSON.parse(localStorage.getItem(`${zoneInstance.elem.id} ${elem.id}`) || '{}')
+			let geoLocalUserMod = JSON.parse(localStorage.getItem(`${zoneInstance.elem.id} ${instance.id}`) || '{}')
 			let kqStyleGeo = zoneInstance.geometry
 			let domGeo = zoneInstance.elem.getBoundingClientRect()
 			
