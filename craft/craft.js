@@ -240,6 +240,7 @@ let craft = function(target, options) {
 	let minWidth = 150
 	let minHeight = 100
 
+	let offsetPointer={x:0,y:0}
 	let mediaPos;
 	let lastSafe;
 	let init = function() {
@@ -398,7 +399,7 @@ let craft = function(target, options) {
 						if (!editMode) {
 							return
 						}
-						asIcon(true,event)
+						asIcon(true,event,offsetPointer)
 						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
 							if(key.indexOf('fullscreen')>=0){return}
@@ -431,7 +432,7 @@ let craft = function(target, options) {
 					}),	
 					interact.modifiers.snap({
 						targets: zones,
-						offset: 'startCoords',
+						offset: offsetPointer,
 						relativePoints: [
 							{ x: 0.5, y: 0.5 },   // to the center
 						],
@@ -631,15 +632,21 @@ let craft = function(target, options) {
 			instance.isReflow = false
 			instance.emulateDrop = false
 		}
-		let asIcon = function(bool,event) {
+		let asIcon = function(bool,event,pointer) {
 			let rec=interact.getElementRect(target)
 
 			if (bool) {
 				rec.width=minWidth;
 				rec.height=minHeight
 				if(event){
-					rec.left=(event.x0+event.dx)-(rec.width/2)
-					rec.top=(event.y0+event.dy)-(rec.height/2)
+					let diffX=(event.x0+event.dx)-(rec.width/2)
+					let diffY=(event.y0+event.dy)-(rec.height/2)
+		
+					pointer.x=rec.left-diffX
+					pointer.y=rec.top-diffY
+					
+					rec.left=diffX
+					rec.top=diffY
 				}
 				target.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
