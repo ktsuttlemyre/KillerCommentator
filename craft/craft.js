@@ -398,7 +398,7 @@ let craft = function(target, options) {
 						if (!editMode) {
 							return
 						}
-						asIcon(true)
+						asIcon(true,event)
 						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
 							if(key.indexOf('fullscreen')>=0){return}
@@ -625,28 +625,19 @@ let craft = function(target, options) {
 			instance.isReflow = false
 			instance.emulateDrop = false
 		}
-		let asIcon = function(bool) {
+		let asIcon = function(bool,event) {
+			let rec=interact.getElementRect(target)
+
+			if(event){
+				rec.left=rec.x0+rec.dx
+				rec.top=rex.x0+rec.dy
+			}
 			if (bool) {
+				rec.width=minWidth;
+				rec.height=minHeight
 				target.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
-				interactable.fire({
-					type: 'resizestart',
-					target: target,
-				});
-				interactable.fire({
-					type: 'resizemove',
-					target: target,
-					matchRect: {
-						left: target.style.left,
-						top: target.style.top,
-						width: minWidth,
-						height: minHeight
-					},
-				});
-				interactable.fire({
-					type: 'resizeend',
-					target: target,
-				});
+				resizeTo(rec)
 			} else {
 				target.classList.remove('is-icon')
 				videoGhost.classList.remove('d-none')
