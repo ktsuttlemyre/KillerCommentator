@@ -123,6 +123,7 @@ let craftZone = function(id, geometry) {
 			if(isOver){
 				return getCenter()
 			}
+			return {}
 		},
 		getCenter:getCenter,
 		isSecondary:zone.id.indexOf('secondary') >= 0,
