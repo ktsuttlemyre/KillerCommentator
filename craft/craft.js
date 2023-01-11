@@ -264,7 +264,7 @@ let craft = function(target, options) {
 		let zones = []
 		let startPos = null
 		let snappedToMedia = false
-		let interactable = interact(target).dynamicDrop(true).pointerEvents({
+		let interactable = interact(target).pointerEvents({
 				holdDuration: 5000,
 			}).styleCursor(false)
 
