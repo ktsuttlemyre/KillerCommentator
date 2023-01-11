@@ -416,6 +416,7 @@ let craft = function(target, options) {
 					start: function(event) {
 						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
+							if(key.indexOf('fullscreen')>=0){return}
 							let instance = craftZone.instances[key]
 							if (instance.isSecondary) {
 								return
