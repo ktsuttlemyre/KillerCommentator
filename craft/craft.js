@@ -23,8 +23,8 @@ let craftZone = function(id, geometry) {
 			.dropzone({
 				// only accept elements matching this CSS selector
 				accept: '.craft',
-				// Require a 75% element overlap for a drop to be possible
-				overlap: 0.90,
+				// Require a 5% element overlap for a drop to be possible
+				overlap: 0.05,
 
 				// listen for drop related events:
 				ondropactivate: function(event) {
