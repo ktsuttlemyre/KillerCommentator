@@ -79,8 +79,8 @@ let craftZone = function(id, geometry) {
 				},
 				ondragleave: function(event) {
 					isOver=false
-					targetPointer.x=0
-					targetPointer.y=0
+					targetPointer.x=NaN
+					targetPointer.y=NaN
 
 					// remove the drop feedback style
 					event.target.classList.remove('targeted')
