@@ -526,7 +526,7 @@ let craft = function(target, options) {
 			let zone = getZone()
 			if (zone) {
 				//free them
-				zone.assCraft.assZone= = null
+				zone.assCraft.assZone= null
 				zone.assCraft= null
 
 				reflow({
