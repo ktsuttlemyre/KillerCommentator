@@ -83,6 +83,14 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	!window.api && (window.api={});				  
 	!window.api.zones && (window.api.zones=[
 		{
+			id:'stage_fullscreen',
+			top:'0px',
+			left:'0px',
+			width:'100%',
+			height:'100%',
+			className:'',
+		},
+		{
 			id:'stage_main',
 			top:'0px',
 			left:'0px',
@@ -96,14 +104,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				height:'240px',
 				className:'',
 			},
-		},
-		{
-			id:'stage_fullscreen',
-			top:'0px',
-			left:'0px',
-			width:'100%',
-			height:'100%',
-			className:'',
 		},
 		{
 			id:'stage_cam_team_blue',
