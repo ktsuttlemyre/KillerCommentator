@@ -198,7 +198,7 @@ let craft = function(target, options) {
 			if (!editMode) {
 				return
 			}
-			let box = mediaElem.getBoundingClientRect()
+			let box = interact.getElementRect(mediaElem)
 			let style = videoGhost.style
 			style.left = (box.left) + 'px'
 			style.top = (box.top) + 'px'
@@ -344,8 +344,8 @@ let craft = function(target, options) {
 							let box = event.matchRect
 							width = box.width
 							height = box.height
-							x = box.x;
-							y = box.y
+							x = box.left;
+							y = box.top
 						} else {
 							// translate when resizing from top or left edges
 							x += event.deltaRect.left
@@ -447,16 +447,15 @@ let craft = function(target, options) {
 			.gesturable({
 				listeners: {
 					start: function(event) {
-						let box = mediaElem.getBoundingClientRect()
-						mediaPos.width = box.width || mediaElem.videoWidth || 0
-						mediaPos.height = box.height || mediaElem.videoHeight || 0
+						let box1 = interact.getElementRect(target)
+						let box2 = interact.getElementRect(mediaElem)
+						mediaPos.width = box2.width || mediaElem.videoWidth || 0
+						mediaPos.height = box2.height || mediaElem.videoHeight || 0
 						initGestDist = event.distance
 						startFn()
-						let box1 = target.getBoundingClientRect()
-						let box2 = mediaElem.getBoundingClientRect()
 						let toler = 5;
-						if (Math.abs(box1.x - box2.x) <= toler &&
-							Math.abs(box1.y - box2.y) <= toler &&
+						if (Math.abs(box1.left - box2.left) <= toler &&
+							Math.abs(box1.top - box2.top) <= toler &&
 							Math.abs(box1.width - box2.width) <= toler &&
 							Math.abs(box1.height - box2.height) <= toler) {
 							snappedToMedia = true
@@ -495,7 +494,7 @@ let craft = function(target, options) {
 						//interactable.reflow({ name: 'drag', axis: 'xy' })
 
 						if (snappedToMedia) {
-							resizeTo(mediaElem.getBoundingClientRect())
+							resizeTo(interact.getElementRect(mediaElem))
 						}
 					},
 					end: function() {
@@ -577,7 +576,7 @@ let craft = function(target, options) {
 
 			let geoLocalUserMod = JSON.parse(localStorage.getItem(`${zoneInstance.elem.id} ${instance.id}`) || '{}')
 			let kqStyleGeo = zoneInstance.geometry
-			let domGeo = zoneInstance.elem.getBoundingClientRect()
+			let domGeo = interact.getElementRect(zoneInstance.elem)
 			
 			let geometry = Object.assign({}, kqStyleGeo, geoLocalUserMod)
 			resizeTo(geometry)
@@ -585,7 +584,7 @@ let craft = function(target, options) {
 			target.classList.add('animate-transition')
 			mediaElem.classList.add('animate-transition')
 			
-			mediaRect=mediaElem.getBoundingClientRect()
+			mediaRect=interact.getElementRect(mediaElem)
 			let width = mediaElem.videoWidth || mediaRect.width
 			let height = mediaElem.videoHeight || mediaRect.height 
 			
@@ -628,8 +627,8 @@ let craft = function(target, options) {
 					type: 'resizemove',
 					target: target,
 					matchRect: {
-						x: target.style.left,
-						y: target.style.top,
+						left: target.style.left,
+						top: target.style.top,
 						width: minWidth,
 						height: minHeight
 					},
