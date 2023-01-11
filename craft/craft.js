@@ -148,6 +148,13 @@ let gappingOnSide = function(elem1, elem2) {
 	return notCovering
 }
 
+function getDistance(x1, y1, x2, y2){
+    let y = x2 - x1;
+    let x = y2 - y1;
+    
+    return Math.sqrt(x * x + y * y);
+}
+
 let craft = function(target, options) {
 	options = Object.assign({
 		panMedia: false
@@ -400,8 +407,14 @@ let craft = function(target, options) {
 						if (!editMode) {
 							return
 						}
-						zones.length = 0
-						if(!target.classList.contains('is-icon')){
+						startFn(event)
+					},
+					move: function(event) {
+						if (!editMode) {
+							return
+						}
+						
+						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.dx,event.dy)>dropSnapRange){
 							resizeTo(asIcon(true,event /*,offsetPointer*/ ),['start','move','end'])
 // 							event.interactable.draggable({
 // 								snap: {
@@ -418,23 +431,17 @@ let craft = function(target, options) {
 								target: target,
 							});
 							interactable.fire(event);
+							Object.keys(craftZone.instances).forEach(function(key) {
+								if(key.indexOf('fullscreen')>=0){return}
+								let instance = craftZone.instances[key]
+								if (instance.isSecondary) {
+									return
+								}
+								zones.push(instance.getCenter(instance.targetPointer))
+							})
 							return
 						}
-						Object.keys(craftZone.instances).forEach(function(key) {
-							if(key.indexOf('fullscreen')>=0){return}
-							let instance = craftZone.instances[key]
-							if (instance.isSecondary) {
-								return
-							}
-							zones.push(instance.getCenter(instance.targetPointer))
-						})
-
-						startFn(event)
-					},
-					move: function(event) {
-						if (!editMode) {
-							return
-						}
+						
 						dragMoveFn(target, event)
 					},
 					end: function(event) {
