@@ -107,7 +107,16 @@ let craftZone = function(id, geometry) {
 			})
 	}
 
+	let getCenter = function(){
+		var dropRect = interact.getElementRect(zone)
+		return {
+				x: dropRect.left + dropRect.width / 2,
+				y: dropRect.top + dropRect.height / 2
+			};
+	}
 	let instance = {
+		getCenter:getCenter,
+		isSecondary:zone.id.indexOf('secondary') >= 0,
 		elem: zone,
 		geometry: geometry,
 		secondary: secondary,
@@ -406,18 +415,10 @@ let craft = function(target, options) {
 						zones.length = 0
 						Object.keys(craftZone.instances).forEach(function(key) {
 							let instance = craftZone.instances[key]
-
-							var dropzoneElement = instance.elem;
-							if (dropzoneElement.id.indexOf('secondary') >= 0) {
+							if (instance.isSecondary) {
 								return
 							}
-
-							var dropRect = interact.getElementRect(dropzoneElement),
-								dropCenter = {
-									x: dropRect.left + dropRect.width / 2,
-									y: dropRect.top + dropRect.height / 2
-								};
-							zones.push(dropCenter)
+							zones.push(instance.getCenter())
 						})
 
 						startFn(event)
