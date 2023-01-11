@@ -52,6 +52,7 @@ let craftZone = function(id, geometry) {
 		craft.dataset.zone = craft.id
 	}
 	let isOver=false;
+	let targetPointer={}
 
 	if (!(id.indexOf('secondary') >= 0)) {
 		// enable draggables to be dropped into this
@@ -69,10 +70,15 @@ let craftZone = function(id, geometry) {
 				},
 				ondragenter: function(event) {
 					isOver=true
+					var dropRect = interact.getElementRect(zone)\
+					targetPointer.x=dropRect.left + dropRect.width / 2
+					targetPointer.y= dropRect.top + dropRect.height / 2
 
 				},
 				ondragleave: function(event) {
 					isOver=false
+					targetPointer.x=NaN
+					targetPointer.y=NaN
 
 					// remove the drop feedback style
 					event.target.classList.remove('targeted')
@@ -128,6 +134,7 @@ let craftZone = function(id, geometry) {
 		getCenter:getCenter,
 		isSecondary:zone.id.indexOf('secondary') >= 0,
 		elem: zone,
+		targetPointer:targetPointer,
 		geometry: geometry,
 		secondary: secondary,
 		saveGeoMods: function() {
@@ -430,7 +437,7 @@ let craft = function(target, options) {
 							if (instance.isSecondary) {
 								return
 							}
-							zones.push(instance.targetGetter)
+							zones.push(instance.targetPointer)
 						})
 
 						startFn(event)
