@@ -637,8 +637,8 @@ let craft = function(target, options) {
 				rec.width=minWidth;
 				rec.height=minHeight
 				if(event){
-					rec.left=(rec.x0+rec.dx)-(rec.width/2)
-					rec.top=(rec.x0+rec.dy)-(rec.height/2)
+					rec.left=(event.x0+event.dx)-(rec.width/2)
+					rec.top=(event.x0+event.dy)-(rec.height/2)
 				}
 				target.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
