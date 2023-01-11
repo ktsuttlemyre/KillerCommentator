@@ -289,7 +289,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				appendTo(inner,zone.secondary.elem)
 			}
 		}
-		Object.entries(window.api.zones).forEach(stageParser)
+		Object.entries(window.api.zones.reverse()).forEach(stageParser)
 		let resizeDebounceTimer=0;
 		//resize all stages with the window resize action
 		window.addEventListener('resize',function(){
