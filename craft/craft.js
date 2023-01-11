@@ -73,6 +73,8 @@ let craftZone = function(id, geometry) {
 					var dropRect = interact.getElementRect(zone);
 					targetPointer.x=dropRect.left + dropRect.width / 2
 					targetPointer.y= dropRect.top + dropRect.height / 2
+					//targetPointer.range=Math.sqrt(dropRect.width*dropRect.width + dropRect.height*dropRect.height);
+
 
 				},
 				ondragleave: function(event) {
