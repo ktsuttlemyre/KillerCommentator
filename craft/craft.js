@@ -384,11 +384,12 @@ let craft = function(target,options){
         ],
         inertia: false
       })
-
+    
+      let zones=[]
       .draggable({
         listeners: {
           start:function(event){
-		  let zones=[]
+		zones.length=0
 		Object.keys(craftZone.instances).forEach(function(key){
 			let instance=craftZone.instances[key]
 			
