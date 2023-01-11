@@ -659,7 +659,7 @@ let craft = function(target, options) {
 				target.classList.remove('is-icon')
 				videoGhost.classList.remove('d-none')
 			}
-			return rect
+			return rec
 		}
 		//promise.resolve(
 		let instance = {
