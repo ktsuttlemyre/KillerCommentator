@@ -14,43 +14,6 @@ let craftZone = function(id, geometry) {
 		secondary = craftZone(`${id}_secondary`, geometry.secondary)
 	}
 
-	let associate = function(zone, elem) {
-		let instance = craft.instances[elem.id]
-// 		if (instance && !instance.emulateDrop) {
-// 			if (!instance.isReflow) {
-// 				return
-// 			}
-// 		}
-		var video = elem.querySelector('.craft-cargo')
-		let associated = craft.instances[zone.dataset.craft]
-		if (associated) {
-			associated.free()
-		}
-		instance.asIcon(false)
-
-		let id = elem.id
-		let geometry = JSON.parse(localStorage.getItem(zone.id + "." + id) || '{}')
-		geometry = Object.assign({}, instance.geometry, geometry)
-		let zDems = zone.getBoundingClientRect()
-		elem.left = zDems.left
-		elem.top = zDems.top
-		elem.width = zDems.width
-		elem.height = zDems.height
-
-		elem.classList.add('animate-transition')
-		video.classList.add('animate-transition')
-
-
-		if ((video.width || video.videoWidth) > (video.height || video.videoHeight)) {
-			video.style.width = zDems.width
-		} else {
-			video.style.height = zDems.height
-		}
-
-		//associate them
-		zone.dataset.craft = zone.id
-		craft.dataset.zone = craft.id
-	}
 	let isOver=false;
 	let targetPointer={}
 
@@ -89,10 +52,8 @@ let craftZone = function(id, geometry) {
 				ondrop: function(event) {
 					// attach the zone with the view
 					let elem = event.relatedTarget
-					let craftInstance = craft.instances[event.relatedTarget.id]
+					let craftInstance = craft.instances[elem.id]
 					let zone = event.target
-					let associated = craft.instances[zone.dataset.craft]
-
 
 					let rect = interact.getElementRect(event.target);
 					// record center point when starting the very first a drag
@@ -108,7 +69,7 @@ let craftZone = function(id, geometry) {
 					}
 					let tolerance=5;
 					if (Math.abs(center1.x - center2.x) <= tolerance && Math.abs(center1.y - center2.y) <= tolerance) {
-						associate(zone, elem)
+						craftInstance.associate(instance)
 					}
 				},
 				ondropdeactivate: function(event) {
@@ -532,19 +493,7 @@ let craft = function(target, options) {
 						//interactable.reflow({ name: 'drag', axis: 'xy' })
 
 						if (snappedToMedia) {
-							interactable.fire({
-								type: 'resizestart',
-								target: target,
-							});
-							interactable.fire({
-								type: 'resizemove',
-								target: target,
-								matchRect: mediaElem.getBoundingClientRect(),
-							});
-							interactable.fire({
-								type: 'resizeend',
-								target: target,
-							});
+							resizeTo(mediaElem.getBoundingClientRect())
 						}
 					},
 					end: function() {
@@ -591,6 +540,57 @@ let craft = function(target, options) {
 
 
 
+			}
+		}
+		let resizeTo=function(matchRect){
+			interactable.fire({
+				type: 'resizestart',
+				target: target,
+			});
+			interactable.fire({
+				type: 'resizemove',
+				target: target,
+				matchRect: matchRect, //magic happens here
+			});
+			interactable.fire({
+				type: 'resizeend',
+				target: target,
+			});
+		}
+		let associate = function(zoneInstance) {
+			
+// 			if (instance && !instance.emulateDrop) {
+// 				if (!instance.isReflow) {
+// 					return
+// 				}
+// 			}
+			
+			let assCraft = instance.assCraft
+			if (assCraft && assCraft!=instance) {
+				assCraft.free()
+			}
+			zoneInstance.assCraft=instance
+			instance.assZone=zoneInstance
+			asIcon(false)
+
+			let geoLocalUserMod = JSON.parse(localStorage.getItem(`${zoneInstance.elem.id} ${elem.id}` || '{}')
+			let kqStyleGeo = zoneInstance.geometry
+			let domGeo = zoneInstance.elem.getBoundingClientRect()
+			
+			let geometry = Object.assign({}, kqStyleGeo, geoLocalUserMod)
+			resizeTo(geometry)
+			    
+			target.classList.add('animate-transition')
+			mediaElem.classList.add('animate-transition')
+			
+			mediaRect=mediaElem.getBoundingClientRect()
+			let width = mediaElem.videoWidth || mediaRect.width
+			let height = mediaElem.videoHeight || mediaRect.height 
+			
+			if (width > height) {
+				mediaElem.style.width = `${geometry.mediaWidth || width}px`
+			} else {
+				mediaElem.style.height = `${geometry.mediaHeight || height}px`
 			}
 		}
 		let edit = function() {
