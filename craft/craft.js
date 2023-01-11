@@ -15,6 +15,7 @@ let craftZone = function(id, geometry) {
 	}
 
 	let associate = function(zone, elem) {
+		alert('associated')
 		let instance = craft.instances[elem.id]
 		if (instance && !instance.emulateDrop) {
 			if (!instance.isReflow) {
