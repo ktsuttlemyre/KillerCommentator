@@ -695,7 +695,7 @@ let craft = function(target, options) {
 		craft.instances[target.id] = instance
 		instance.isReflow = true
 		startEditMode(120000)
-		resizeTo(instance.asIcon(true))
+		//resizeTo(instance.asIcon(true))
 		instance.isReflow = false
 		//let promise=new Promise()
 		//return promise
