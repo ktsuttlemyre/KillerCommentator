@@ -575,10 +575,10 @@ let craft = function(target, options) {
 			asIcon(false)
 
 			let geoLocalUserMod = JSON.parse(localStorage.getItem(`${zoneInstance.elem.id} ${instance.id}`) || '{}')
-			let kqStyleGeo = zoneInstance.geometry
+			let kqStyleGeo = zoneInstance.geometry //The original geometry I used to calculate via a kqstyle aspect ratio
 			let domGeo = interact.getElementRect(zoneInstance.elem)
 			
-			let geometry = Object.assign({}, kqStyleGeo, geoLocalUserMod)
+			let geometry = Object.assign({}, domGeo, geoLocalUserMod)
 			resizeTo(geometry)
 			    
 			target.classList.add('animate-transition')
