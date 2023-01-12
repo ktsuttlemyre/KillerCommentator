@@ -416,7 +416,7 @@ let craft = function(target, options) {
 						}
 						
 						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.dx,event.dy)>dropSnapRange){
-							resizeTo(asIcon(true,event /*,offsetPointer*/ ),['start','move','end'])
+							associate(null,event /*,offsetPointer*/ ,['start','move','end'])
 // 							event.interactable.draggable({
 // 								snap: {
 // 									targets: zones,
@@ -605,7 +605,7 @@ let craft = function(target, options) {
 				interactable.fire(obj);
 			})
 		}
-		let associate = function(zoneInstance) {
+		let associate = function(zoneInstance,event,pointer) {
 			zoneInstance = zoneInstance || undefined
 // 			if (instance && !instance.emulateDrop) {
 // 				if (!instance.isReflow) {
@@ -613,14 +613,17 @@ let craft = function(target, options) {
 // 				}
 // 			}
 			
+			//if theres something in the zone free it
 			let assCraft = instance.assCraft
 			if (assCraft && assCraft!=instance) {
 				assCraft.free()
 			}
+			
+			//link zone and craft
 			zoneInstance && (zoneInstance.assCraft=instance)
 			instance.assZone=zoneInstance
-			asIcon(false)
-
+			
+			//associate data
 			let zoneId=zoneInstance && zoneInstance.id
 			let geoLocalUserMod = JSON.parse(localStorage.getItem([zoneId,instance.id].join(' ').trim()) || '{}')
 			//let kqStyleGeo = zoneInstance.geometry //The original geometry I used to calculate via a kqstyle aspect ratio
@@ -628,6 +631,27 @@ let craft = function(target, options) {
 			// furthest to the right has priority -->
 			let geometry = Object.assign({}, domGeo, geoLocalUserMod)
 			
+			
+			if(zoneInstance){
+				assCraft.classList.remove('is-icon')
+				videoGhost.classList.remove('d-none')
+			}else{ //as icon
+				geometry.width=minWidth;
+				geometry.height=minHeight
+				if(event){
+					let diffX=(event.x0+event.dx)-(geometry.width/2)
+					let diffY=(event.y0+event.dy)-(geometry.height/2)
+		
+					pointer && (pointer.x=geometry.left-diffX)
+					pointer && (pointer.y=geometry.top-diffY)
+					
+					geometry.left=diffX
+					geometry.top=diffY
+				}
+				assCraft.classList.add('is-icon')
+				videoGhost.classList.add('d-none')
+			}
+
 			//set media first
 			let mediaRect=interact.getElementRect(mediaElem)
 			//not actaully scalar but pretend it is cause I just want to see which is longer
@@ -672,31 +696,6 @@ let craft = function(target, options) {
 			instance.isReflow = false
 			instance.emulateDrop = false
 		}
-		let asIcon = function(bool,event,pointer) {
-			let rec=interact.getElementRect(target)
-
-			if (bool) {
-				rec.width=minWidth;
-				rec.height=minHeight
-				if(event){
-					let diffX=(event.x0+event.dx)-(rec.width/2)
-					let diffY=(event.y0+event.dy)-(rec.height/2)
-		
-					pointer && (pointer.x=rec.left-diffX)
-					pointer && (pointer.y=rec.top-diffY)
-					
-					rec.left=diffX
-					rec.top=diffY
-				}
-				target.classList.add('is-icon')
-				videoGhost.classList.add('d-none')
-				//associate(false) //remove association
-			} else {
-				target.classList.remove('is-icon')
-				videoGhost.classList.remove('d-none')
-			}
-			return rec
-		}
 		//promise.resolve(
 		let instance = {
 			id:id,
@@ -704,11 +703,11 @@ let craft = function(target, options) {
 			free: free,
 			edit: edit,
 			reflow: reflow,
-			asIcon: asIcon,
 		}
 		craft.instances[target.id] = instance
 		instance.isReflow = true
 		startEditMode(120000)
+		associate(false)
 		//resizeTo(instance.asIcon(true))
 		instance.isReflow = false
 		//let promise=new Promise()
