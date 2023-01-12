@@ -106,16 +106,19 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		interact('.killer-commentator')
 		  .on('tap', function (event) {
 		    event.preventDefault()
-		    event.currentTarget.classList.add('listening')
-		    voice.start()
+		    let cssClass='listening'
+		    event.currentTarget.classList.add(cssClass)
+		    voice.start(function(){event.currentTarget.classList.remove(cssClass)})
 		  })
 		  .on('doubletap', function (event) {
 		    event.preventDefault()
-		    event.currentTarget.classList.toggle('deleting')
-		    setTimeout(function(){event.currentTarget.classList.remove('deleting')},10000)
+		    let cssClass='searching'
+		    event.currentTarget.classList.toggle(cssClass)
+		    SourceManager.discoverComponents(function(){event.currentTarget.classList.remove(cssClass)});
 		  })
 		  .on('hold', function (event) {
 		    event.currentTarget.classList.add('rotate')
+		    setTimeout(function(){event.currentTarget.classList.remove('rotate')},10000)
 		    var kcWindow = window.open("","Killer Commentator Control Panel")
 		    if(kcWindow){
 			    ajax(base_site+"controlpanel/index.html",function(html){
