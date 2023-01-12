@@ -697,6 +697,8 @@ let craft = function(target, options) {
 			id:id,
 			associate:associate,
 			edit: edit,
+			elem:target,
+			mediaElem:mediaElem,
 			reflow: reflow,
 		}
 		craft.instances[target.id] = instance
