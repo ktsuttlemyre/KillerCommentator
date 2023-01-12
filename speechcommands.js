@@ -155,7 +155,8 @@ window.voice=(function(document,voice,pp){let inject=pp.inject, appendTo=pp.appe
       },
 
       // (B) START SPEECH RECOGNITION
-      start : () => {
+      start : (callback) => {
+        voice.callback=callback
         voice.recog.start();
         voice.btn.onclick = voice.stop;
         voice.btn.value = "Speak Now Or Click Again To Cancel";
@@ -165,6 +166,10 @@ window.voice=(function(document,voice,pp){let inject=pp.inject, appendTo=pp.appe
 
       // (C) STOP/CANCEL SPEECH RECOGNITION
       stop : () => {
+        if(voice.callback){
+          voice.callback()
+          voice.callback=null
+        }
         voice.recog.stop();
         voice.btn.onclick = voice.start;
         voice.listening=false
