@@ -109,6 +109,7 @@ let craftZone = function(id, geometry) {
 			//localStorage.setItem(id + "." + associated.id, JSON.stringify(geometry))
 		}
 	}
+	secondary && (secondary.parent=instance)
 	craftZone.instances[id] = instance
 	if (secondary) {
 		craftZone.instances[secondary.elem.id] = secondary
@@ -475,7 +476,7 @@ let craft = function(target, options) {
 				if(zoneInstance.isPrimary){
 				   associate(zoneInstance.secondary)
 				}else{
-				   associate(craftZone.instances[zoneInstance.id+"_secondary"])
+				   associate(craftZone.instances.parent)
 				}
 			})
 			.on('doubletap', function(event) {
