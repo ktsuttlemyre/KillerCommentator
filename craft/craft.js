@@ -629,7 +629,7 @@ let craft = function(target, options) {
 			
 			
 			if(zoneInstance){
-				instance.classList.remove('is-icon')
+				instance.elem.classList.remove('is-icon')
 				videoGhost.classList.remove('d-none')
 			}else{ //as icon
 				geometry.width=minWidth;
@@ -644,7 +644,7 @@ let craft = function(target, options) {
 					geometry.left=diffX
 					geometry.top=diffY
 				}
-				instance.classList.add('is-icon')
+				instance.elem.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
 			}
 
