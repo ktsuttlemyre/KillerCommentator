@@ -569,27 +569,6 @@ let craft = function(target, options) {
 				return zone
 			}
 		}
-		let free = function() {
-			let zone = getZone()
-			if (zone) {
-				//free them
-				zone.assCraft.assZone= null
-				zone.assCraft= null
-
-				reflow({
-					emulateDrop: false
-				})
-				//      interactable.fire({
-				//        type: 'dragstart',
-				//        target: element,
-				//        dx: 20,
-				//        dy: 20,
-				//      });
-
-
-
-			}
-		}
 		let resizeTo=function(matchRect,order){
 			if(!order){
 				order=['start','move','end']
@@ -614,10 +593,27 @@ let craft = function(target, options) {
 // 			}
 			
 			//if theres something in the zone free it
-			let assCraft = instance.assCraft
+			let assCraft = zoneInstance.assCraft
 			if (assCraft && assCraft!=instance) {
-				assCraft.free()
+				//assCraft.associate()
+				let zone = getZone()
+				if (zone) {
+					//free them
+					zone.assCraft.assZone= null
+					zone.assCraft= null
+
+				//	reflow({
+				//		emulateDrop: false
+				//	})
+				//      interactable.fire({
+				//        type: 'dragstart',
+				//        target: element,
+				//        dx: 20,
+				//        dy: 20,
+				//      });
+				}
 			}
+
 			
 			//link zone and craft
 			zoneInstance && (zoneInstance.assCraft=instance)
@@ -633,7 +629,7 @@ let craft = function(target, options) {
 			
 			
 			if(zoneInstance){
-				assCraft.classList.remove('is-icon')
+				instance.classList.remove('is-icon')
 				videoGhost.classList.remove('d-none')
 			}else{ //as icon
 				geometry.width=minWidth;
@@ -648,11 +644,11 @@ let craft = function(target, options) {
 					geometry.left=diffX
 					geometry.top=diffY
 				}
-				assCraft.classList.add('is-icon')
+				instance.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
 			}
 
-			//set media first
+			// render media first
 			let mediaRect=interact.getElementRect(mediaElem)
 			//not actaully scalar but pretend it is cause I just want to see which is longer
 			let wScalar = mediaElem.videoWidth || mediaRect.width
@@ -665,7 +661,7 @@ let craft = function(target, options) {
 				mediaElem.style.height = `${geometry.mediaHeight || geometry.height}px`
 			}
 			
-			// set crop second
+			// render crop second
 			resizeTo(geometry)
 			    
 			//add animation classes after resize
@@ -700,7 +696,6 @@ let craft = function(target, options) {
 		let instance = {
 			id:id,
 			associate:associate,
-			free: free,
 			edit: edit,
 			reflow: reflow,
 		}
