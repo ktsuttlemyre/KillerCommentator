@@ -476,7 +476,7 @@ let craft = function(target, options) {
 				if(zoneInstance.isPrimary){
 				   associate(zoneInstance.secondary)
 				}else{
-				   associate(craftZone.instances.parent)
+				   associate(zoneInstance.parent)
 				}
 			})
 			.on('doubletap', function(event) {
