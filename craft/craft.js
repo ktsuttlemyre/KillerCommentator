@@ -690,7 +690,7 @@ let craft = function(target, options) {
 				}
 				target.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
-				associate(false) //remove association
+				//associate(false) //remove association
 			} else {
 				target.classList.remove('is-icon')
 				videoGhost.classList.remove('d-none')
