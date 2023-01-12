@@ -593,7 +593,7 @@ let craft = function(target, options) {
 // 			}
 			
 			//if theres something in the zone free it
-			let assCraft = zoneInstance.assCraft
+			let assCraft = zoneInstance && zoneInstance.assCraft
 			if (assCraft && assCraft!=instance) {
 				//assCraft.associate()
 				let zone = getZone()
