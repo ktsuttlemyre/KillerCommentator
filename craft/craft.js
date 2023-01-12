@@ -97,6 +97,7 @@ let craftZone = function(id, geometry) {
 		id:id,
 		getCenter:getCenter,
 		isSecondary:zone.id.indexOf('secondary') >= 0,
+		isPrimary:zone.id.indexOf('secondary') < 0,
 		elem: zone,
 		targetPointer:targetPointer,
 		geometry: geometry,
@@ -468,14 +469,24 @@ let craft = function(target, options) {
 				]
 			})
 			.on('tap', function(event) {
-
-				console.log('move to secondary', event)
+				console.log('secondary swap', event)
+				let zoneInstance = instance.assZone
+				if(!zoneInstance){return}
+				if(zoneInstance.isPrimary){
+				   associate(zoneInstance.secondary)
+				}else{
+				   associate(craft.instances[instance.id+"_secondary"])
+				}
 			})
 			.on('doubletap', function(event) {
-				if (!editMode) {
-					return
+				console.log('main swap')
+				let zoneInstance = instance.assZone
+				if(!zoneInstance){return}
+				if(zoneInstance.isMain){
+					associate(instance.lastZone)
+				}else{
+					associate(zoneInstance)
 				}
-				console.log('trigger lockin', event)
 			})
 			.on('hold', function(event) {
 				startEditMode()
@@ -595,7 +606,7 @@ let craft = function(target, options) {
 			})
 		}
 		let associate = function(zoneInstance) {
-			
+			zoneInstance = zoneInstance || undefined
 // 			if (instance && !instance.emulateDrop) {
 // 				if (!instance.isReflow) {
 // 					return
@@ -679,6 +690,7 @@ let craft = function(target, options) {
 				}
 				target.classList.add('is-icon')
 				videoGhost.classList.add('d-none')
+				associate(false) //remove association
 			} else {
 				target.classList.remove('is-icon')
 				videoGhost.classList.remove('d-none')
