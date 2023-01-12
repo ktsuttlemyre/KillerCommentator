@@ -141,7 +141,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		      })
 		    ],
 		    // enable autoScroll
-		    autoScroll: true,
+		    autoScroll: false,
 
 		    listeners: {
 		      // call this function on every dragmove event
