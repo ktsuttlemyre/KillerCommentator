@@ -115,8 +115,15 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		    setTimeout(function(){event.currentTarget.classList.remove('deleting')},10000)
 		  })
 		  .on('hold', function (event) {
-	// 			    event.currentTarget.classList.toggle('rotate')
-	// 			    event.currentTarget.classList.remove('large')
+		    event.currentTarget.classList.add('rotate')
+		    var kcWindow = window.open("","Killer Commentator Control Panel")
+		    ajax(base_site+"control_panel.html",function(html){
+			appendTo(kcWindow.document.body,domParse(html))
+		    }
+		    var html = "<html><head></head><body></body></html>"
+		    kcWindow.document.open()
+		    kcWindow.document.write(html)
+		    kcWindow.document.close()
 		  })
 		  .draggable({
 		    // enable inertial throwing
