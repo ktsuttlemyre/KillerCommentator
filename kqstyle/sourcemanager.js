@@ -363,10 +363,12 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			return SourceManager.load(source)
 		}
 	}
-	SourceManager.discoverComponents=async function(constraints){
+	SourceManager.discoverComponents=async function(constraints,callback){
 		constraints = Object.assign({},constraints)
 		if (!'mediaDevices' in navigator && !navigator.mediaDevices.getUserMedia){
-			alert('this broswer doesn\'t have access to navigator.medaDevices api')
+			let err='this broswer doesn\'t have access to navigator.medaDevices api'
+			console.error(err)
+			callback && callback(null,err)
 			return
 		}
 		
@@ -376,17 +378,33 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				video:true,
 				audio:true
 			});
-		}catch(e){console.error(e)}
-		if(!stream){alert('Please accept the security prompt')}
+		}catch(err){
+			console.error(err)
+			callback && callback(null,err)
+		}
+		if(!stream){
+			let err = 'Please accept the security prompt'
+			console.error(err)
+			callback && callback(null,err)
+			return
+		}
 		
 		let list;
 		try{
 			list = await navigator.mediaDevices.enumerateDevices();
-		}catch(e){console.error(e)}
+		}catch(err){
+			console.error(err)
+			callback && callback(null,err)
+			return
+		}
 		if(!list || !list.length){
-			alert('no devices found')
+			let err = 'no devices found'
+			console.error(err)
+			callback && callback(null,err)
+			return
 		}
 		
+		let returnList=[]
 		for(var i=0,l=list.length;i<l;i++){
 			let item = list[i]
 			console.log('found item',item)
@@ -395,6 +413,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			if(document.getElementById(`device-${item.deviceId}`)){
 				return
 			}
+			returnList.push(item)
 			if(item.kind=='videoinput'){
 				let stream = null;
 				try{
@@ -413,7 +432,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 						}
 					  }
 					},constraints));
-				}catch(e){console.error(e)}
+				}catch(err){
+					console.error(err)
+					callback && callback(null,err)
+				}
 				if(!stream){continue}
 
 				//quick note about archeteture design
@@ -430,7 +452,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 				var video = document.createElement('video');
 				video.id = `device-${item.deviceId}`
-				video.addEventListener( "loadedmetadata", function (e) {
+				video.addEventListener( "loadedmetadata", function (event) {
 					//SourceManager.draggableCraft(div,this,this.videoWidth/this.videoHeight)
 					SourceManager.autoCroppingCraft(div,this,this.videoWidth/this.videoHeight)
 				}, false )
@@ -450,9 +472,11 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				    promise.then(_ => {
 					// Autoplay started!
 					button.parentNode.removeChild(button)
-				    }).catch(error => {
+				    }).catch(err => {
 					// Autoplay was prevented.
 					// Show a "Play" button so that user can start playback.
+					console.error(err)
+					callback && callback(null,err)
 
 				    });
 				}
