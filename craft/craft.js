@@ -548,15 +548,14 @@ let craft = function(target, options) {
 						snappedToMedia = false
 
 						// start a resize action and wait for inertia to finish
-						instance.isReflow = true
 						interactable.reflow({
 							name: 'resize',
 							edges: {
 								right: true,
 								bottom: true,
 							},
+							isReflow:true
 						})
-						instance.isReflow = false
 						endFn()
 					}
 				}
@@ -677,20 +676,19 @@ let craft = function(target, options) {
 		let reflow = function(opts) {
 			return
 			Object.assign(instance, opts)
-			isReflow = true
 			interactable.reflow({
 				name: 'resize',
 				edges: {
 					left: true,
 					top: true,
 				},
+				isReflow:true
 			})
 			interactable.reflow({
 				name: 'drag',
-				axis: 'xy'
+				axis: 'xy',
+				isReflow:true
 			})
-			instance.isReflow = false
-			instance.emulateDrop = false
 		}
 		//promise.resolve(
 		let instance = {
@@ -702,11 +700,9 @@ let craft = function(target, options) {
 			reflow: reflow,
 		}
 		craft.instances[target.id] = instance
-		instance.isReflow = true
 		startEditMode(120000)
-		associate(false)
+		//associate(false)
 		//resizeTo(instance.asIcon(true))
-		instance.isReflow = false
 		//let promise=new Promise()
 		//return promise
 
@@ -744,7 +740,8 @@ window.addEventListener('resize', function() {
 		Object.keys(craft.instances).forEach(function(key) {
 			let inst = craft.instances[key]
 			inst.reflow({
-				emulateDrop: false
+				emulateDrop:false,
+				isReflow:true,
 			})
 		})
 	});
