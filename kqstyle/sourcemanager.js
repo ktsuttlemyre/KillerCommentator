@@ -6,6 +6,12 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		twitch:{
 			//video:'1686476519'
 			channel:'kqsfl'
+		},
+		backgrounds:{
+			main_stage:{
+				player:'backgroundVideo',
+				source:'https://kqsfl.com/wp-content/uploads/2023/01/hotline_background.mp4'
+			}
 		}
 	}
 
@@ -29,6 +35,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				return `https://challonge.com/${arg}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
 			},
 			chat:'https://nightdev.com/hosted/obschat/?theme=dark&channel=kqsfl&fade=false&bot_activity=false&prevent_clipping=false'
+			
 			
 		},
 		whiteboards: {
@@ -78,6 +85,42 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				//twitchPlayer.setVolume(0.5);
 			}))
 		},
+		backgroundVideo:function(source){
+			return SourceManager.players.video({
+					attributes:{
+						poster:'',
+						src:source,
+						type:"video/mp4",
+						autoplay:true,
+						muted:true,
+						loop:true
+					}
+				})
+		
+		}
+		video:function(options){
+			var vdo = document.createElement("video");
+			
+			['attributes',"style"].forEach(function(iter){
+				Object.entries(options[iter]||{}).forEach(function(entry){
+					const [key,value] = entry
+					if(iter=='attributes'){
+						vdo.setAttribute(key, value)
+					}else if(iter=='style'){
+						vdo.style[key]=value
+					}
+					
+				})
+			}
+			vdo.style.width = "100%";
+			vdo.style.height = "100%";
+			
+			return vdo;
+		},
+		element:function(options){
+			
+		}
+		
 	}
 							  
 	!window.api && (window.api={});				  
@@ -299,6 +342,18 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			}
 		}
 		window.api.zones.reverse().forEach(stageParser)
+		
+		
+		//add customizations
+		Object.entries(config.backgrounds).forEach(function(entry){
+			const [stageId,opts] = entry
+			SourceManager.attach(null,craftZone.instances[stageId].elem,SourceManager.players[opts.player](opts))
+		})
+		SourceManager.attach(config.backgrounds,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
+		
+		
+		
+		
 		let resizeDebounceTimer=0;
 		//resize all stages with the window resize action
 		window.addEventListener('resize',function(){
@@ -314,7 +369,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		window.dispatchEvent(new Event('resize'));
 	}
 							  
-	SourceManager.load=function(source,stage,player){
+	SourceManager.attach=function(source,stage,player){
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
 		stage=stage||craftZone.instances['stage_main'].elem;
@@ -334,9 +389,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		var tmp = source;
 		switch(source){
 			case "whiteboard":
-			return SourceManager.load(SourceManager.sources.urls.whiteboard,craftZone.instances['stage_main'].elem,SourceManager.players.iframe);	
+			return SourceManager.attach(SourceManager.sources.urls.whiteboard,craftZone.instances['stage_main'].elem,SourceManager.players.iframe);	
 			case "twitch":
-			return SourceManager.load(config.twitch,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
+			return SourceManager.attach(config.twitch,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
 			default:
 				//is it a whiteboard?
 				source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
@@ -360,7 +415,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 					source = SourceManager.sources.urls[source]
 				}
 					
-			return SourceManager.load(source)
+			return SourceManager.attach(source)
 		}
 	}
 	SourceManager.discoverComponents=async function(constraints,callback){
