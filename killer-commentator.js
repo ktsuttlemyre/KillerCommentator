@@ -117,13 +117,18 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		  .on('hold', function (event) {
 		    event.currentTarget.classList.add('rotate')
 		    var kcWindow = window.open("","Killer Commentator Control Panel")
-		    ajax(base_site+"controlpanel/index.html",function(html){
-			appendTo(kcWindow.document.body,domParse(html))
-		    })
-		    var html = "<html><head></head><body></body></html>"
-		    kcWindow.document.open()
-		    kcWindow.document.write(html)
-		    kcWindow.document.close()
+		    if(kcWindow){
+			    ajax(base_site+"controlpanel/index.html",function(html){
+				appendTo(kcWindow.document.body,domParse(html))
+			    })
+			    var html = "<html><head></head><body></body></html>"
+
+			    kcWindow.document.open()
+			    kcWindow.document.write(html)
+			    kcWindow.document.close()
+		    }else{
+			    alert('Please allow popups')
+		    }
 		  })
 		  .draggable({
 		    // enable inertial throwing
