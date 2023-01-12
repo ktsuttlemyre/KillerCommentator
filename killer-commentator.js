@@ -25,6 +25,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 				ajax(base_site+"logo/index.html",function(html){
 					let logo=domParse(html);
 					prependTo(document.body,logo);
+					window.scroll(0,0) //in case you somehow scroll away
 					main()
 				});
 			});
