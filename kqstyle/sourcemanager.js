@@ -97,7 +97,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 					}
 				})
 		
-		}
+		},
 		video:function(options){
 			var vdo = document.createElement("video");
 			
