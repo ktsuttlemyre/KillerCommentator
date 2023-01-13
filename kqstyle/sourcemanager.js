@@ -349,7 +349,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			const [stageId,opts] = entry
 			SourceManager.attach(null,craftZone.instances[stageId].elem,SourceManager.players[opts.player](opts))
 		})
-		SourceManager.attach(config.backgrounds,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
+		//SourceManager.attach(config.backgrounds,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
 		
 		
 		
