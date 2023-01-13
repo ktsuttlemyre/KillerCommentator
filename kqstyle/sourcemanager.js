@@ -8,7 +8,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			channel:'kqsfl'
 		},
 		backgrounds:{
-			main_stage:{
+			stage_main:{
 				player:'backgroundVideo',
 				source:'https://kqsfl.com/wp-content/uploads/2023/01/hotline_background.mp4'
 			}
@@ -349,7 +349,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			const [stageId,opts] = entry
 			SourceManager.attach(null,craftZone.instances[stageId].elem,SourceManager.players[opts.player](opts))
 		})
-		//SourceManager.attach(config.backgrounds,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
+		SourceManager.attach(config.backgrounds,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
 		
 		
 		
