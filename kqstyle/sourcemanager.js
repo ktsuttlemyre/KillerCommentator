@@ -111,7 +111,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 					}
 					
 				})
-			}
+			})
 			vdo.style.width = "100%";
 			vdo.style.height = "100%";
 			
