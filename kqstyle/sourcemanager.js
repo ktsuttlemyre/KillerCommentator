@@ -5,7 +5,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		},
 		twitch:{
 			//video:'1686476519'
-			channel:'kqsfl'
+			channel:'kqsfl',
+			stage:'stage_main',
 		},
 		backgrounds:{
 			stage_main:{
@@ -80,10 +81,17 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				// only needed if your site is also embedded on embed.example.com and othersite.example.com
 				parent: [location.host,"kq.style","ktsuttlemyre.github.io"]
 				},options)
-			appendTo(document.body,inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},function(){
-				SourceManager.twitchPlayer = new Twitch.Player("stage_main", options);
+			let cb = function(){
+				SourceManager.twitchPlayer = new Twitch.Player(options.stage, options);
 				//twitchPlayer.setVolume(0.5);
-			}))
+			}
+			let elem=inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},cb)
+			if(!elem){
+				//duplicate elem
+				cb && setTimeout(cb,1)
+				return
+			}
+			appendTo(document.body,elem)
 		},
 		backgroundVideo:function(source){
 			return SourceManager.players.video({
@@ -349,7 +357,6 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			const [stageId,opts] = entry
 			SourceManager.attach(opts.source,craftZone.instances[stageId].elem,SourceManager.players[opts.player])
 		})
-		SourceManager.attach(config.backgrounds,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
 		
 		
 		
@@ -372,7 +379,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	SourceManager.attach=function(source,stage,player){
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
-		stage=stage||craftZone.instances['stage_main'].elem;
+		stage=(stage ==null || typeof stage == 'string')?(craftZone.instances[stage].elem || document.getElementById(stage) || craftZone.instances['stage_main'].elem) : stage;
 		
 		stage.innerHTML = "";
 
