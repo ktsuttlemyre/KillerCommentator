@@ -104,8 +104,14 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 						src:source,
 						type:"video/mp4",
 						autoplay:true,
+						autoPlay:true,
 						muted:true,
 						loop:true
+					},
+					listeners:{
+						loadedmetadata:function (event) {
+							this.play();
+						}
 					}
 				})
 		
@@ -113,13 +119,16 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		video:function(options){
 			var vdo = document.createElement("video");
 			
-			['attributes',"style"].forEach(function(iter){
+			['attributes',"style",'listeners'].forEach(function(iter){
 				Object.entries(options[iter]||{}).forEach(function(entry){
 					const [key,value] = entry
 					if(iter=='attributes'){
 						vdo.setAttribute(key, value)
 					}else if(iter=='style'){
 						vdo.style[key]=value
+					}else if(iter=='listeners'){
+						vdo.addEventListener(key, value, false)
+
 					}
 					
 				})
