@@ -110,9 +110,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 						loop:true,
 					},
 					listeners:{
-						loadedmetadata:function (event) {
-							this.play();
-							console.log('playing background video',this,event)
+						oncanplay:function(event){
+							event.target.play()
 						}
 					}
 				})
