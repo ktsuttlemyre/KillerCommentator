@@ -100,17 +100,19 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		backgroundVideo:function(source){
 			return SourceManager.players.video({
 					attributes:{
-						poster:'',
+						//poster:'',
+						preload:true,
+						playsinline:true,
 						src:source,
 						type:"video/mp4",
 						autoplay:true,
-						autoPlay:true,
 						muted:true,
-						loop:true
+						loop:true,
 					},
 					listeners:{
 						loadedmetadata:function (event) {
 							this.play();
+							console.log('playing background video',this,event)
 						}
 					}
 				})
