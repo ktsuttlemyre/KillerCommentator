@@ -5,8 +5,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		},
 		twitch:{
 			//video:'1686476519'
-			channel:'kqsfl',
-			stage:'stage_main',
+			channel:'kqsfl'
 		},
 		backgrounds:{
 			stage_main:{
@@ -74,7 +73,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			ifrm.frameBorder = "0";
 			return ifrm;
 		},
-		twitch:function(options){
+		twitch:function(craft, options){
 			options=Object.assign({
 				width: "100%",
 				height: "100%",
@@ -82,16 +81,21 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				parent: [location.host,"kq.style","ktsuttlemyre.github.io"]
 				},options)
 			let cb = function(){
-				SourceManager.twitchPlayer = new Twitch.Player(options.stage, options);
+				SourceManager.twitchPlayer = new Twitch.Player(craft.id||craft, options);
 				//twitchPlayer.setVolume(0.5);
 			}
-			let elem=inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},cb)
-			if(!elem){
-				//duplicate elem
+			let script=inject('script',{src:"https://player.twitch.tv/js/embed/v1.js"},cb)
+			if(!script){
+				//duplicate script
 				cb && setTimeout(cb,1)
-				return
+			}else{
+				appendTo(document.body,script)
 			}
-			appendTo(document.body,elem)
+			
+
+			
+			
+			return div
 		},
 		backgroundVideo:function(source){
 			return SourceManager.players.video({
@@ -391,14 +395,46 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	        domElem && stage.appendChild(domElem);
 		return 
 	}
+	SourceManager.load=function(source,stage,player,reuse){
+		let craft;
+		if(!source){return}
+		player=player||SourceManager.players.iframe;
+		stage=(stage == null || typeof stage == 'string')?(craftZone.instances[stage].elem || document.getElementById(stage) || craftZone.instances['stage_main'].elem) : stage;
+		
+		if(source.call){
+			source=source()
+		}
+
+		let domElem=player(source);
+		if(reuse){
+			if(reuse.isCraft){
+				craft = reuse
+			}else if(typeof reuse == 'string'){
+				craft=craft.instances[reuse]
+			}else{
+				craft = reuse
+			}
+			if(!craft){
+				craft = document.getElementById(reuse)
+			}	
+		}
+		if(!craft){
+			craft = document.createElement('div')
+			craft.id=generateId()
+			let craftInstance = SourceManager.autoCroppingCraft(craft,domElem/*,aspectRatio*/)
+			document.body.appendChild(craft)
+		}
+		craftInstance.associate(stage)
+		return 
+	}
 	SourceManager.cmd=function(source){
 		if(!source){return}
 		var tmp = source;
 		switch(source){
 			case "whiteboard":
-			return SourceManager.attach(SourceManager.sources.urls.whiteboard,craftZone.instances['stage_main'].elem,SourceManager.players.iframe);	
+			return SourceManager.load(SourceManager.sources.urls.whiteboard,craftZone.instances['stage_main'].elem,SourceManager.players.iframe);	
 			case "twitch":
-			return SourceManager.attach(config.twitch,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
+			return SourceManager.load(config.twitch,craftZone.instances['stage_main'].elem,SourceManager.players.twitch);
 			default:
 				//is it a whiteboard?
 				source = (SourceManager.sources.whiteboards[source] && SourceManager.sources.whiteboards[source].src) || source
@@ -510,6 +546,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				let div = document.createElement('div')
 				let id = generateId()
 				div.id=id
+				div.dataset.label=item.label
+				div.dataset.groupId=item.groupId
+				div.dataset.kind=item.kind
+				div.dataset.deviceId=item.deviceId
 				let button = document.createElement('a')
 				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 				var video = document.createElement('video');
@@ -538,8 +578,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 					// Autoplay was prevented.
 					// Show a "Play" button so that user can start playback.
 					console.error(err)
-					callback && callback(null,err)
-
+					callback && callback(null,err);
 				    });
 				}
 			}	
@@ -644,7 +683,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
 		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
 			initStages()
-			SourceManager.cmd("twitch")
+			//SourceManager.cmd("twitch")
 		}));
 	}));
 
