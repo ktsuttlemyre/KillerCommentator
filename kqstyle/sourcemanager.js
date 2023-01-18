@@ -323,7 +323,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		})
 		
 		Object.entries(craft.instances).forEach(function(entry){
-			const [key, instance] = entry;                            
+			const [key, instance] = entry;
+			if(!instance.assZone){return}
 			let geo=instance.getGeometry()
 			instance.resizeTo(geo)
 		})
