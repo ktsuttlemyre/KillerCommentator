@@ -190,7 +190,7 @@ let craft = function(target, options) {
 	let id=target.id
 
 	let initGestDist = 0
-	let dropSnapRange = 100
+	let dropSnapRange = 150
 	let editDebounceId = null;
 	let resetDebounce = 5000
 	let resetDebounceCustom
