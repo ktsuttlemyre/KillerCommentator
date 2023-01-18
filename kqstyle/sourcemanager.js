@@ -278,7 +278,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	]);
 
 				
-	SourceManager.resize=function(e){
+	SourceManager.resize=function(event){
 		let kqStyleHeight=1080
 		let kqStyleWidth=1920
 
@@ -316,6 +316,12 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		    style.height=newHeight+"px"
 		    style.top=offsetY+"px"
 		    style.left=offsetX+"px"
+		})
+		
+		Object.entries(craft.instances).forEach(function(entry){
+			const [key, instance] = entry;                            
+			let geo=instance.getGeometry()
+			instance.resizeTo(geo)
 		})
 	}
 	let kqstyle_viewport;
