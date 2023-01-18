@@ -107,29 +107,17 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		interact('.killer-commentator')
 		  .on('tap', function (event) {
 		    event.preventDefault()
-		document.querySelectorAll('video').forEach(function(t){
-			if(isVideoPlaying(t)){return}
-			t.play()
-		})
 		    let cssClass='listening'
 		    event.currentTarget.classList.add(cssClass)
 		    voice.start(function(){event.currentTarget.classList.remove(cssClass)})
 		  })
 		  .on('doubletap', function (event) {
 		    event.preventDefault()
-			document.querySelectorAll('video').forEach(function(t){
-			if(isVideoPlaying(t)){return}
-			t.play()
-			})
 		    let cssClass='searching'
 		    event.currentTarget.classList.toggle(cssClass)
 		    SourceManager.discoverComponents(function(){event.currentTarget.classList.remove(cssClass)});
 		  })
 		  .on('hold', function (event) {
-			document.querySelectorAll('video').forEach(function(t){
-			if(isVideoPlaying(t)){return}
-			t.play()
-			})
 		    event.currentTarget.classList.add('rotate')
 		    setTimeout(function(){event.currentTarget.classList.remove('rotate')},10000)
 		    var kcWindow = window.open("","Killer Commentator Control Panel")
@@ -191,5 +179,14 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		// this function is used later in the resizing and gesture demos
 		window.dragMoveListener = dragMoveListener
 	}
+	
+	//force background videos play
+	setInterval(function(){
+		document.querySelectorAll('video[autoplay][loop][muted]').forEach(function(vid){
+			if(isVideoPlaying(vid)){return}
+			vid.play()
+		})
+	},5000)
+	
 	return KillerCommentator
 })(document,{},(window.plugin_platform && window.plugin_platform()));
