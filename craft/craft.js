@@ -752,7 +752,7 @@ let craft = function(target, options) {
 		}
 		craft.instances[target.id] = instance
 		startEditMode(120000)
-		//associate(false)
+		associate(null)
 		//resizeTo(instance.asIcon(true))
 		//let promise=new Promise()
 		//return promise
