@@ -20,7 +20,7 @@ let craftZone = function(id, geometry) {
 	
 	let snap=function(bool){
 		if(bool==null){
-			bool = !instance.snapOn){
+			bool = !instance.snapOn
 		}
 		if(bool){
 			instance.snapOn=true
