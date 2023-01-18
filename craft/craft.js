@@ -494,7 +494,7 @@ let craft = function(target, options) {
 						relativePoints: [
 							{ x: 0.5, y: 0.5 },   // to the center
 						],
-						range:dropSnapRange
+						range:100
 					})
 				]
 			})
