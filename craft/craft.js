@@ -24,13 +24,16 @@ let craftZone = function(id, geometry) {
 		}
 		if(bool){
 			instance.snapOn=true
-			setSnapCenter()
+			var dropRect = interact.getElementRect(zone)
+			targetPointer.x=dropRect.left + dropRect.width / 2;
+			targetPointer.y=dropRect.top + dropRect.height / 2;
 			//targetPointer.range=Math.sqrt(dropRect.width*dropRect.width + dropRect.height*dropRect.height);
 		}else{
 			instance.snapOn=false
 			targetPointer.x=-maxInt
 			targetPointer.y=-maxInt
 		}
+		return targetPointer
 			
 	}
 
@@ -98,12 +101,6 @@ let craftZone = function(id, geometry) {
 			})
 	}
 
-	let setSnapCenter = function(){
-		var dropRect = interact.getElementRect(zone)
-		targetPointer.x=dropRect.left + dropRect.width / 2
-		targetPointer.y=dropRect.top + dropRect.height / 2
-		return targetPointer
-	}
 	let instance = {
 // 		targetGetter:function(){
 // 			if(isOver){
@@ -112,7 +109,6 @@ let craftZone = function(id, geometry) {
 // 			return {}
 // 		},
 		id:id,
-		setSnapCenter:setSnapCenter,
 		isSecondary:zone.id.indexOf('secondary') >= 0,
 		isPrimary:zone.id.indexOf('secondary') < 0,
 		elem: zone,
@@ -458,10 +454,7 @@ let craft = function(target, options) {
 								let assZone = craftZone.instances[key]
 								//if(assZone === instance.assZone){
 								//}
-								let snapTarget = assZone.setSnapCenter()
-								if (assZone.isSecondary) {
-									assZone.snap(false)
-								}
+								let snapTarget = assZone.snap(assZone.isPrimary)
 								zones.push(snapTarget)
 							})
 							return
