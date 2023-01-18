@@ -670,10 +670,13 @@ let craft = function(target, options) {
 
 			
 			//link zone and craft
-			zoneInstance && (zoneInstance.assCraft=instance)
+			if(zoneInstance){
+				zoneInstance.assCraft=instance
+				zoneInstance.snap(true); //turn on snaps
+			}
 			instance.assZone=zoneInstance
-			//turn on snaps
-			zoneInstance.snap(true)
+			
+			
 			
 			if(!dontResize){
 				let geometry = getGeometry()
