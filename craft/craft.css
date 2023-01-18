@@ -160,7 +160,14 @@
 }
 
 .active {
-  border-color: #aaa;
+  /*animation: bounce 1.5s ease infinite;*/
+  animation: glow 1.5s ease infinite;
+}
+
+@keyframes glow {
+  50% {
+    background: rgba(255,255,255,.6);
+  }
 }
 
 .targeted {
