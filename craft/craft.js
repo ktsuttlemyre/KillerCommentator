@@ -16,6 +16,28 @@ let craftZone = function(id, geometry) {
 
 	let isOver=false;
 	let targetPointer={}
+	let maxInt=999999999
+	
+	let snap=function(bool){
+		if(bool==null){
+			if(targetPointer.x==-maxInt && targetPointer.y==-maxInt){
+				bool=true
+			}else{
+				bool=false
+			}
+			
+		}
+		if(bool){
+			var dropRect = interact.getElementRect(zone);
+			targetPointer.x=dropRect.left + dropRect.width / 2
+			targetPointer.y= dropRect.top + dropRect.height / 2
+			//targetPointer.range=Math.sqrt(dropRect.width*dropRect.width + dropRect.height*dropRect.height);
+		}else{
+			targetPointer.x=-maxInt
+			targetPointer.y=-maxInt
+		}
+			
+	}
 
 	if (!(id.indexOf('secondary') >= 0)) {
 		// enable draggables to be dropped into this
@@ -33,17 +55,11 @@ let craftZone = function(id, geometry) {
 				},
 				ondragenter: function(event) {
 					isOver=true
-					var dropRect = interact.getElementRect(zone);
-					targetPointer.x=dropRect.left + dropRect.width / 2
-					targetPointer.y= dropRect.top + dropRect.height / 2
-					//targetPointer.range=Math.sqrt(dropRect.width*dropRect.width + dropRect.height*dropRect.height);
-
-
+					snap(true)
 				},
 				ondragleave: function(event) {
 					isOver=false
-					targetPointer.x=-9999999
-					targetPointer.y=-9999999
+					snap(false)
 
 					// remove the drop feedback style
 					event.target.classList.remove('targeted')
@@ -437,11 +453,13 @@ let craft = function(target, options) {
 							interactable.fire(event);
 							Object.keys(craftZone.instances).forEach(function(key) {
 								if(key.indexOf('fullscreen')>=0){return}
-								let instance = craftZone.instances[key]
-								if (instance.isSecondary) {
-									return
-								}
-								zones.push(instance.getCenter(instance.targetPointer))
+								let assZone = craftZone.instances[key]
+								//if(assZone === instance.assZone){
+								//}
+								//if (assZone.isSecondary) {
+								//	return
+								//}
+								zones.push(assZone.getCenter(assZone.targetPointer))
 							})
 							return
 						}
