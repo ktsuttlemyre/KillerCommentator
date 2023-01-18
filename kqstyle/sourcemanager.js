@@ -708,7 +708,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
 			initStages()
 			//SourceManager.cmd("twitch")
-			SourceManager.append(config.chat,'stage_chat',SourceManager.players.iframe)
+			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe)
 		}));
 	}));
 
