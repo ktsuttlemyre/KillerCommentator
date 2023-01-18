@@ -24,7 +24,7 @@ let craftZone = function(id, geometry) {
 		}
 		if(bool){
 			instance.snapOn=true
-			getCenter(targetPointer)
+			setSnapCenter()
 			//targetPointer.range=Math.sqrt(dropRect.width*dropRect.width + dropRect.height*dropRect.height);
 		}else{
 			instance.snapOn=false
@@ -98,12 +98,11 @@ let craftZone = function(id, geometry) {
 			})
 	}
 
-	let getCenter = function(obj){
+	let setSnapCenter = function(){
 		var dropRect = interact.getElementRect(zone)
-		obj=obj||{}
-		obj.x=dropRect.left + dropRect.width / 2
-		obj.y=dropRect.top + dropRect.height / 2
-		return obj
+		targetPointer.x=dropRect.left + dropRect.width / 2
+		targetPointer.y=dropRect.top + dropRect.height / 2
+		return targetPointer
 	}
 	let instance = {
 // 		targetGetter:function(){
@@ -113,7 +112,7 @@ let craftZone = function(id, geometry) {
 // 			return {}
 // 		},
 		id:id,
-		getCenter:getCenter,
+		setSnapCenter:setSnapCenter,
 		isSecondary:zone.id.indexOf('secondary') >= 0,
 		isPrimary:zone.id.indexOf('secondary') < 0,
 		elem: zone,
@@ -434,7 +433,7 @@ let craft = function(target, options) {
 						if (!editMode) {
 							return
 						}
-						
+						console.log('dragmove',event.x0,event.y0,event.dx,event.dy,event)
 						if(!target.classList.contains('is-icon') && getDistance(0,0,event.dx,event.dy)>dropSnapRange){
 							associate(null, true)
 							let geometry = getGeometry(event /*,offsetPointer*/ ,['start','move','end'])
@@ -459,7 +458,7 @@ let craft = function(target, options) {
 								let assZone = craftZone.instances[key]
 								//if(assZone === instance.assZone){
 								//}
-								let snapTarget = assZone.getCenter(assZone.targetPointer)
+								let snapTarget = assZone.setSnapCenter()
 								if (assZone.isSecondary) {
 									assZone.snap(false)
 								}
