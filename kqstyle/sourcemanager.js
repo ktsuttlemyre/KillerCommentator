@@ -318,7 +318,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		    style.left=offsetX+"px"
 			
 	            if(instance.snapOn){
-			    instance.getCenter(instance.targetPointer)
+			    instance.setSnapCenter()
 		    }
 		})
 		
