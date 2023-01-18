@@ -607,9 +607,7 @@ let craft = function(target, options) {
 				let obj = {
 					type: `resize${action}`,
 					target: target,
-				}
-				if(action=='move'){
-					obj.matchRect=matchRect
+					matchRect:matchRect,
 				}
 				interactable.fire(obj);
 			})
