@@ -101,13 +101,13 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			return SourceManager.players.video({
 					attributes:{
 						//poster:'',
-						preload:true,
-						playsinline:true,
+						preload:'preload',
+						playsinline:'playsinline',
 						src:source,
 						type:"video/mp4",
-						autoplay:true,
-						muted:true,
-						loop:true,
+						autoplay:'autoplay',
+						muted:'muted',
+						loop:'loop',
 					},
 					listeners:{
 						oncanplay:function(event){
