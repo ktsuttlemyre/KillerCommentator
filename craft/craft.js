@@ -571,7 +571,35 @@ let craft = function(target, options) {
 				return zone
 			}
 		}
+		//takes a object created via Craft.getGeometry(), Element.getBoundingClientRect() or interact.getElementRect(element)
+		//Craft.getGeometry() will give best resutls because it parses out mediaWidth/mediaHeight
 		let resizeTo=function(matchRect,order){
+			let zoneInstance = getZone()
+			
+			if(zoneInstance){
+				instance.elem.classList.remove('is-icon')
+				videoGhost.classList.remove('d-none')
+			}else{
+				instance.elem.classList.add('is-icon')
+				videoGhost.classList.add('d-none')
+			}
+			
+			// render media first
+			let mediaRect=interact.getElementRect(mediaElem)
+			let style = mediaElem.style;
+			
+			//not actaully scalar but pretend it is cause I just want to see which is longer
+			let wScalar = mediaElem.videoWidth || mediaRect.width
+			let hScalar = mediaElem.videoHeight || mediaRect.height 
+	
+			//if (wScalar > hScalar) {
+			if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
+				mediaElem.style.width = `${matchRect.mediaWidth || matchRect.width}px`
+			} else {
+				mediaElem.style.height = `${matchRect.mediaHeight || matchRect.height}px`
+			}
+			
+			//old resizeTo code
 			if(!order){
 				order=['start','move','end']
 			}
@@ -644,10 +672,7 @@ let craft = function(target, options) {
 			let geometry = Object.assign({}, domGeo, geoLocalUserMod)
 			
 			
-			if(zoneInstance){
-				instance.elem.classList.remove('is-icon')
-				videoGhost.classList.remove('d-none')
-			}else{ //as icon
+			if(!zoneInstance){ //as icon
 				geometry.width=minWidth;
 				geometry.height=minHeight
 				if(event){
@@ -660,24 +685,9 @@ let craft = function(target, options) {
 					geometry.left=diffX
 					geometry.top=diffY
 				}
-				instance.elem.classList.add('is-icon')
-				videoGhost.classList.add('d-none')
 			}
-
-			// render media first
-			let mediaRect=interact.getElementRect(mediaElem)
-			//not actaully scalar but pretend it is cause I just want to see which is longer
-			let wScalar = mediaElem.videoWidth || mediaRect.width
-			let hScalar = mediaElem.videoHeight || mediaRect.height 
-			let style = mediaElem.style;
-			//if (wScalar > hScalar) {
-			if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
-				mediaElem.style.width = `${geometry.mediaWidth || geometry.width}px`
-			} else {
-				mediaElem.style.height = `${geometry.mediaHeight || geometry.height}px`
-			}
-			
-			// render crop second
+		
+			return geometry
 		}
 		let edit = function() {
 			alert('edit on craft public interface not implmeneted')
