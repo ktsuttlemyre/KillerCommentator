@@ -85,10 +85,15 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 	!(function(){ //attach to canvas to get events
 		let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')[0]
 		if(!canvas){return}
-		var ctx = canvas.getContext('2d');
+		var ctx;
+		'2d,webgl,webgl2,experimental-webgl,bitmaprenderer'.split(',').forEach(function(c){
+			if(ctx){return}
+			ctx=canvas.getContext(c)
+		})
+		
 		let gameStarted=false
 		setInterval(function(){
-			if(isTransparent(ctx,100,100)!=gameStarted){
+			if(ctx && isTransparent(ctx,100,100)!=gameStarted){
 				if(gameStarted){
 					//game was started now its off
 					console.log('stats screen showing')
