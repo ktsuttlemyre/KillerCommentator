@@ -6,7 +6,9 @@
   overflow:hidden;
   width:150px;
   height:150px;
-  position:relative;
+  position:absolute;
+  top:0;
+  left:0;
   cursor: pointer important;
 }
 .video-ghost{
