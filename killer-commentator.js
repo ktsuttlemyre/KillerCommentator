@@ -101,23 +101,35 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		},7500)
 	})()
 
-
+ const isVideoPlaying = video => !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);								  
 	let main = function(){
 		//add speech commands 
 		interact('.killer-commentator')
 		  .on('tap', function (event) {
 		    event.preventDefault()
+		document.querySelectorAll('video').forEach(function(t){
+			if(isVideoPlaying(t)){return}
+			t.play()
+		})
 		    let cssClass='listening'
 		    event.currentTarget.classList.add(cssClass)
 		    voice.start(function(){event.currentTarget.classList.remove(cssClass)})
 		  })
 		  .on('doubletap', function (event) {
 		    event.preventDefault()
+			document.querySelectorAll('video').forEach(function(t){
+			if(isVideoPlaying(t)){return}
+			t.play()
+			})
 		    let cssClass='searching'
 		    event.currentTarget.classList.toggle(cssClass)
 		    SourceManager.discoverComponents(function(){event.currentTarget.classList.remove(cssClass)});
 		  })
 		  .on('hold', function (event) {
+			document.querySelectorAll('video').forEach(function(t){
+			if(isVideoPlaying(t)){return}
+			t.play()
+			})
 		    event.currentTarget.classList.add('rotate')
 		    setTimeout(function(){event.currentTarget.classList.remove('rotate')},10000)
 		    var kcWindow = window.open("","Killer Commentator Control Panel")
