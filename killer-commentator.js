@@ -86,7 +86,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 // 		// returns true if pixel is fully transparent
 // 	    return ctx.getImageData(x, y, 1, 1).data[3] === 0; // 4th byte is alpha
 // 	}
-	!(function(){ //attach to canvas to get events
+//	!(function(){ //attach to canvas to get events
 // 		let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')[0]
 // 		if(!canvas){return}
 // 		var ctx;
@@ -96,20 +96,20 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 // 			ctx=canvas.getContext(c)
 // 		})
 		
-		let gameStarted=false
-		setInterval(function(){
-			if(ctx && isTransparent(ctx,100,100)!=gameStarted){
-				if(gameStarted){
-					//game was started now its off
-					console.log('stats screen showing')
-				}else{
-					//game was off now started
-					console.log('game started')
-				}
-				gameStarted=!gameStarted
-			}
-		},7500)
-	})()
+// 		let gameStarted=false
+// 		setInterval(function(){
+// 			if(ctx && isTransparent(ctx,100,100)!=gameStarted){
+// 				if(gameStarted){
+// 					//game was started now its off
+// 					console.log('stats screen showing')
+// 				}else{
+// 					//game was off now started
+// 					console.log('game started')
+// 				}
+// 				gameStarted=!gameStarted
+// 			}
+// 		},7500)
+// 	})()
 
  const isVideoPlaying = video => !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);								  
 	let main = function(){
