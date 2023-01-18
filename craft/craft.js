@@ -100,7 +100,7 @@ let craftZone = function(id, geometry) {
 		isPrimary:zone.id.indexOf('secondary') < 0,
 		elem: zone,
 		targetPointer:targetPointer,
-		geometry: geometry,
+		initGeometry: geometry,
 		secondary: secondary,
 		saveGeoMods: function() {
 			console.log('alert saving of geeo mods')
@@ -417,7 +417,8 @@ let craft = function(target, options) {
 						}
 						
 						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.dx,event.dy)>dropSnapRange){
-							associate(null,event /*,offsetPointer*/ ,['start','move','end'])
+							associate(null, true)
+							let geometry = getGeometry(event /*,offsetPointer*/ ,['start','move','end'])
 // 							event.interactable.draggable({
 // 								snap: {
 // 									targets: zones,
@@ -428,6 +429,7 @@ let craft = function(target, options) {
 // 									range:dropSnapRange
 // 								}
 // 							})
+							resizeTo(geometry)
 							interactable.fire({
 								type: 'dragend',
 								target: target,
@@ -584,7 +586,7 @@ let craft = function(target, options) {
 				interactable.fire(obj);
 			})
 		}
-		let associate = function(zoneInstance,event,pointer) {
+		let associate = function(zoneInstance,dontResize) {
 			zoneInstance = zoneInstance || undefined
 // 			if (instance && !instance.emulateDrop) {
 // 				if (!instance.isReflow) {
@@ -619,6 +621,20 @@ let craft = function(target, options) {
 			zoneInstance && (zoneInstance.assCraft=instance)
 			instance.assZone=zoneInstance
 			
+			if(!dontResize){
+				let geometry = getGeometry()
+				resizeTo(geometry)
+			}
+			    
+			//add animation classes after resize
+			//resize intaractjs has constraints that conflict with animations
+			//so add them after
+			target.classList.add('animate-transition')
+			mediaElem.classList.add('animate-transition')
+			
+		}
+		let getGeometry = function(event,pointer){
+			let zoneInstance = instance.assZone
 			//associate data
 			let zoneId=zoneInstance && zoneInstance.id
 			let geoLocalUserMod = JSON.parse(localStorage.getItem([zoneId,instance.id].join(' ').trim()) || '{}')
@@ -662,14 +678,6 @@ let craft = function(target, options) {
 			}
 			
 			// render crop second
-			resizeTo(geometry)
-			    
-			//add animation classes after resize
-			//resize intaractjs has constraints that conflict with animations
-			//so add them after
-			target.classList.add('animate-transition')
-			mediaElem.classList.add('animate-transition')
-			
 		}
 		let edit = function() {
 			alert('edit on craft public interface not implmeneted')
@@ -699,6 +707,8 @@ let craft = function(target, options) {
 			elem:target,
 			mediaElem:mediaElem,
 			reflow: reflow,
+			getGeometry:getGeometry,
+			resizeTo:resizeTo,
 		}
 		craft.instances[target.id] = instance
 		startEditMode(120000)
