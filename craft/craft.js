@@ -20,17 +20,14 @@ let craftZone = function(id, geometry) {
 	
 	let snap=function(bool){
 		if(bool==null){
-			if(targetPointer.x==-maxInt && targetPointer.y==-maxInt){
-				bool=true
-			}else{
-				bool=false
-			}
-			
+			bool = !instance.snapOn){
 		}
 		if(bool){
+			instance.snapOn=true
 			getCenter(targetPointer)
 			//targetPointer.range=Math.sqrt(dropRect.width*dropRect.width + dropRect.height*dropRect.height);
 		}else{
+			instance.snapOn=false
 			targetPointer.x=-maxInt
 			targetPointer.y=-maxInt
 		}
