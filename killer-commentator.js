@@ -86,7 +86,8 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')[0]
 		if(!canvas){return}
 		var ctx;
-		'2d,webgl,webgl2,experimental-webgl,bitmaprenderer'.split(',').forEach(function(c){
+		//'2d,webgl,webgl2,experimental-webgl,bitmaprenderer'.split(',')
+		['webgl2'].forEach(function(c){
 			if(ctx){return}
 			ctx=canvas.getContext(c)
 		})
