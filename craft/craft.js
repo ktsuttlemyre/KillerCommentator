@@ -270,7 +270,7 @@ let craft = function(target, options) {
 	let videoGhost = document.createElement('div')
 	videoGhost.className = 'video-ghost'
 	document.body.insertBefore(videoGhost, target)
-	let minWidth = 150
+	let minWidth = 100
 	let minHeight = 100
 
 	let offsetPointer={x:0,y:0}
@@ -465,7 +465,7 @@ let craft = function(target, options) {
 								//if(assZone === instance.assZone){
 								//}
 								if (assZone.isSecondary) {
-									return
+									assZone.snap(false)
 								}
 								zones.push(assZone.getCenter(assZone.targetPointer))
 							})
