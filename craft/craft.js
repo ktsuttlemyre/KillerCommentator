@@ -59,7 +59,7 @@ let craftZone = function(id, geometry) {
 				},
 				ondragenter: function(event) {
 					isOver=true
-					if(instance.assCraft.assZone===instance){
+					if(instance.assCraft && instance.assCraft.assZone === instance){
 						return snap(true)
 					}
 					//snap(false)
