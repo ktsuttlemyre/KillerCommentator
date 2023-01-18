@@ -181,12 +181,14 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 	}
 	
 	//force background videos play
-	setInterval(function(){
+	let forcePlay=function(){
 		document.querySelectorAll('video[autoplay][loop][muted]').forEach(function(vid){
 			if(isVideoPlaying(vid)){return}
 			vid.play()
 		})
-	},5000)
+	}
+	setInterval(forcePlay,5000)
+	setTimeout(forcePlay,1)
 	
 	return KillerCommentator
 })(document,{},(window.plugin_platform && window.plugin_platform()));
