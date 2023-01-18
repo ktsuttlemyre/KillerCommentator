@@ -100,7 +100,7 @@ let craftZone = function(id, geometry) {
 		isPrimary:zone.id.indexOf('secondary') < 0,
 		elem: zone,
 		targetPointer:targetPointer,
-		initGeometry: geometry,
+		unscaledGeometry: geometry,
 		secondary: secondary,
 		saveGeoMods: function() {
 			console.log('alert saving of geeo mods')
