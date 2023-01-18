@@ -432,17 +432,7 @@ let craft = function(target, options) {
 						console.log('dragmove',event.x0,event.y0,event.dx,event.dy,event)
 						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.client.x,event.client.y)>dropSnapRange){
 							associate(null, true)
-							let geometry = getGeometry(event /*,offsetPointer*/ ,['start','move','end'])
-// 							event.interactable.draggable({
-// 								snap: {
-// 									targets: zones,
-// 									//offset: offsetPointer,
-// 									relativePoints: [
-// 										{ x: 0.5, y: 0.5 },   // to the center
-// 									],
-// 									range:dropSnapRange
-// 								}
-// 							})
+							let geometry = getGeometry(event /*,offsetPointer*/)
 							resizeTo(geometry)
 							interactable.fire({
 								type: 'dragend',
@@ -452,8 +442,6 @@ let craft = function(target, options) {
 							Object.keys(craftZone.instances).forEach(function(key) {
 								if(key.indexOf('fullscreen')>=0){return}
 								let assZone = craftZone.instances[key]
-								//if(assZone === instance.assZone){
-								//}
 								let snapTarget = assZone.snap(assZone.isPrimary)
 								zones.push(snapTarget)
 							})
