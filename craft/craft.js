@@ -122,6 +122,7 @@ let craftZone = function(id, geometry) {
 		isSecondary:zone.id.indexOf('secondary') >= 0,
 		isPrimary:zone.id.indexOf('secondary') < 0,
 		elem: zone,
+		snap:snap,
 		targetPointer:targetPointer,
 		unscaledGeometry: geometry,
 		secondary: secondary,
@@ -671,6 +672,8 @@ let craft = function(target, options) {
 			//link zone and craft
 			zoneInstance && (zoneInstance.assCraft=instance)
 			instance.assZone=zoneInstance
+			//turn on snaps
+			zoneInstance.snap(true)
 			
 			if(!dontResize){
 				let geometry = getGeometry()
