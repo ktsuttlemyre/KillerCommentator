@@ -52,7 +52,7 @@ let craftZone = function(id, geometry) {
 				ondropactivate: function(event) {
 					// add active dropzone feedback
 					event.target.classList.add('active')
-					if(instance.assCraft.assZone===instance){
+					if(instance.assCraft && instance.assCraft.assZone === instance){
 						return snap(true)
 					}
 					//snap(false)
