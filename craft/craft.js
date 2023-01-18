@@ -464,10 +464,11 @@ let craft = function(target, options) {
 								let assZone = craftZone.instances[key]
 								//if(assZone === instance.assZone){
 								//}
+								let snapTarget = assZone.getCenter(assZone.targetPointer)
 								if (assZone.isSecondary) {
 									assZone.snap(false)
 								}
-								zones.push(assZone.getCenter(assZone.targetPointer))
+								zones.push(snapTarget)
 							})
 							return
 						}
