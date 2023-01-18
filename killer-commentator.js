@@ -77,20 +77,24 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		
 	}
 	
+	
+// 	const pixels = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+// 	gl.readPixels(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+// 	console.log(pixels); // Uint8Array
 
-	function isTransparent(ctx, x, y) { // x, y coordinate of pixel
-		// returns true if pixel is fully transparent
-	    return ctx.getImageData(x, y, 1, 1).data[3] === 0; // 4th byte is alpha
-	};
+// 	function isTransparent(ctx, x, y) { // x, y coordinate of pixel
+// 		// returns true if pixel is fully transparent
+// 	    return ctx.getImageData(x, y, 1, 1).data[3] === 0; // 4th byte is alpha
+// 	}
 	!(function(){ //attach to canvas to get events
-		let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')[0]
-		if(!canvas){return}
-		var ctx;
-		//'2d,webgl,webgl2,experimental-webgl,bitmaprenderer'.split(',')
-		['webgl2'].forEach(function(c){
-			if(ctx){return}
-			ctx=canvas.getContext(c)
-		})
+// 		let canvas = document.getElementById('unity-canvas') || document.getElementsByTagName('canvas')[0]
+// 		if(!canvas){return}
+// 		var ctx;
+// 		//'2d,webgl,webgl2,experimental-webgl,bitmaprenderer'.split(',')
+// 		['webgl2'].forEach(function(c){
+// 			if(ctx){return}
+// 			ctx=canvas.getContext(c)
+// 		})
 		
 		let gameStarted=false
 		setInterval(function(){
