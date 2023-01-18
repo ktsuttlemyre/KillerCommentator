@@ -316,6 +316,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		    style.height=newHeight+"px"
 		    style.top=offsetY+"px"
 		    style.left=offsetX+"px"
+			
+	            if(assZone.snapOn){
+			    assZone.getCenter(assZone.targetPointer)
+		    }
 		})
 		
 		Object.entries(craft.instances).forEach(function(entry){
