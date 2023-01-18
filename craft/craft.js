@@ -181,7 +181,7 @@ let craft = function(target, options) {
 	let id=target.id
 
 	let initGestDist = 0
-	let dropSnapRange = 20
+	let dropSnapRange = 100
 	let editDebounceId = null;
 	let resetDebounce = 5000
 	let resetDebounceCustom
@@ -430,7 +430,7 @@ let craft = function(target, options) {
 							return
 						}
 						console.log('dragmove',event.x0,event.y0,event.dx,event.dy,event)
-						if(!target.classList.contains('is-icon') && getDistance(0,0,event.dx,event.dy)>dropSnapRange){
+						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.client.x,event.client.y)>dropSnapRange){
 							associate(null, true)
 							let geometry = getGeometry(event /*,offsetPointer*/ ,['start','move','end'])
 // 							event.interactable.draggable({
@@ -481,7 +481,7 @@ let craft = function(target, options) {
 						relativePoints: [
 							{ x: 0.5, y: 0.5 },   // to the center
 						],
-						range:100
+						range:dropSnapRange
 					})
 				]
 			})
