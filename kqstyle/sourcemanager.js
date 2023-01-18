@@ -12,7 +12,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				player:'backgroundVideo',
 				source:'https://kqsfl.com/wp-content/uploads/2023/01/hotline_background.mp4'
 			}
-		}
+		},
+		chat:'https://nightdev.com/hosted/obschat/?theme=dark&channel=kqsfl&fade=false&bot_activity=false'
 	}
 
 	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
@@ -34,8 +35,10 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				let arg = arguments[0]||config.urls.challonge[0];
 				return `https://challonge.com/${arg}/module?show_tournament_name=1&show_final_results=1&show_standings=1&show_voting=1`
 			},
-			chat:'https://nightdev.com/hosted/obschat/?theme=dark&channel=kqsfl&fade=false&bot_activity=false&prevent_clipping=false'
-			
+			chat:function(channel){
+				channel=channel || (config.twitch && config.twitch.channel)
+				return `https://www.twitch.tv/${channel}/chat?popout=`
+			}			
 			
 		},
 		whiteboards: {
@@ -705,6 +708,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
 			initStages()
 			//SourceManager.cmd("twitch")
+			SourceManager.append(config.chat,'stage_chat',SourceManager.players.iframe)
 		}));
 	}));
 
