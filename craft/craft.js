@@ -41,7 +41,7 @@ let craftZone = function(id, geometry) {
 
 	if (!(id.indexOf('secondary') >= 0)) {
 		// enable draggables to be dropped into this
-		interact(zone)
+		let interactable = interact(zone)
 			.dropzone({
 				// only accept elements matching this CSS selector
 				accept: '.craft',
@@ -52,14 +52,21 @@ let craftZone = function(id, geometry) {
 				ondropactivate: function(event) {
 					// add active dropzone feedback
 					event.target.classList.add('active')
+					if(instance.assCraft.assZone===instance){
+						return snap(true)
+					}
+					//snap(false)
 				},
 				ondragenter: function(event) {
 					isOver=true
-					snap(true)
+					if(instance.assCraft.assZone===instance){
+						return snap(true)
+					}
+					//snap(false)
 				},
 				ondragleave: function(event) {
 					isOver=false
-					snap(false)
+					//snap(false)
 
 					// remove the drop feedback style
 					event.target.classList.remove('targeted')
@@ -456,9 +463,9 @@ let craft = function(target, options) {
 								let assZone = craftZone.instances[key]
 								//if(assZone === instance.assZone){
 								//}
-								//if (assZone.isSecondary) {
-								//	return
-								//}
+								if (assZone.isSecondary) {
+									return
+								}
 								zones.push(assZone.getCenter(assZone.targetPointer))
 							})
 							return
