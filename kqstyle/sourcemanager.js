@@ -303,7 +303,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		Object.entries(craftZone.instances).forEach(function(entry){
 			const [id, instance] = entry;
 			let elem=instance.elem;
-			let data = instance.geometry;
+			let data = instance.unscaledGeometry;
 			if(id=="stage_fullscreen"){return}
 
 		    var newWidth    = parseFloat(data.width) / ratioHeight,
