@@ -440,7 +440,7 @@ let craft = function(target, options) {
 							return
 						}
 						
-						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.dx,event.dy)>dropSnapRange){
+						if(!target.classList.contains('is-icon') && getDistance(0,0,event.dx,event.dy)>dropSnapRange){
 							associate(null, true)
 							let geometry = getGeometry(event /*,offsetPointer*/ ,['start','move','end'])
 // 							event.interactable.draggable({
