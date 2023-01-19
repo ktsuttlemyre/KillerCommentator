@@ -4,17 +4,19 @@
 let craftZone = function(id, geometry) {
 	let zone = document.createElement('div');
 	zone.id = id;
+	zone.className=geometry.className
+	
 	Object.keys(geometry).forEach(function(key) {
-		//filter out secondary
-		if (key == 'secondary') {
+		//filter out keys that arent style
+		if (key == 'enhance' || key == 'secondary' || key == 'terciary' || key == 'className') {
 			return
 		}
 		zone.style[key] = geometry[key]
 	})
 
-	let secondary;
-	if (geometry.secondary) {
-		secondary = craftZone(`${id}_secondary`, geometry.secondary)
+	let enhance;
+	if (geometry.enhance) {
+		enhance = craftZone(`${id}_enhance`, geometry.enhance)
 	}
 
 	let isOver=false;
@@ -40,7 +42,7 @@ let craftZone = function(id, geometry) {
 			
 	}
 
-	if (!(id.indexOf('secondary') >= 0)) {
+	if (!(id.indexOf('enhance') >= 0)) {
 		// enable draggables to be dropped into this
 		let interactable = interact(zone)
 			.dropzone({
@@ -112,12 +114,12 @@ let craftZone = function(id, geometry) {
 // 			return {}
 // 		},
 		id:id,
-		isPrimary:zone.id.indexOf('secondary') < 0,
+		isPrimary:zone.id.indexOf('enhance') < 0,
 		elem: zone,
 		snap:snap,
 		targetPointer:targetPointer,
 		unscaledGeometry: geometry,
-		secondary: secondary,
+		enhance: enhance,
 		saveGeoMods: function() {
 			console.log('alert saving of geeo mods')
 			let geometry = {}
@@ -125,11 +127,11 @@ let craftZone = function(id, geometry) {
 			//localStorage.setItem(id + "." + associated.id, JSON.stringify(geometry))
 		}
 	}
-	secondary && (secondary.parent=instance)
+	enhance && (enhance.main=instance)
 	craftZone.instances[id] = instance
-	if (secondary) {
-		craftZone.instances[secondary.elem.id] = secondary
-		instance.secondary = secondary
+	if (enhance) {
+		craftZone.instances[enhance.elem.id] = enhance
+		instance.enhance = enhance
 	}
 	return instance
 }
@@ -469,13 +471,13 @@ let craft = function(target, mediaElem, zone, options) {
 				]
 			})
 			.on('tap', function(event) {
-				console.log('secondary swap', event)
+				console.log('enhance swap', event)
 				let zoneInstance = instance.assZone
 				if(!zoneInstance){return}
 				if(zoneInstance.isPrimary){
-				   associate(zoneInstance.secondary)
+				   associate(zoneInstance.enhance)
 				}else{
-				   associate(zoneInstance.parent)
+				   associate(zoneInstance.main)
 				}
 			})
 			.on('doubletap', function(event) {
