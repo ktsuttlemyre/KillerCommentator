@@ -457,10 +457,10 @@ let craft = function(target, mediaElem, zone, options) {
 				},
 				inertia: true,
 				modifiers: [
-					interact.modifiers.restrictRect({
-						restriction: 'parent',
-						endOnly:true
-					}),	
+// 					interact.modifiers.restrictRect({
+// 						restriction: 'parent',
+// 						endOnly:true
+// 					}),	
 					interact.modifiers.snap({
 						targets: zones,
 						//offset: offsetPointer,
