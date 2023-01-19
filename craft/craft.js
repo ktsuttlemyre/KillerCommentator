@@ -678,8 +678,8 @@ let craft = function(target, mediaElem, zone, options) {
 				geometry.width=minWidth;
 				geometry.height=minHeight
 				if(event){
-					let diffX=(event.x0+event.dx)-(geometry.width/2)
-					let diffY=(event.y0+event.dy)-(geometry.height/2)
+					let diffX=(event.x0+event.dx) //-(geometry.width/2)
+					let diffY=(event.y0+event.dy) //-(geometry.height/2)
 		
 					pointer && (pointer.x=geometry.left-diffX)
 					pointer && (pointer.y=geometry.top-diffY)
