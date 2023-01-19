@@ -670,9 +670,9 @@ let craft = function(target, mediaElem, zone, options) {
 			let zoneId=zoneInstance && zoneInstance.id
 			let geoLocalUserMod = JSON.parse(localStorage.getItem([zoneId,instance.id].join(' ').trim()) || '{}')
 			//let kqStyleGeo = zoneInstance.geometry //The original geometry I used to calculate via a kqstyle aspect ratio
-			let domGeo = (zoneInstance)?interact.getElementRect(zoneInstance.elem):{left:(window.innerWidth/3),top:(window.innerHeight/3),width:(window.innerWidth/5),height:(window.innerHeight/5)};
+			let domGeo = (zoneInstance)?interact.getElementRect(zoneInstance.elem):interact.getElementRect(instance.elem);
 			// furthest to the right has priority -->
-			let geometry = Object.assign({}, domGeo, geoLocalUserMod)
+			let geometry = Object.assign({}, domGeo, geoLocalUserMod,{left:(window.innerWidth/3),top:(window.innerHeight/3),width:(window.innerWidth/5),height:(window.innerHeight/5)})
 			
 			
 			if(!zoneInstance){ //as icon
