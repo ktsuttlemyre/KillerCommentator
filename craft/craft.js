@@ -432,18 +432,18 @@ let craft = function(target, mediaElem, zone, options) {
 							associate(null, true)
 							let geometry = getGeometry(event /*,offsetPointer*/)
 							resizeTo(geometry)
-							interactable.fire({
-								type: 'dragend',
-								target: target
-							});
+// 							interactable.fire({
+// 								type: 'dragend',
+// 								target: target
+// 							});
 							Object.keys(craftZone.instances).forEach(function(key) {
 								if(key.indexOf('fullscreen')>=0){return}
 								let assZone = craftZone.instances[key]
 								let snapTarget = assZone.snap(assZone.isPrimary)
 								zones.push(snapTarget)
 							})
-							interactable.fire(savedStart);
-							interactable.fire(event);
+// 							interactable.fire(savedStart);
+// 							interactable.fire(event);
 						}
 						
 						dragMoveFn(target, event)
