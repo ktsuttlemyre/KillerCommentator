@@ -741,6 +741,11 @@ let craft = function(target, mediaElem, zone, options) {
 	target.classList.add('craft')
 	let editMode = false
 	let id=target.id
+	
+	let editModeCover = document.crateElement('div')
+	editModeCover.className='edit-cover'
+	target.appendChild(editModeCover)
+	
 	let videoGhost = document.createElement('div')
 	videoGhost.className = 'video-ghost'
 	document.body.insertBefore(videoGhost, target)
