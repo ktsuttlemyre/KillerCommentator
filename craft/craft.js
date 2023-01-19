@@ -171,7 +171,7 @@ function getDistance(x1, y1, x2, y2){
     return Math.sqrt(x * x + y * y);
 }
 
-let craft = function(target, mediaElem, options) {
+let craft = function(target, mediaElem, zone, options) {
 	options = Object.assign({
 		gesturePans: false
 	}, options || {})
@@ -720,6 +720,9 @@ let craft = function(target, mediaElem, options) {
 		}
 		craft.instances[target.id] = instance
 		startEditMode(120000)
+		if(zone){
+			console.error('implement assoicate zone please')
+		}		      
 		//associate(null)
 		//resizeTo(instance.asIcon(true))
 		//let promise=new Promise()
