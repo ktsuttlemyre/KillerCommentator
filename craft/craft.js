@@ -742,7 +742,7 @@ let craft = function(target, mediaElem, zone, options) {
 	let editMode = false
 	let id=target.id
 	
-	let editModeCover = document.crateElement('div')
+	let editModeCover = document.createElement('div')
 	editModeCover.className='edit-cover'
 	target.appendChild(editModeCover)
 	
