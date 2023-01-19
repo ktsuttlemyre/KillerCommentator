@@ -445,8 +445,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		if(!craft){
 			craft = document.createElement('div')
 			craft.id=generateId()
-			craft.appendChild(domElem)
-			let craftInstance = SourceManager.autoCroppingCraft(craft/*,aspectRatio*/)
+			
+			let craftInstance = SourceManager.autoCroppingCraft(craft,domElem/*,aspectRatio*/)
 			document.body.appendChild(craft)
 		}
 		craftInstance.associate(stage)
@@ -579,13 +579,13 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				button.innerHTML='<i class="fa-regular fa-circle-play"></i>'
 				var video = document.createElement('video');
 				video.id = `device-${item.deviceId}`
-				video.addEventListener( "loadedmetadata", function (event) {
-					//SourceManager.draggableCraft(div,this,this.videoWidth/this.videoHeight)
-					SourceManager.autoCroppingCraft(div,this.videoWidth/this.videoHeight)
-				}, false )
+// 				video.addEventListener( "loadedmetadata", function (event) {
+// 					//SourceManager.draggableCraft(div,this,this.videoWidth/this.videoHeight)
+// 					SourceManager.autoCroppingCraft(div,this,this.videoWidth/this.videoHeight)
+// 				}, false )
 
 				button.onclick=function(){video.play();button.parentNode.removeChild(button)}
-				prependTo(div,video)
+				
 				prependTo(div,button)
 				prependTo(document.body,div);
 
@@ -610,8 +610,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		}
 	}
 	
-	SourceManager.autoCroppingCraft=function(container,aspectRatio){
-		return craft(container,aspectRatio)
+	SourceManager.autoCroppingCraft=function(container,child,aspectRatio){
+		return craft(container,child,aspectRatio)
 	}
 					  
 	SourceManager.draggableCraft=function(container,child,aspectRatio){
