@@ -433,7 +433,8 @@ let craft = function(target, mediaElem, zone, options) {
 							let geometry = getGeometry(event /*,offsetPointer*/)
 							resizeTo(geometry)
 							interactable.fire({
-								type: 'dragend'
+								type: 'dragend',
+								target: target
 							});
 							Object.keys(craftZone.instances).forEach(function(key) {
 								if(key.indexOf('fullscreen')>=0){return}
@@ -676,8 +677,8 @@ let craft = function(target, mediaElem, zone, options) {
 			
 			if(!zoneInstance){ //as icon
 				if(event){
-					let diffX=(event.x0+event.dx)+(geometry.width)
-					let diffY=(event.y0+event.dy)+(geometry.height)
+					let diffX=(event.x0+event.dx)//+(geometry.width)
+					let diffY=(event.y0+event.dy)//+(geometry.height)
 					//let diffX=geometry.left+(geometry.width/2)
 					//let diffY=geometry.top+(geometry.height/2)
 					
