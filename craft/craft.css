@@ -45,7 +45,7 @@
     right: 0px;
 } */
 
-.caft.edit-mode .edit-cover{
+.edit-mode .edit-cover{
   display:block !important;
   position:absolute;
   width:100%;
