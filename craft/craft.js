@@ -1,3 +1,6 @@
+//DEVNOTE: matching deviceid to trackid
+//https://stackoverflow.com/questions/66048083/enumeratedevices-after-getusermedia-how-to-find-the-active-devices
+
 let craftZone = function(id, geometry) {
 	let zone = document.createElement('div');
 	zone.id = id;
