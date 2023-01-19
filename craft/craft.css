@@ -45,7 +45,17 @@
     right: 0px;
 } */
 
-
+.craft .edit-cover{
+  display:none;
+  position:absolute;
+  width:100%;
+  height:100%;
+  inset:0;
+  background:green;
+}
+.caft.edit-mode .edit-cover{
+  display:block
+}
 .craft.edit-mode .craft-cargo:after{
   content: "";
   width:20px;
