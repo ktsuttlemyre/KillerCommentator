@@ -679,8 +679,8 @@ let craft = function(target, mediaElem, zone, options) {
 				if(event){
 					//let diffX=(event.x0+event.dx)//+(geometry.width)
 					//let diffY=(event.y0+event.dy)//+(geometry.height)
-					let diffX=geometry.left+(Math.abs(geometry.width-minWidth)/2)
-					let diffY=geometry.top+(Math.abs(geometry.height-minHeight)/2)
+					let diffX=geometry.left-(Math.abs(geometry.width-minWidth)/2)
+					let diffY=geometry.top-(Math.abs(geometry.height-minHeight)/2)
 					
 					pointer && (pointer.x=geometry.left-diffX)
 					pointer && (pointer.y=geometry.top-diffY)
