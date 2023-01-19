@@ -587,7 +587,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 				button.onclick=function(){video.play();button.parentNode.removeChild(button)}
 				
 				prependTo(div,button)
-				prependTo(document.body,div);
+				SourceManager.autoCroppingCraft(div,video)
+
 
 
 				video.srcObject = stream
