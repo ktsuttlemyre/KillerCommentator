@@ -430,7 +430,7 @@ let craft = function(target, mediaElem, zone, options) {
 						console.log('dragmove',event.x0,event.y0,event.dx,event.dy,event)
 						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.client.x,event.client.y)>dropSnapRange){
 							associate(null, true)
-							let geometry = getGeometry()//event /*,offsetPointer*/)
+							let geometry = getGeometry(event /*,offsetPointer*/)
 							resizeTo(geometry)
 							interactable.fire({
 								type: 'dragend'
@@ -675,11 +675,9 @@ let craft = function(target, mediaElem, zone, options) {
 			
 			
 			if(!zoneInstance){ //as icon
-				geometry.width=minWidth;
-				geometry.height=minHeight
 				if(event){
-					let diffX=(event.x0+event.dx) //-(geometry.width/2)
-					let diffY=(event.y0+event.dy) //-(geometry.height/2)
+					let diffX=(event.x0+event.dx)-(geometry.width/2)
+					let diffY=(event.y0+event.dy)-(geometry.height/2)
 					//let diffX=geometry.left+(geometry.width/2)
 					//let diffY=geometry.top+(geometry.height/2)
 					
@@ -689,6 +687,8 @@ let craft = function(target, mediaElem, zone, options) {
 					geometry.left=diffX
 					geometry.top=diffY
 				}
+				geometry.width=minWidth;
+				geometry.height=minHeight
 			}
 		
 			return geometry
