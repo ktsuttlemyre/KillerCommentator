@@ -745,13 +745,14 @@ let craft = function(target, mediaElem, zone, options) {
 	let editModeCover = document.createElement('div')
 	editModeCover.className='edit-cover'
 	editModeCover.style.display='none';
-	target.appendChild(editModeCover)
+
 	
 	let videoGhost = document.createElement('div')
 	videoGhost.className = 'video-ghost'
 	document.body.insertBefore(videoGhost, target)
 
 	target.appendChild(mediaElem)
+	target.appendChild(editModeCover)
 	mediaElem.classList.add('craft-cargo')
 	switch(mediaElem.tagName.toUpperCase()){
 		case 'VIDEO':
