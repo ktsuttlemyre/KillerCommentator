@@ -430,7 +430,7 @@ let craft = function(target, mediaElem, zone, options) {
 						console.log('dragmove',event.x0,event.y0,event.dx,event.dy,event)
 						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.client.x,event.client.y)>dropSnapRange){
 							associate(null, true)
-							let geometry = getGeometry(event /*,offsetPointer*/)
+							let geometry = getGeometry()//event /*,offsetPointer*/)
 							resizeTo(geometry)
 							interactable.fire({
 								type: 'dragend'
