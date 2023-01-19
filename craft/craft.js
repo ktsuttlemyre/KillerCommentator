@@ -672,7 +672,7 @@ let craft = function(target, mediaElem, zone, options) {
 			//let kqStyleGeo = zoneInstance.geometry //The original geometry I used to calculate via a kqstyle aspect ratio
 			let domGeo = (zoneInstance)?interact.getElementRect(zoneInstance.elem):interact.getElementRect(instance.elem);
 			// furthest to the right has priority -->
-			let geometry = Object.assign({}, domGeo, geoLocalUserMod,{left:(window.innerWidth/3),top:(window.innerHeight/3),width:(window.innerWidth/5),height:(window.innerHeight/5)})
+			let geometry = Object.assign({},{left:(window.innerWidth/3),top:(window.innerHeight/3),width:(window.innerWidth/5),height:(window.innerHeight/5)}, domGeo, geoLocalUserMod)
 			
 			
 			if(!zoneInstance){ //as icon
