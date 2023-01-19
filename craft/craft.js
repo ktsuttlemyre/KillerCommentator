@@ -280,7 +280,7 @@ let craft = function(target, mediaElem, zone, options) {
 			target.appendChild(elem) //.insertBefore(elem,target.firstChild)
 			handles[key] = elem;
 		})
-
+		let savedStart=null;
 		let zones = []
 		let startPos = null
 		let snappedToMedia = false
@@ -417,6 +417,7 @@ let craft = function(target, mediaElem, zone, options) {
 			.draggable({
 				listeners: {
 					start: function(event) {
+						savedStart=event
 						if (!editMode) {
 							return
 						}
@@ -431,11 +432,10 @@ let craft = function(target, mediaElem, zone, options) {
 							associate(null, true)
 							let geometry = getGeometry(event /*,offsetPointer*/)
 							resizeTo(geometry)
-// 							interactable.fire({
-// 								type: 'dragend',
-// 								target: target,
-// 							});
-// 							interactable.fire(event);
+							interactable.fire({
+								type: 'dragend'
+							});
+							interactable.fire(savedStart);
 							Object.keys(craftZone.instances).forEach(function(key) {
 								if(key.indexOf('fullscreen')>=0){return}
 								let assZone = craftZone.instances[key]
@@ -678,10 +678,10 @@ let craft = function(target, mediaElem, zone, options) {
 				geometry.width=minWidth;
 				geometry.height=minHeight
 				if(event){
-					//let diffX=(event.x0+event.dx) -(geometry.width/2)
-					//let diffY=(event.y0+event.dy) -(geometry.height/2)
-					let diffX=geometry.left+(geometry.width/2)
-					let diffY=geometry.top+(geometry.height/2)
+					let diffX=(event.x0+event.dx) //-(geometry.width/2)
+					let diffY=(event.y0+event.dy) //-(geometry.height/2)
+					//let diffX=geometry.left+(geometry.width/2)
+					//let diffY=geometry.top+(geometry.height/2)
 					
 					pointer && (pointer.x=geometry.left-diffX)
 					pointer && (pointer.y=geometry.top-diffY)
