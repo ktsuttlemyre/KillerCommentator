@@ -112,7 +112,6 @@ let craftZone = function(id, geometry) {
 // 			return {}
 // 		},
 		id:id,
-		isSecondary:zone.id.indexOf('secondary') >= 0,
 		isPrimary:zone.id.indexOf('secondary') < 0,
 		elem: zone,
 		snap:snap,
