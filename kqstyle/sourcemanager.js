@@ -165,13 +165,17 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'1540px',
 			height:'874px',
 			className:'',
-			secondary:{
+			enhance:{
 				top:'0px',
 				left:'0px',
 				width:'426px',
 				height:'240px',
 				className:'',
 			},
+			secondary:[
+			],
+			tertiary:[
+			]
 		},
 		{
 			id:'stage_cam_team_blue',
@@ -180,7 +184,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'348px',
 			height:'193px',
 			className:'',
-			secondary:{
+			enhance:{
 				top:'0px',
 				left:'0px',
 				width:'426px',
@@ -195,7 +199,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'348px',
 			height:'193px',
 			className:'',
-			secondary:{
+			enhance:{
 				top:'0px',
 				left:'0px',
 				width:'426px',
@@ -210,7 +214,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'335px',
 			height:'181px',
 			className:'',
-			secondary:{
+			enahnce:{
 				top:'5px',
 				left:'1245px',
 				width:'670px',
@@ -225,7 +229,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'335px',
 			height:'181px',
 			className:'',
-			secondary:{
+			enhance:{
 				top:'5px',
 				left:'1245px',
 				width:'670px',
@@ -240,7 +244,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'335px',
 			height:'181px',
 			className:'',
-			secondary:{
+			enhance:{
 				top:'0px',
 				left:'910px',
 				width:'670px',
@@ -255,7 +259,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'335px',
 			height:'181px',
 			className:'',
-			secondary:{
+			enhance:{
 				top:'0px',
 				left:'910px',
 				width:'670px',
@@ -270,7 +274,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			width:'335px',
 			height:'181px',
 			className:'',
-			secondary:{
+			enhance:{
 				top:'380px',
 				left:'1575px',
 				width:'335px',
@@ -372,9 +376,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			zone.elem.className='kc-zone'
 			appendTo(inner,zone.elem)
 			
-			if(zone.secondary){
-				zone.secondary.elem.className='kc-zone'
-				appendTo(inner,zone.secondary.elem)
+			if(zone.enhance){
+				zone.enhance.elem.className='kc-zone'
+				appendTo(inner,zone.enhance.elem)
 			}
 		}
 		window.api.zones.reverse().forEach(stageParser)
