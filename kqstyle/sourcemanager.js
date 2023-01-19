@@ -446,10 +446,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			craft = document.createElement('div')
 			craft.id=generateId()
 			
-			let craftInstance = SourceManager.autoCroppingCraft(craft,domElem/*,aspectRatio*/)
-			document.body.appendChild(craft)
+			SourceManager.autoCroppingCraft(craft,domElem,stage/*,aspectRatio*/)
 		}
-		craftInstance.associate(stage)
 		return 
 	}
 	SourceManager.cmd=function(source){
@@ -611,8 +609,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		}
 	}
 	
-	SourceManager.autoCroppingCraft=function(container,child,aspectRatio){
-		return craft(container,child,aspectRatio)
+	SourceManager.autoCroppingCraft=function(container,child,stage,options){
+		return craft(container,child,stage,options)
 	}
 					  
 	SourceManager.draggableCraft=function(container,child,aspectRatio){
