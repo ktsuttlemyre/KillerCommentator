@@ -173,7 +173,7 @@ function getDistance(x1, y1, x2, y2){
 
 let craft = function(target, mediaElem, options) {
 	options = Object.assign({
-		panMedia: false
+		gesturePans: false
 	}, options || {})
 	
 	let initGestDist = 0
@@ -527,9 +527,9 @@ let craft = function(target, mediaElem, options) {
 							isGap += gappingOnSide(target, mediaElem)
 						}
 						// keep the dragged position in the data-x/data-y attributes
-						if (options.gesturePansMedia) {
+						if (options.gesturePans=='media') {
 							dragMoveFn(mediaElem, event)
-						} else if (options.gesturePansCrop) {
+						} else if (options.gesturePans=='crop') {
 							dragMoveFn(target, event)
 						}
 						isGap += gappingOnSide(target, mediaElem)
