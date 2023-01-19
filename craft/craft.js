@@ -677,10 +677,10 @@ let craft = function(target, mediaElem, zone, options) {
 			
 			if(!zoneInstance){ //as icon
 				if(event){
-					let diffX=(event.x0+event.dx)//+(geometry.width)
-					let diffY=(event.y0+event.dy)//+(geometry.height)
-					//let diffX=geometry.left+(geometry.width/2)
-					//let diffY=geometry.top+(geometry.height/2)
+					//let diffX=(event.x0+event.dx)//+(geometry.width)
+					//let diffY=(event.y0+event.dy)//+(geometry.height)
+					let diffX=geometry.left-(Math.abs(geometry.width-minWidth)/2)
+					let diffY=geometry.top-(Math.abs(geometry.height-minHeight)/2)
 					
 					pointer && (pointer.x=geometry.left-diffX)
 					pointer && (pointer.y=geometry.top-diffY)
