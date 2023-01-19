@@ -53,7 +53,8 @@
   inset:0;
   margin:0;
   padding:0;
-  background:green;
+  opacity:20%;
+  background:#07c;
 }
 .craft.edit-mode .craft-cargo:after{
   content: "";
