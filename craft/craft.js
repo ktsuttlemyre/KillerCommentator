@@ -171,15 +171,11 @@ function getDistance(x1, y1, x2, y2){
     return Math.sqrt(x * x + y * y);
 }
 
-let craft = function(target, options) {
+let craft = function(target, mediaElem, options) {
 	options = Object.assign({
 		panMedia: false
 	}, options || {})
-	target.classList.add('events-none')
-	target.classList.add('craft')
-	let editMode = false
-	let id=target.id
-
+	
 	let initGestDist = 0
 	let dropSnapRange = 100
 	let editDebounceId = null;
@@ -257,9 +253,6 @@ let craft = function(target, options) {
 		'transition-indicator': 'cross'
 	}
 
-	let videoGhost = document.createElement('div')
-	videoGhost.className = 'video-ghost'
-	document.body.insertBefore(videoGhost, target)
 	let minWidth = 100
 	let minHeight = 100
 
@@ -734,29 +727,39 @@ let craft = function(target, options) {
 
 	}
 
+	//main
+	if(!document.contains(target)) {
+		document.body.appendChild(target)
+	}
+	target.classList.add('events-none')
+	target.classList.add('craft')
+	let editMode = false
+	let id=target.id
+	let videoGhost = document.createElement('div')
+	videoGhost.className = 'video-ghost'
+	document.body.insertBefore(videoGhost, target)
 
-	let mediaElem = target.querySelector('video')
-	if (mediaElem) {
-		mediaElem.classList.add('craft-cargo')
-		if (!mediaElem.videoWidth || mediaElem.videoWidth == null) {
-
-			mediaElem.addEventListener("loadedmetadata", function(e) {
+	target.appendChild(mediaElem)
+	mediaElem.classList.add('craft-cargo')
+	switch(mediaElem.tagName.toUpperCase()){
+		case 'VIDEO':
+			if (!mediaElem.videoWidth || mediaElem.videoWidth == null) {
+				mediaElem.addEventListener("loadedmetadata", function(e) {
+					init()
+				})
+			}else{
 				init()
-			})
-		} else {
+			}
+		break;
+		case 'IMG':
+		case 'CANVAS':
 			init()
-		}
-	} else {
-		mediaElem = target.querySelector('img,canvas')
-		mediaElem.classList.add('craft-cargo')
-		init()
+		break;
+		default:
+			init()
 	}
 }
 craft.instances = {}
-
-//document.querySelectorAll('.craft').forEach(craftIt)
-
-
 
 
 let animationFrameId = 0
