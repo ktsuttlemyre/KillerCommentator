@@ -3,13 +3,18 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-  overflow:hidden;
   width:150px;
   height:150px;
   position:absolute;
   top:0;
   left:0;
-  border: 4px solid gray;
+  border: 4px solid #737373;
+}
+.craft-viewport{
+	posiiton:static;
+	overflow:hidden;
+	width:100%;
+	height:100%;
 }
 
 .craft::before {
