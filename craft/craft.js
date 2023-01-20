@@ -299,6 +299,7 @@ let craft = function(target, mediaElem, zone, options) {
 	let offsetPointer={x:0,y:0}
 	let mediaPos;
 	let lastSafe;
+	let videoGhost
 	let init = function(freeAspectRatio) {
 		mediaPos = Object.assign({
 			angle: 0,
@@ -308,7 +309,7 @@ let craft = function(target, mediaElem, zone, options) {
 		let aspectRatio = (mediaElem.videoWidth || mediaPos.width) / (mediaElem.videoHeight || mediaPos.height)
 
 
-		let videoGhost = document.createElement('div')
+		videoGhost = document.createElement('div')
 		videoGhost.className = 'video-ghost'
 		document.body.insertBefore(videoGhost, target)
 		
