@@ -194,7 +194,8 @@ function getDistance(x1, y1, x2, y2){
 
 let craft = function(target, mediaElem, zone, options) {
 	options = Object.assign({
-		gesturePans: false
+		gesturePans: false,
+		resizeMode:'crop' //crop or resize
 	}, options || {})
 	
 	let initGestDist = 0
@@ -298,7 +299,7 @@ let craft = function(target, mediaElem, zone, options) {
 	let offsetPointer={x:0,y:0}
 	let mediaPos;
 	let lastSafe;
-	let init = function(nativeAspectRatio) {
+	let init = function(freeAspectRatio) {
 		mediaPos = Object.assign({
 			angle: 0,
 			scale: 0
@@ -311,7 +312,7 @@ let craft = function(target, mediaElem, zone, options) {
 		videoGhost.className = 'video-ghost'
 		document.body.insertBefore(videoGhost, target)
 		
-		if(nativeAspectRatio){
+		if(!freeAspectRatio){
 			resizeMods.unshift(
 				// keep the edges inside the parent
 				interact.modifiers.restrictEdges({
@@ -334,7 +335,8 @@ let craft = function(target, mediaElem, zone, options) {
 		let savedStart=null;
 		let zones = []
 		let startPos = null
-		let snappedToMedia = false
+		let resizeCropWithMedia = false
+		
 		let interactable = interact(target).pointerEvents({
 				holdDuration: 5000,
 			}).styleCursor(false)
@@ -426,6 +428,10 @@ let craft = function(target, mediaElem, zone, options) {
 							// update the element's style
 							width = event.rect.width
 							height = event.rect.height
+						}
+						if(options.resizeMode=='resize'){
+							mediaElem.width=width
+							mediaElem.height=height					 
 						}
 						target.style.width = width + 'px'
 						target.style.height = height + 'px'
@@ -549,7 +555,7 @@ let craft = function(target, mediaElem, zone, options) {
 							Math.abs(box1.top - box2.top) <= toler &&
 							Math.abs(box1.width - box2.width) <= toler &&
 							Math.abs(box1.height - box2.height) <= toler) {
-							snappedToMedia = true
+							resizeCropWithMedia = true
 						}
 					},
 					move(event) {
@@ -584,12 +590,12 @@ let craft = function(target, mediaElem, zone, options) {
 						}
 						//interactable.reflow({ name: 'drag', axis: 'xy' })
 
-						if (snappedToMedia) {
+						if (resizeCropWithMedia) {
 							resizeTo(interact.getElementRect(mediaElem))
 						}
 					},
 					end: function() {
-						snappedToMedia = false
+						resizeCropWithMedia = false
 
 						// start a resize action and wait for inertia to finish
 						interactable.reflow({
@@ -828,18 +834,18 @@ let craft = function(target, mediaElem, zone, options) {
 		case 'VIDEO':
 			if (!mediaElem.videoWidth || mediaElem.videoWidth == null) {
 				mediaElem.addEventListener("loadedmetadata", function(e) {
-					init(true)
+					init(false)
 				})
 			}else{
-				init(true)
+				init(false)
 			}
 		break;
 		case 'IMG':
 		case 'CANVAS':
-			init(true)
+			init(false)
 		break;
 		default:
-			init(false)
+			init(true)
 	}
 }
 craft.instances = {}
