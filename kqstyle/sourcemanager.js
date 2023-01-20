@@ -1,5 +1,5 @@
 window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
-	let config = JSON.parse(localStorage.getItem(config) || '{}')
+	let config = JSON.parse(localStorage.getItem('KillerCommentator.config') || '{}')
 
 
 	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
