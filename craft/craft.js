@@ -30,8 +30,7 @@ let craftZone = function(id, geometry) {
 		if(bool){
 			instance.snapOn=true
 			var dropRect = interact.getElementRect(zone)
-			targetPointer.x=dropRect.left + dropRect.width / 2;
-			targetPointer.y=dropRect.top + dropRect.height / 2;
+			calcCenter(interact.getElementRect(zone),targetPointer)
 			//targetPointer.range=Math.sqrt(dropRect.width*dropRect.width + dropRect.height*dropRect.height);
 		}else{
 			instance.snapOn=false
@@ -81,18 +80,8 @@ let craftZone = function(id, geometry) {
 					let craftInstance = craft.instances[elem.id]
 					let zone = event.target
 
-					let rect = interact.getElementRect(event.target);
-					// record center point when starting the very first a drag
-					let center1 = {
-						x: rect.left + rect.width / 2,
-						y: rect.top + rect.height / 2
-					}
-					rect = interact.getElementRect(event.relatedTarget);
-					// record center point when starting the very first a drag
-					let center2 = {
-						x: rect.left + rect.width / 2,
-						y: rect.top + rect.height / 2
-					}
+					let center1 = calcCenter(interact.getElementRect(event.target))
+					let center2 = calcCenter(interact.getElementRect(event.relatedTarget))
 					let tolerance=5;
 					if (Math.abs(center1.x - center2.x) <= tolerance && Math.abs(center1.y - center2.y) <= tolerance) {
 						craftInstance.associate(instance)
@@ -137,6 +126,34 @@ let craftZone = function(id, geometry) {
 }
 craftZone.instances = {}
 
+//https://stackoverflow.com/questions/123999/how-can-i-tell-if-a-dom-element-is-visible-in-the-current-viewport/7557433#7557433
+//takes an element, getBoundingClientRect or point {x,y}
+let inViewport=function(rect){
+	if(rect.getBoundingClientRect){
+		rect=getBoundingClientRect()
+	}else if(rect.x!=null && rect.y!=null){
+		if(rect.width==null && rect.height==null){
+			rect = {left:rect.x,right:rect.x,top:rect.y,bottom:rect.y}
+		}
+		//otherwise its an interact.getRect() and can be treated as a getBoundingClientRect
+	}
+
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+    );
+}
+let calcCenter=function(rect,pointer){
+	if(rect.getBoundingClientRect){
+		rect = rect.getBoundingClientRect();
+	}
+	pointer = pointer ||{}
+	pointer.x = rect.left + rect.width / 2,
+	pointer.y = rect.top + rect.height / 2
+	return pointer 
+}
 
 //to gesture move the inside use "options.panMedia"
 //that option is buggy though so its optional
@@ -453,6 +470,10 @@ let craft = function(target, mediaElem, zone, options) {
 							return
 						}
 						endFn(event)
+						let center = calcCenter(target)
+						if(!inViewport(center)){
+							resizeTo(defaultCraftGeo)
+						}
 					}
 				},
 				inertia: true,
@@ -664,6 +685,8 @@ let craft = function(target, mediaElem, zone, options) {
 			mediaElem.classList.add('animate-transition')
 			
 		}
+		//TODO have a window size event update this object but i really don't need that type of trouble right now
+		let defaultCraftGeo={left:(window.innerWidth/3),top:(window.innerHeight/3),width:(window.innerWidth/5),height:(window.innerHeight/5)}
 		let getGeometry = function(event,pointer){
 			let zoneInstance = instance.assZone
 			//associate data
@@ -672,7 +695,7 @@ let craft = function(target, mediaElem, zone, options) {
 			//let kqStyleGeo = zoneInstance.geometry //The original geometry I used to calculate via a kqstyle aspect ratio
 			let domGeo = (zoneInstance)?interact.getElementRect(zoneInstance.elem):interact.getElementRect(instance.elem);
 			// furthest to the right has priority -->
-			let geometry = Object.assign({},{left:(window.innerWidth/3),top:(window.innerHeight/3),width:(window.innerWidth/5),height:(window.innerHeight/5)}, domGeo, geoLocalUserMod)
+			let geometry = Object.assign({},defaultCraftGeo, domGeo, geoLocalUserMod)
 			
 			
 			if(!zoneInstance){ //as icon
