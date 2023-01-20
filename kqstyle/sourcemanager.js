@@ -1,20 +1,6 @@
 window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
-	let config={
-		urls:{
-			challonge:['HCC_2022'],
-		},
-		twitch:{
-			//video:'1686476519'
-			channel:'kqsfl'
-		},
-		backgrounds:{
-			stage_main:{
-				player:'backgroundVideo',
-				source:'https://kqsfl.com/wp-content/uploads/2023/01/hotline_background.mp4'
-			}
-		},
-		chat:'https://nightdev.com/hosted/obschat/?theme=dark&channel=kqsfl&fade=false&bot_activity=false'
-	}
+	let config = JSON.parse(localStorage.getItem(config) || '{}')
+
 
 	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
 
