@@ -307,10 +307,11 @@ let craft = function(target, mediaElem, zone, options) {
 
 		if(nativeAspectRatio){
 			resizeMods.unshift(
-			// keep the edges inside the parent
-			interact.modifiers.restrictEdges({
-				outer: mediaElem
-			})
+				// keep the edges inside the parent
+				interact.modifiers.restrictEdges({
+					outer: mediaElem
+				})
+			)
 		}
 		
 		//add handles
