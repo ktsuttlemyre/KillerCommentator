@@ -770,6 +770,7 @@ let craft = function(target, mediaElem, zone, options) {
 			while (target.firstChild) {
 				target.removeChild(target.lastChild);
 			}
+			target.remove();
 
 			//unassociate
 			instance.assTarget=null
