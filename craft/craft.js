@@ -242,6 +242,9 @@ let craft = function(target, mediaElem, zone, options) {
 				return
 			}
 			let box = interact.getElementRect(mediaElem)
+			if(!box){
+				return
+			}
 			let style = videoGhost.style
 			style.left = (box.left) + 'px'
 			style.top = (box.top) + 'px'
