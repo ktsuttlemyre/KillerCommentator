@@ -469,7 +469,7 @@ let craft = function(target, mediaElem, zone, options) {
 						if (!editMode) {
 							return
 						}
-						console.log('dragmove',event.x0,event.y0,event.dx,event.dy,event)
+						console.debug('dragmove',event.x0,event.y0,event.dx,event.dy,event)
 						if(!target.classList.contains('is-icon') && getDistance(event.x0,event.y0,event.client.x,event.client.y)>dropSnapRange){
 							associate(null, true)
 							let geometry = getGeometry(event /*,offsetPointer*/)
@@ -523,7 +523,7 @@ let craft = function(target, mediaElem, zone, options) {
 				]
 			})
 			.on('tap', function(event) {
-				console.log('enhance swap', event)
+				console.debug('enhance swap', event)
 				let zoneInstance = instance.assZone
 				if(!zoneInstance){return}
 				if(zoneInstance.isPrimary){
@@ -533,7 +533,7 @@ let craft = function(target, mediaElem, zone, options) {
 				}
 			})
 			.on('doubletap', function(event) {
-				console.log('main swap')
+				console.debug('main swap')
 				let zoneInstance = instance.assZone
 				if(!zoneInstance){return}
 				if(zoneInstance.isMain){
@@ -572,7 +572,7 @@ let craft = function(target, mediaElem, zone, options) {
 						//let vector = event.scale*currentScale
 						//currentScale=vector
 						let initGestDelta = event.distance - initGestDist
-						console.log(mediaPos.width, initGestDist - event.distance, style.height)
+						console.debug(mediaPos.width, initGestDist - event.distance, style.height)
 						//let vector = (Math.abs(event.dy)>Math.abs(event.dx))?event.dy:event.dx;
 						let isGap = ''
 						if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
@@ -820,6 +820,7 @@ let craft = function(target, mediaElem, zone, options) {
 	target.classList.add('events-none')
 	target.classList.add('craft')
 	let editMode = false
+	let locked = false
 	let id=target.id
 	
 	let editModeCover = document.createElement('div')
