@@ -293,8 +293,11 @@ let craft = function(target, mediaElem, zone, options) {
 		Object.keys(handles).forEach(function(key) {
 			let elem = document.createElement('div')
 			elem.className = 'handle ' + ((key || '').trim() + ' ' + (handles[key] || '').trim()).trim()
-			//elem.textContent="&nbsp;";
-			target.appendChild(elem) //.insertBefore(elem,target.firstChild)
+			if(key=='transition-indicator'){
+				target.firstChild.appendChild(elem)
+			}else{
+				target.appendChild(elem) //.insertBefore(elem,target.firstChild)
+			}
 			handles[key] = elem;
 		})
 		let savedStart=null;
