@@ -423,7 +423,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	        domElem && stage.appendChild(domElem);
 		return 
 	}
-	SourceManager.load=function(source,stage,player,reuse,craftOptions){
+	SourceManager.load=function(source,stage,player,craftOptions,reuse){
 		let craft;
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
