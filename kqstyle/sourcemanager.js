@@ -506,6 +506,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		}catch(err){
 			console.error(err)
 			callback && callback(null,err)
+			return
 		}
 		if(!stream){
 			let err = 'Please accept the security prompt'
@@ -607,6 +608,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 					// Show a "Play" button so that user can start playback.
 					console.error(err)
 					callback && callback(null,err);
+					return
 				    });
 				}
 			}	
