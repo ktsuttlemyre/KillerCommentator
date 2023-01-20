@@ -134,7 +134,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		    if(kcWindow){
 			    ajax(base_site+"controlpanel/index.html",function(html){
 				appendTo(kcWindow.document.body,domParse(html))
-				appendTo(kcWindow.document.body,domParse(`<script src="${base_site}controlpanel/controlpanel.js"></script>`)
+				appendTo(kcWindow.document.body,domParse(`<script src="${base_site}controlpanel/controlpanel.js"></script>`))
 			    })
 			    var html = `<html><head></head><body></body></html>`
 
