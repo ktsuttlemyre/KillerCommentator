@@ -276,11 +276,27 @@ let craft = function(target, mediaElem, zone, options) {
 
 	let minWidth = 100
 	let minHeight = 100
+	
+	let resizeMods = [
+		// minimum size
+		interact.modifiers.restrictSize({
+			min: {
+				width: minWidth,
+				height: minHeight
+			},
+			// max: mediaElem
+		}),
+		interact.modifiers.restrictEdges({
+			outer: 'parent',
+			endOnly:true
+		})
+	]
+	
 
 	let offsetPointer={x:0,y:0}
 	let mediaPos;
 	let lastSafe;
-	let init = function() {
+	let init = function(nativeAspectRatio) {
 		mediaPos = Object.assign({
 			angle: 0,
 			scale: 0
@@ -289,6 +305,14 @@ let craft = function(target, mediaElem, zone, options) {
 		let aspectRatio = (mediaElem.videoWidth || mediaPos.width) / (mediaElem.videoHeight || mediaPos.height)
 
 
+		if(nativeAspectRatio){
+			resizeMods.unshift(
+			// keep the edges inside the parent
+			interact.modifiers.restrictEdges({
+				outer: mediaElem
+			})
+		}
+		
 		//add handles
 		Object.keys(handles).forEach(function(key) {
 			let elem = document.createElement('div')
@@ -411,26 +435,7 @@ let craft = function(target, mediaElem, zone, options) {
 						endFn(event)
 					}
 				},
-				modifiers: [
-					// keep the edges inside the parent
-					interact.modifiers.restrictEdges({
-						outer: mediaElem
-					}),
-
-					// minimum size
-					interact.modifiers.restrictSize({
-						min: {
-							width: minWidth,
-							height: minHeight
-						},
-						// max: mediaElem
-					}),
-					interact.modifiers.restrictEdges({
-						outer: 'parent',
-						endOnly:true
-					})
-
-				],
+				modifiers: resizeMods,
 				inertia: false
 			})
 
@@ -793,18 +798,18 @@ let craft = function(target, mediaElem, zone, options) {
 		case 'VIDEO':
 			if (!mediaElem.videoWidth || mediaElem.videoWidth == null) {
 				mediaElem.addEventListener("loadedmetadata", function(e) {
-					init()
+					init(true)
 				})
 			}else{
-				init()
+				init(true)
 			}
 		break;
 		case 'IMG':
 		case 'CANVAS':
-			init()
+			init(true)
 		break;
 		default:
-			init()
+			init(false)
 	}
 }
 craft.instances = {}
