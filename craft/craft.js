@@ -226,6 +226,7 @@ let craft = function(target, mediaElem, zone, options) {
 		target.classList.remove('edit-mode')
 		target.classList.add('animate-transition')
 		mediaElem.classList.add('animate-transition')
+		videoGhost.classList.add('d-none')
 	}
 	let startEditMode = function(inital) {
 		resetDebounceCustom = inital
@@ -234,6 +235,7 @@ let craft = function(target, mediaElem, zone, options) {
 		target.classList.add('edit-mode')
 		target.classList.remove('animate-transition')
 		mediaElem.classList.remove('animate-transition')
+		videoGhost.classList.remove('d-none')
 		let updateGhost = function() {
 			if (!editMode) {
 				return
@@ -305,6 +307,10 @@ let craft = function(target, mediaElem, zone, options) {
 		let aspectRatio = (mediaElem.videoWidth || mediaPos.width) / (mediaElem.videoHeight || mediaPos.height)
 
 
+		let videoGhost = document.createElement('div')
+		videoGhost.className = 'video-ghost'
+		document.body.insertBefore(videoGhost, target)
+		
 		if(nativeAspectRatio){
 			resizeMods.unshift(
 				// keep the edges inside the parent
@@ -481,7 +487,12 @@ let craft = function(target, mediaElem, zone, options) {
 						endFn(event)
 						let center = calcCenter(target)
 						if(!inViewport(center)){
-							resizeTo(defaultCraftGeo)
+							let yes = confirm(`Do you wish to delete ${target.dataset.content}?`);
+							if(yes){
+								destroy()
+							}else{
+								resizeTo(defaultCraftGeo)
+							}
 						}
 					}
 				},
@@ -746,9 +757,30 @@ let craft = function(target, mediaElem, zone, options) {
 				isReflow:true
 			})
 		}
+		let destroy = function() {
+			let stream = mediaElem.srcObj
+			//kill video and audio stream from video tag
+			if(stream){
+				stream.getTracks().forEach(t => {
+					t.stop();
+					stream.removeTrack(t);
+				});
+			}
+			//clean up dom
+			while (target.firstChild) {
+				target.removeChild(target.lastChild);
+			}
+
+			//unassociate
+			instance.assTarget=null
+			//delete memory
+			craft.instances[target.id] = null
+			delete craft.instances[target.id]
+		}
 		//promise.resolve(
 		let instance = {
 			id:id,
+			destroy:destroy,
 			associate:associate,
 			edit: edit,
 			elem:target,
@@ -784,11 +816,6 @@ let craft = function(target, mediaElem, zone, options) {
 	
 	let craftViewport = document.createElement('div')
 	craftViewport.className='craft-viewport'
-
-	
-	let videoGhost = document.createElement('div')
-	videoGhost.className = 'video-ghost'
-	document.body.insertBefore(videoGhost, target)
 	
 	craftViewport.appendChild(mediaElem)
 	target.appendChild(craftViewport)
