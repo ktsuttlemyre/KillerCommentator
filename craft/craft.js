@@ -771,6 +771,7 @@ let craft = function(target, mediaElem, zone, options) {
 				target.removeChild(target.lastChild);
 			}
 			target.remove();
+			videoGhost.remove()
 
 			//unassociate
 			instance.assTarget=null
