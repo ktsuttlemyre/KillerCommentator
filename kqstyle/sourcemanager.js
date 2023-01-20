@@ -423,7 +423,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 	        domElem && stage.appendChild(domElem);
 		return 
 	}
-	SourceManager.load=function(source,stage,player,reuse){
+	SourceManager.load=function(source,stage,player,reuse,craftOptions){
 		let craft;
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
@@ -450,7 +450,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			craft = document.createElement('div')
 			craft.id=generateId()
 			
-			SourceManager.autoCroppingCraft(craft,domElem,stage/*,aspectRatio*/)
+			SourceManager.autoCroppingCraft(craft,domElem,stage,craftOptions)
 		}
 		return 
 	}
@@ -713,7 +713,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
 			initStages()
 			//SourceManager.cmd("twitch")
-			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe)
+			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize'})
 		}));
 	}));
 
