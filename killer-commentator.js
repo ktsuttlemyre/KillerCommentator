@@ -13,7 +13,6 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		//platform plugin ready to use
 		include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",
 			"https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js",
-			base_site+"controlpanel/controlpanel.js"
 			base_site+"svgscribble.js",
 			base_site+"kqstyle/sourcemanager.js",
 			base_site+"craft/craft.js",
@@ -135,9 +134,8 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		    if(kcWindow){
 			    ajax(base_site+"controlpanel/index.html",function(html){
 				appendTo(kcWindow.document.body,domParse(html))
-				bindControlPanel(kcWindow)
 			    })
-			    var html = "<html><head></head><body></body></html>"
+			    var html = `<html><head><script src="${base_site}controlpanel/controlpanel.js"></script></head><body></body></html>`
 
 			    kcWindow.document.open()
 			    kcWindow.document.write(html)
