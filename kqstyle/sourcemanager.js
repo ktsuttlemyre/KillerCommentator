@@ -1,5 +1,21 @@
 window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
-	let config = JSON.parse(localStorage.getItem('KillerCommentator.config') || '{}')
+	let config = JSON.parse(localStorage.getItem('KillerCommentator.config') || `{
+		"urls":{
+			"challonge":[]
+		},
+		"twitch":{
+			"video":"",
+			"channel":""
+		},
+		"backgrounds":{
+		},
+		"chat":"",
+		"liveOnLocation":{
+			"guest":"",
+			"scene":"",
+			"host":""
+		}
+	}`)
 
 
 	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
