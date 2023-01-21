@@ -808,7 +808,7 @@ window.onGameEvent=function(event){
       }
       break
       default:
-        console.debug('unhandled event'event)
+        console.debug('unhandled event',event)
   }
 }
 
