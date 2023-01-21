@@ -795,14 +795,16 @@ window.onGameEvent=function(event){
 	SourceManager.setAugment()
 	clearTimeout(famineTimer)
 
-    case berryDeposit: 
-      if((--berries)=<0){
+    case berryDeposit:
+      berries--
+      if(berries=<0){
 	//famine start
 	famineTimer=setTimeout(famineEnd,90000)
       }
     break
     case berryKickIn:
-      if((--berries)=<0){
+      berries--
+      if(berries=<0){
 	//famine start
 	famineTimer=setTimeout(famineEnd,90000)
       }
