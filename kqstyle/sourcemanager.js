@@ -796,13 +796,13 @@ window.onGameEvent=function(event){
 	clearTimeout(famineTimer)
 
     case berryDeposit: 
-      if(--berries=<0){
+      if((--berries)=<0){
 	//famine start
 	famineTimer=setTimeout(famineEnd,90000)
       }
     break
     case berryKickIn:
-      if(--berries=<0){
+      if((--berries)=<0){
 	//famine start
 	famineTimer=setTimeout(famineEnd,90000)
       }
