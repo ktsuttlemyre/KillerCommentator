@@ -438,8 +438,8 @@ let craft = function(target, mediaElem, zone, options) {
 							height = event.rect.height
 						}
 						if(options.resizeMode=='resize'){
-							mediaElem.width=width + 'px'
-							mediaElem.height=height	 + 'px'				 
+							mediaElem.style.width=width + 'px'
+							mediaElem.style.height=height + 'px'				 
 						}
 						target.style.width = width + 'px'
 						target.style.height = height + 'px'
