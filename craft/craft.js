@@ -1,6 +1,10 @@
 //DEVNOTE: matching deviceid to trackid
 //https://stackoverflow.com/questions/66048083/enumeratedevices-after-getusermedia-how-to-find-the-active-devices
-
+let filterSubpixels = true
+let toInt=function(n){
+	if(filterSubpixels){return ~~n}
+	return n
+}
 let craftZone = function(id, geometry) {
 	let zone = document.createElement('div');
 	zone.id = id;
@@ -434,8 +438,8 @@ let craft = function(target, mediaElem, zone, options) {
 							height = event.rect.height
 						}
 						if(options.resizeMode=='resize'){
-							mediaElem.width=width
-							mediaElem.height=height					 
+							mediaElem.width=width + 'px'
+							mediaElem.height=height	 + 'px'				 
 						}
 						target.style.width = width + 'px'
 						target.style.height = height + 'px'
@@ -796,7 +800,7 @@ let craft = function(target, mediaElem, zone, options) {
 			associate:associate,
 			edit: edit,
 			elem:target,
-			mediaElem:mediaElem,
+// 			mediaElem:mediaElem,
 			reflow: reflow,
 			getGeometry:getGeometry,
 			resizeTo:resizeTo,
