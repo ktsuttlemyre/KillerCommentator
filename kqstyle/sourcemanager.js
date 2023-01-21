@@ -744,7 +744,51 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 
 		appendTo(document.body,node)
 	})
-
+							  
+	SourceManager.setAugment=function(map){
+		switch(map){
+			case day:
+			break
+			case night:
+			break
+			case dusk:
+			break
+			case twilight
+			break
+			default:
+		}
+	}
+	SourceManager.setLayout=function(label){
+		switch(label){
+			case home:
+			break;
+			default:
+		}
+	}
+							  
+							  
+							  
+window.onGameEvent=function(event){
+  let values = event.values
+  switch(event.event_type){
+    case gamestart:
+      const [map,goldOnLeft,elapsedTime,attractMode,version] = values
+          SourceManager.setLayout('home')
+          SourceManager.setAugment(map.replace('map_',''))
+      break;
+            
+      //case: gameend:
+      case: victory:
+      const [victor,type] = values
+        SourceManager.setLayout(victor.toLowerCase())
+	SourceManager.setAugment()    
+      
+      
+      break
+      default:
+        console.debug('unhandled event'event)
+  }
+}
 
 
 	return SourceManager
