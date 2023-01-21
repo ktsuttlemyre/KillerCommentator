@@ -785,7 +785,7 @@ window.onGameEvent=function(event){
         map.replace('map_','')
 	SourceManager.setLayout('home')
 	SourceManager.setAugment(map)
-	berries = berriesPerMap[]
+	berries = berriesPerMap[map]
       break;
             
     //case: gameend:
