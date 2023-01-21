@@ -16,6 +16,20 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			"host":""
 		}
 	}`)
+	
+	
+let placeholders=[
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.50.30-A-synthwave-miami-vice-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.50.49-A-synthwave-miami-vice-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.06-A-synthwave-hotline-miami-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.11-A-synthwave-hotline-miami-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.17-A-synthwave-stylized-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.22-A-synthwave-hotline-miami-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.26-A-synthwave-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.30-A-synthwave-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.41-A-synthwave-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
+"https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.45-A-synthwave-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png"
+]
 
 
 	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
