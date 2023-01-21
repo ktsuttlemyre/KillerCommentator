@@ -753,7 +753,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 			break
 			case dusk:
 			break
-			case twilight
+			case twilight:
 			break
 			default:
 		}
