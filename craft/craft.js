@@ -346,7 +346,7 @@ let craft = function(target, mediaElem, zone, options) {
 		let resizeCropWithMedia = false
 		
 		let interactable = interact(target).pointerEvents({
-				holdDuration: 5000,
+				holdDuration: 2500,
 			}).styleCursor(false)
 
 			//         .resizable({
