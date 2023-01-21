@@ -1,4 +1,6 @@
+function initControlPanel(){
 
+}
 var openFile = function(event) {
   var input = event.target;
 
