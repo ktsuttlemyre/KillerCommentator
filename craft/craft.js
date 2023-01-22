@@ -805,7 +805,7 @@ let craft = function(target, mediaElem, zone, options) {
 		if(zone){
 			console.error('implement assoicate zone please')
 		}		      
-		//associate(null)
+		zone && associate(zone)
 		//resizeTo(instance.asIcon(true))
 		//let promise=new Promise()
 		//return promise
