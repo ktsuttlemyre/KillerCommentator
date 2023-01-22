@@ -668,12 +668,7 @@ let craft = function(target, mediaElem, zone, options) {
 			})
 		}
 		let associate = function(zoneInstance,dontResize) {
-			zoneInstance = zoneInstance || undefined
-// 			if (instance && !instance.emulateDrop) {
-// 				if (!instance.isReflow) {
-// 					return
-// 				}
-// 			}
+			zoneInstance = craftZone.instances[zoneInstance] || zoneInstance || undefined
 			
 			//if theres something in the zone free it
 			let assCraft = zoneInstance && zoneInstance.assCraft
