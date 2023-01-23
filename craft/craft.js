@@ -668,7 +668,7 @@ let craft = function(target, mediaElem, zone, options) {
 			})
 		}
 		let associate = function(zoneInstance,dontResize) {
-			zoneInstance = craftZone.instances[zoneInstance] || craftZone.instances[zoneInstance.id] || zoneInstance || undefined
+			zoneInstance = craftZone.instances[ (zoneInstance?zoneInstance.id:zoneInstance) ] || zoneInstance || undefined
 			
 			//if theres something in the zone free it
 			let assCraft = zoneInstance && zoneInstance.assCraft
