@@ -5,7 +5,7 @@ let toInt=function(n){
 	if(filterSubpixels){return ~~n}
 	return n
 }
-let craftZone = function(id, geometry) {
+let craftZone = function(id, geometry){
 	let zone = document.createElement('div');
 	zone.id = id;
 	zone.className=geometry.className
