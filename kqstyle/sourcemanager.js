@@ -730,13 +730,15 @@ let placeholders=[
 			initStages()
 			//SourceManager.cmd("twitch")
 			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize'})
+			
+			ajax(KillerCommentator.base_site+"carousel_partners.html",function(html){
+				let dom=domParse(html);
+				//prependTo(document.body,dom);
+				craft(document.createElement('div'),dom,'stage_advert')
+			});
+
 		}));
 	}));
-	ajax(KillerCommentator.base_site+"carousel_partners.html",function(html){
-		let dom=domParse(html);
-		//prependTo(document.body,dom);
-		craft(document.createElement('div'),dom,'stage_advert')
-	});
 
 
 	//add bootstrap
