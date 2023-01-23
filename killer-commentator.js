@@ -29,11 +29,6 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 					window.scroll(0,0) //in case you somehow scroll away
 					main()
 				});
-				ajax(base_site+"carousel_partners.html",function(html){
-					let dom=domParse(html);
-					//prependTo(document.body,dom);
-					craft(document.createElement('div'),dom,'stage_advert')
-				});
 			});
 		})
 
