@@ -434,7 +434,11 @@ let placeholders=[
 	SourceManager.attach=function(source,stage,player){
 		if(!source){return}
 		player=player||SourceManager.players.iframe;
-		stage=(stage ==null || typeof stage == 'string')?(craftZone.instances[stage].elem || document.getElementById(stage) || craftZone.instances['stage_main'].elem) : stage;
+		if(stage ==null || typeof stage == 'string'){
+			stage = (craftZone.instances[stage].elem || document.getElementById(stage) || craftZone.instances['stage_main'].elem)
+		}else{
+			stage = stage.elem || stage	
+		}
 		
 		stage.innerHTML = "";
 
