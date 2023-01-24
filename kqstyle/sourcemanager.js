@@ -31,6 +31,20 @@ let placeholders=[
 "https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.51.45-A-synthwave-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png"
 ]
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+let placeholderPool=[];
+function getPlaceholder(){
+	if(!placeholderPool.length){
+		placeholderPool=shuffleArray(placeholders.slice());
+	}
+	return placeholderPool.pop()
+}
+
 
 	appendTo('head',inject('link',{href:KillerCommentator.base_site+"kqstyle/sourcemanager.css", rel:"stylesheet", type:"text/css", crossorigin:"anonymous"})) 
 
@@ -438,7 +452,7 @@ let placeholders=[
 		
 		Object.entries(craftZone.instances).forEach(function(entry){
 			const [id, zone] = entry;
-			const background = placeholders[Math.floor(Math.random() * placeholders.length)];
+			const background = getPlaceholder()
 			if(!zone.isPrimary){
 				return
 			}
