@@ -799,24 +799,24 @@ function getPlaceholder(){
 	appendTo(document.body,inject('script',{src:"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js", integrity:"sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM", crossorigin:"anonymous"},function(){
 		  // remote script has loaded
 	      }));
-	ajax(KillerCommentator.base_site+"templates/video_source_modal.tmpl",function(data){
-		data=data.split(/\r?\n---/);
-		let modalSRC = data[0]
-		let itemSRC = data[1]
+// 	ajax(KillerCommentator.base_site+"templates/video_source_modal.tmpl",function(data){
+// 		data=data.split(/\r?\n---/);
+// 		let modalSRC = data[0]
+// 		let itemSRC = data[1]
 
-		let modal=domParse(modal)
-		let item=domParse(item)
+// 		let modal=domParse(modal)
+// 		let item=domParse(item)
 
-		navigator.mediaDevices.enumerateDevices().then(function(devices){
-			devices.forEach(function(device){
-				item.innerHTML=`${deviceId}${groupId}${kind}${label}`
-				appendTo(modal,item)
-			})
-		},console.error)
+// 		navigator.mediaDevices.enumerateDevices().then(function(devices){
+// 			devices.forEach(function(device){
+// 				item.innerHTML=`${deviceId}${groupId}${kind}${label}`
+// 				appendTo(modal,item)
+// 			})
+// 		},console.error)
 
 
-		appendTo(document.body,node)
-	})
+// 		appendTo(document.body,node)
+// 	})
 							  
 	SourceManager.setAugment=function(map){
 		switch(map){
