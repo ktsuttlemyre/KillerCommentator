@@ -92,7 +92,7 @@ let placeholders=[
 			st.alignItems='center';
 			st.justifyContent='center';
 			
-			Object.entries(style).forEach(function(entry){
+			Object.entries(style||{}).forEach(function(entry){
 				const [key,value]=entry
 				if(key=='img'){return}
 				st[key]=value
@@ -109,7 +109,7 @@ let placeholders=[
 				}
 				img.style.position='absolute'
 				img.style.top='0px'
-				Object.entries(style.img).forEach(function(entry){
+				Object.entries(style.img|{}).forEach(function(entry){
 					const [key,value]=entry
 					this.style[key]=value
 				})
