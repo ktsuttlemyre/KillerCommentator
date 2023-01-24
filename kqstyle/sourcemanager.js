@@ -81,25 +81,36 @@ let placeholders=[
 		}
 	}
 	SourceManager.players={
-		img:function(src){
+		img:function(src,style){
 			let div = document.createElement('div')
-			let style = div.style
-			style.overflow='hidden'
-			style.width='100%';
-			style.height='100%'
-			style.display='flex';
-			style.flexFlow='row nowrap';
-			style.alignItems='center';
-			style.justifyContent='center';
+			let st = div.style
+			st.overflow='hidden'
+			st.width='100%';
+			st.height='100%'
+			st.display='flex';
+			st.flexFlow='row nowrap';
+			st.alignItems='center';
+			st.justifyContent='center';
+			
+			Object.entries(style).forEach(function(entry){
+				const [key,value]=entry
+				if(key=='img')[return}
+				st[key]=value
+			})
+			
 			let img = new Image();
 			img.onload=function(){
-				if(this.width>=this.height){
-					this.style.height='100%';
-					this.style.width='auto'
-				}else{
+				if(this.width >= this.height){
 					this.style.height='auto';
 					this.style.width='100%'
+				}else{
+					this.style.height='100%';
+					this.style.width='auto'
 				}
+				Object.entries(style.img).forEach(function(entry){
+					const [key,value]=entry
+					this.style[key]=value
+				})
 			}
 			img.src = src
 			div.appendChild(img)
