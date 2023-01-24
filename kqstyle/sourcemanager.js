@@ -406,6 +406,8 @@ let placeholders=[
 			SourceManager.attach(opts.source,craftZone.instances[stageId].elem,SourceManager.players[opts.player])
 		})
 		
+		placeholders
+		
 		
 		
 		
@@ -561,14 +563,6 @@ let placeholders=[
 				try{
 					stream = await navigator.mediaDevices.getUserMedia(Object.assign({
 					  video: {
-// 						width: {
-// 							ideal: 1920,
-// 		//							max: 2560,
-// 						},
-// 						height: {
-// 							ideal: 1080,
-// 		//							max: 1440
-// 						},
 						deviceId: {
 							exact:  item.deviceId
 						}
@@ -580,7 +574,7 @@ let placeholders=[
 				}
 				if(!stream){continue}
 
-				//quick note about archeteture design
+				// quick note about archeteture design
 				// stages are designate parking spaces for crafts
 				// crafts have not children and crafts do not attach to stages via document.node interactions
 				// the just hover over via css translation(x,y) and style.width style.height
@@ -607,8 +601,6 @@ let placeholders=[
 				
 				prependTo(div,button)
 				SourceManager.autoCroppingCraft(div,video)
-
-
 
 				video.srcObject = stream
 				//video.autoplay=true
