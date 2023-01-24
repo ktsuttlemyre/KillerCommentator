@@ -200,6 +200,7 @@ let craft = function(target, mediaElem, zone, options) {
 	options = Object.assign({
 		gesturePans: false,
 		resizeMode:'crop' //crop or resize
+		//constrainMedia:'width' or height or auto
 	}, options || {})
 	
 	let initGestDist = 0
@@ -578,24 +579,24 @@ let craft = function(target, mediaElem, zone, options) {
 						let initGestDelta = event.distance - initGestDist
 						console.debug(mediaPos.width, initGestDist - event.distance, style.height)
 						//let vector = (Math.abs(event.dy)>Math.abs(event.dx))?event.dy:event.dx;
-						let isGap = ''
-						if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
-							style.width = mediaPos.width + initGestDelta + 'px'
-							isGap += gappingOnSide(target, mediaElem)
-						} else {
-							style.height = mediaPos.height + initGestDelta + 'px'
-							isGap += gappingOnSide(target, mediaElem)
-						}
+						//let isGap = ''
+// 						if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
+// 							style.width = mediaPos.width + initGestDelta + 'px'
+// 							isGap += gappingOnSide(target, mediaElem)
+// 						} else {
+// 							style.height = mediaPos.height + initGestDelta + 'px'
+// 							isGap += gappingOnSide(target, mediaElem)
+// 						}
 						// keep the dragged position in the data-x/data-y attributes
 						if (options.gesturePans=='media') {
 							dragMoveFn(mediaElem, event)
 						} else if (options.gesturePans=='crop') {
 							dragMoveFn(target, event)
 						}
-						isGap += gappingOnSide(target, mediaElem)
-						if (!isGap) {
-							lastSafe = Object.assign(lastSafe, mediaElem.getBoundingClientRect())
-						}
+						//isGap += gappingOnSide(target, mediaElem)
+// 						if (!isGap) {
+// 							lastSafe = Object.assign(lastSafe, mediaElem.getBoundingClientRect())
+// 						}
 						//interactable.reflow({ name: 'drag', axis: 'xy' })
 
 						if (resizeCropWithMedia) {
@@ -648,7 +649,8 @@ let craft = function(target, mediaElem, zone, options) {
 			let hScalar = mediaElem.videoHeight || mediaRect.height 
 	
 			//if (wScalar > hScalar) {
-			if (style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
+			
+			if (options.constrainMedia=='width' || style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
 				mediaElem.style.width = `${matchRect.mediaWidth || matchRect.width}px`
 			} else {
 				mediaElem.style.height = `${matchRect.mediaHeight || matchRect.height}px`
