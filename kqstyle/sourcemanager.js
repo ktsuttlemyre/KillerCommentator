@@ -81,6 +81,11 @@ let placeholders=[
 		}
 	}
 	SourceManager.players={
+		img:function(src){
+			var img = document.createElement('img')
+			img.src=src
+			return img;
+		},
 		iframe:function(src){
 			var ifrm = document.createElement("iframe");
 			ifrm.setAttribute("src", src);
@@ -399,17 +404,17 @@ let placeholders=[
 		}
 		window.api.zones.reverse().forEach(stageParser)
 		
+		Object.entries(craftZone.instances).forEach(function(entry){
+			const [id, zone] = entry;
+			const background = placeholders[Math.floor(Math.random() * placeholders.length)];
+			SourceManager.attach(background,zone,SourceManager.players['img'])
+		})
 		
 		//add customizations
 		Object.entries(config.backgrounds).forEach(function(entry){
 			const [stageId,opts] = entry
 			SourceManager.attach(opts.source,craftZone.instances[stageId].elem,SourceManager.players[opts.player])
-		})
-		
-		placeholders
-		
-		
-		
+		})		
 		
 		let resizeDebounceTimer=0;
 		//resize all stages with the window resize action
