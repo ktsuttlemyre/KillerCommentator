@@ -650,7 +650,7 @@ let craft = function(target, mediaElem, zone, options) {
 	
 			//if (wScalar > hScalar) {
 			
-			if (options.constrainMedia=='width' || style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0)) {
+			if (options.constrainMedia!='height' && (options.constrainMedia=='width' || style.height == "auto" || style.height == '' || style.height == null || parseFloat(style.height <= 0))) {
 				mediaElem.style.width = `${matchRect.mediaWidth || matchRect.width}px`
 			} else {
 				mediaElem.style.height = `${matchRect.mediaHeight || matchRect.height}px`
