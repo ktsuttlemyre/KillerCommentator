@@ -16,7 +16,6 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 			base_site+"svgscribble.js",
 			base_site+"kqstyle/sourcemanager.js",
 			base_site+"craft/craft.js",
-			base_site+"eventManger.js",
 			base_site+"speechcommands.js",function(){
 			//add logo and activate
 			//add scribble toolbar
