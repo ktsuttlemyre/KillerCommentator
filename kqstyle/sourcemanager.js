@@ -82,9 +82,22 @@ let placeholders=[
 	}
 	SourceManager.players={
 		img:function(src){
-			var img = document.createElement('img')
-			img.src=src
-			return img;
+			let div = document.createElement('div')
+			div.style.overflow='hidden'
+			div.style.width=div.style.height='100%'
+			let img = new Image();
+			img.onLoad=function(){
+				if(this.width>=this.height){
+					this.style.height='100%';
+					this.style.width='auto'
+				}else{
+					this.style.height='auto';
+					this.style.width='100%'
+				}
+			}
+			img.src = src
+			div.appendChild(img)
+			return div;
 		},
 		iframe:function(src){
 			var ifrm = document.createElement("iframe");
