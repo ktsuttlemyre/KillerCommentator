@@ -786,7 +786,7 @@ function getPlaceholder(){
 				let dom=domParse(html);
 				//prependTo(document.body,dom);
 				craft(document.createElement('div'),dom,'stage_advert');
-				const carousel = new bootstrap.Carousel('#Carousel_partners')
+				const carousel = new bootstrap.Carousel('#carousel_partners')
 			});
 
 		}));
