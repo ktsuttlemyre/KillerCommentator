@@ -734,7 +734,8 @@ let placeholders=[
 			ajax(KillerCommentator.base_site+"carousel_partners.html",function(html){
 				let dom=domParse(html);
 				//prependTo(document.body,dom);
-				craft(document.createElement('div'),dom,'stage_advert')
+				craft(document.createElement('div'),dom,'stage_advert');
+				const carousel = new bootstrap.Carousel('#Carousel_partners')
 			});
 
 		}));
