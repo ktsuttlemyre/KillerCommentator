@@ -107,6 +107,8 @@ let placeholders=[
 					this.style.height='100%';
 					this.style.width='auto'
 				}
+				img.style.position='absolute'
+				img.style.top='0px'
 				Object.entries(style.img).forEach(function(entry){
 					const [key,value]=entry
 					this.style[key]=value
