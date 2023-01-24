@@ -83,8 +83,14 @@ let placeholders=[
 	SourceManager.players={
 		img:function(src){
 			let div = document.createElement('div')
-			div.style.overflow='hidden'
-			div.style.width=div.style.height='100%'
+			let style = div.style
+			style.overflow='hidden'
+			style.width='100%';
+			style.height='100%'
+			style.display='flex';
+			style.flexFlow='row nowrap';
+			style.alignItems='center';
+			style.justifyContent='center';
 			let img = new Image();
 			img.onLoad=function(){
 				if(this.width>=this.height){
