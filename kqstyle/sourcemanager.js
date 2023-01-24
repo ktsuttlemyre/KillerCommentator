@@ -94,7 +94,7 @@ let placeholders=[
 			
 			Object.entries(style).forEach(function(entry){
 				const [key,value]=entry
-				if(key=='img')[return}
+				if(key=='img'){return}
 				st[key]=value
 			})
 			
