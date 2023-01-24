@@ -109,7 +109,7 @@ let placeholders=[
 				}
 				img.style.position='absolute'
 				img.style.top='0px'
-				Object.entries(style.img|{}).forEach(function(entry){
+				Object.entries(style?style.img:{}).forEach(function(entry){
 					const [key,value]=entry
 					this.style[key]=value
 				})
