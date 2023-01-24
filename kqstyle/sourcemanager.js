@@ -420,6 +420,9 @@ let placeholders=[
 		Object.entries(craftZone.instances).forEach(function(entry){
 			const [id, zone] = entry;
 			const background = placeholders[Math.floor(Math.random() * placeholders.length)];
+			if(!zone.isPrimary){
+				return
+			}
 			SourceManager.attach(background,zone,SourceManager.players['img'])
 		})
 		
