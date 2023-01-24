@@ -803,7 +803,7 @@ let craft = function(target, mediaElem, zone, options) {
 			resizeTo:resizeTo,
 		}
 		craft.instances[target.id] = instance
-		startEditMode(120000)
+		startEditMode(10000)
 		if(zone){
 			console.error('implement assoicate zone please')
 		}		      
