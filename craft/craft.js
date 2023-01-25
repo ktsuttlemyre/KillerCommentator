@@ -308,7 +308,7 @@ let craft = function(target, mediaElem, zone, options) {
 		})
 	]
 	
-
+	let instance;
 	let offsetPointer={x:0,y:0}
 	let mediaPos;
 	let lastSafe;
@@ -796,7 +796,7 @@ let craft = function(target, mediaElem, zone, options) {
 			delete craft.instances[target.id]
 		}
 		//promise.resolve(
-		let instance = {
+		instance = {
 			id:id,
 			destroy:destroy,
 			associate:associate,
