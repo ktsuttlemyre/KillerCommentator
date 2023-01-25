@@ -38,7 +38,12 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 								}
 								main()
 								craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height',noFrame:true,title:'Partners'});
-								const carousel = new bootstrap.Carousel('#carousel_partners', {wrap:true,pause:false,keyboard:false,touch:false,interval:60000,ride:"carousel"})
+								const carousel = new bootstrap.Carousel('#carousel_partners', {wrap:true,pause:false,keyboard:false,touch:false,interval:60000})
+// 								let nextSlide=function(){
+// 									carousel.
+// 									setTimeout(nextSlide,60000)
+// 								}
+// 								nextSlide()
 							}));
 						}));
 
