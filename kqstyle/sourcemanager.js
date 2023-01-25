@@ -405,7 +405,7 @@ function getPlaceholder(){
 		})
 	}
 	let kqstyle_viewport;
-	let initStages=function(){
+	SourceManager.initStages=function(){
 		//takeawy srollbars cause fuck those!
 		document.body.style.overflow="hidden"
 		
