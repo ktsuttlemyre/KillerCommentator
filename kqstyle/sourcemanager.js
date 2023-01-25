@@ -456,10 +456,10 @@ function getPlaceholder(){
 			const [id, zone] = entry;
 			if(id.match(/advert|chat|comment/ig)){return}
 			if(id.match(/roster_blue/ig)){
-				(zone.elem||zone).classList.add('frame','blue')
+				(zone.elem||zone).classList.add('frame','blue');
 			}
 			if(id.match(/roster_gold/ig)){
-				(zone.elem||zone).classList.add('frame','blue')
+				(zone.elem||zone).classList.add('frame','gold');
 			}
 			const background = getPlaceholder()
 			if(!zone.isPrimary){
