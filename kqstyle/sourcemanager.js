@@ -795,7 +795,7 @@ function getPlaceholder(){
 				let dom=domParse(html);
 				//prependTo(document.body,dom);
 				craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height',noFrame:true,title:'Partners'});
-				const carousel = new bootstrap.Carousel('#carousel_partners', {touch:false,interval:60000})
+				const carousel = new bootstrap.Carousel('#carousel_partners', {touch:false,interval:60000,ride:"carousel"})
 			});
 
 		}));
