@@ -736,7 +736,7 @@ let craft = function(target, mediaElem, zone, options) {
 					target.classList.remove('gold')
 					target.classList.remove('blue')
 					target.classList.add('frame')
-					target.dataset.title='Commentator Cam'
+					target.dataset.title='Commentator'
 				}
 				if(instance.assZone.id.match(/main/gi)){
 					target.classList.remove('gold')
