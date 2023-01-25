@@ -206,7 +206,10 @@ let craft = function(target, mediaElem, zone, options) {
 		//constrainMedia:'width' or height or auto
 	}, options || {})
 	
-	target.classList.add('frame')
+	if(!options.noFrame){
+		target.classList.add('frame')
+	}
+	target.dataset.title=options.title
 	
 	let initGestDist = 0
 	let dropSnapRange = 100
@@ -711,15 +714,16 @@ let craft = function(target, mediaElem, zone, options) {
 			//so add them after
 			target.classList.add('animate-transition')
 			mediaElem.classList.add('animate-transition')
-			if(instance.assZone && instance.assZone.id.match(/blue/gi)){
-				target.classList.add('blue')
-			}else{
-				target.classList.remove('blue')
-			}
-			if(instance.assZone && instance.assZone.id.match(/gold/gi)){
-				target.classList.add('gold')
-			}else{
-				target.classList.remove('gold')
+			options.associateCallback && options.associateCallback.call(instance,instance,zoneInstance)
+			if(instance.assZone){
+				if(instance.assZone.id.match(/blue/gi)){
+					target.classList.add('blue')
+					target.classList.remove('gold')
+				}
+				if(instance.assZone.id.match(/gold/gi)){
+					target.classList.add('gold')
+					target.classList.remove('blue')
+				}
 			}
 			
 		}
