@@ -34,7 +34,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 							appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
 								main()
 								craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height',noFrame:true,title:'Partners'});
-								const carousel = new bootstrap.Carousel('#carousel_partners', {touch:false,interval:60000,ride:"carousel"})
+								const carousel = new bootstrap.Carousel('#carousel_partners', {wrap:true,pause:false,keyboard:false,touch:false,interval:60000,ride:"carousel"})
 							}));
 						}));
 
@@ -140,7 +140,9 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		SourceManager.initStages()
 		//SourceManager.cmd("twitch")
 		SourceManager.load(SourceManager.config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat',ride:true,style:{background:'#0d1117'}})
-		
+		SourceManager.discoverComponents()
+
+
 		startScribble()
 		
 		//add speech commands 
