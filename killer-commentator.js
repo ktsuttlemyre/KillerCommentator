@@ -32,6 +32,10 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 						//source manager
 						appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
 							appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
+								if(!SourceManager.config){
+									alert('no config')
+									return
+								}
 								main()
 								craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height',noFrame:true,title:'Partners'});
 								const carousel = new bootstrap.Carousel('#carousel_partners', {wrap:true,pause:false,keyboard:false,touch:false,interval:60000,ride:"carousel"})
