@@ -83,6 +83,9 @@ let craftZone = function(id, geometry){
 					let elem = event.relatedTarget
 					let craftInstance = craft.instances[elem.id]
 					let zone = event.target
+					if(!craftInstance.editMode){
+						return
+					}
 
 					let center1 = calcCenter(interact.getElementRect(event.target))
 					let center2 = calcCenter(interact.getElementRect(event.relatedTarget))
