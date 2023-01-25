@@ -781,7 +781,7 @@ function getPlaceholder(){
 		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
 			initStages()
 			//SourceManager.cmd("twitch")
-			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat'})
+			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat',ride:true})
 			
 			ajax(KillerCommentator.base_site+"carousel_partners.html",function(html){
 				let dom=domParse(html);
