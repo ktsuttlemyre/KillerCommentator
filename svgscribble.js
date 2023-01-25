@@ -81,8 +81,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 
 		var config = {
 			tool: 'commentator',       // The currently selected tool //commentator arrow
-			color : 'white',        // The currently selected colour
-			colorAlt : 'black',
+			color : '#eb008b',        // The currently selected colour
+			colorAlt : 'white',
 			strokeWidth: 4,         // The width of the lines we draw
 			normalisation: 6,// The average normalisation for pencil drawing
 
