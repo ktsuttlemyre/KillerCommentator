@@ -783,31 +783,7 @@ function getPlaceholder(){
 			  })
 			}
 
-	//init
-	appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
-		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
-			initStages()
-			//SourceManager.cmd("twitch")
-			
-			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat',ride:true,style:{background:'#0d1117'}})
-			
-			ajax(KillerCommentator.base_site+"carousel_partners.html",function(html){
-				let dom=domParse(html);
-				//prependTo(document.body,dom);
-				craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height',noFrame:true,title:'Partners'});
-				const carousel = new bootstrap.Carousel('#carousel_partners', {touch:false,interval:60000,ride:"carousel"})
-			});
 
-		}));
-	}));
-
-
-	//add bootstrap
-	appendTo('head',inject('meta',{name:"viewport", content:"width=device-width, initial-scale=1"}));
-	appendTo('head',inject('link',{href:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel:"stylesheet", integrity:"sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin:"anonymous"}))
-	appendTo(document.body,inject('script',{src:"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js", integrity:"sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM", crossorigin:"anonymous"},function(){
-		  // remote script has loaded
-	      }));
 // 	ajax(KillerCommentator.base_site+"templates/video_source_modal.tmpl",function(data){
 // 		data=data.split(/\r?\n---/);
 // 		let modalSRC = data[0]
