@@ -46,6 +46,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 	let startScribble=function(){
 		SVGScribble.init();
 		SVGScribble.toggle();
+		SVGScribble.toolbar('hide')
 	}
 
 	function selectColor(number,alpha) {
