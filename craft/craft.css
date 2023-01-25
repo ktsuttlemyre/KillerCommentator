@@ -57,10 +57,10 @@
 	/*
 	after setting .craft.frame make it blue
 	*/
-	border: 4px solid blue !important;
+	border: 4px solid #894ba4 !important;
 }
 .craft.blue::before {
-	border-bottom: 1.5rem solid blue !important;
+	border-bottom: 1.5rem solid #894ba4 !important;
 	border-left: 1.25rem solid transparent !important;
 	border-right: 1.25rem solid transparent !important;
 }
@@ -69,10 +69,10 @@
 	/*
 	after setting .craft.frame make it gold
 	*/
-	border: 4px solid gold !important;
+	border: 4px solid #d43c2d !important;
 }
 .craft.gold::before {
-	border-bottom: 1.5rem solid gold !important;
+	border-bottom: 1.5rem solid #d43c2d !important;
 	border-left: 1.25rem solid transparent !important;
 	border-right: 1.25rem solid transparent !important;
 }
