@@ -114,6 +114,7 @@ function getPlaceholder(){
 			})
 			
 			let img = new Image();
+			img.referrerpolicy="no-referrer"
 			img.onload=function(){
 				if(this.width >= this.height){
 					this.style.height='auto';
