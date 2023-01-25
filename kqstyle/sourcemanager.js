@@ -1,21 +1,9 @@
 window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
-	let config=SourceManager.config= JSON.parse(localStorage.getItem('KillerCommentator.config') || showOpenFilePicker() || `{
-		"urls":{
-			"challonge":[]
-		},
-		"twitch":{
-			"video":"",
-			"channel":""
-		},
-		"backgrounds":{
-		},
-		"chat":"",
-		"liveOnLocation":{
-			"guest":"",
-			"scene":"",
-			"host":""
-		}
-	}`)
+	let config=SourceManager.config=JSON.parse(localStorage.getItem('KillerCommentator.config')
+	if(!config){
+		config=SourceManager.config=showOpenFilePicker()
+		localStorage.setItem('KillerCommentator.config',config)
+	}
 	
 	
 let placeholders=[
