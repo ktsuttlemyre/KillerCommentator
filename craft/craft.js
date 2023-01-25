@@ -215,7 +215,8 @@ let craft = function(target, mediaElem, zone, options) {
 	}
 	let endFn = function(event) {
 		actions--
-		if (actions == 1) {
+		if (actions <= 0) {
+			actions=0
 			//TODO future optimization. Only check for collision at the end of the move
 			// then calculate difference to move the elemet to proper position
 			//gappingOnSide(target,mediaElem)
@@ -237,6 +238,7 @@ let craft = function(target, mediaElem, zone, options) {
 	let startEditMode = function(inital) {
 		resetDebounceCustom = inital
 		editMode = true
+		editDebounceId = setTimeout(endEditMode, resetDebounceCustom || resetDebounce)
 		target.dataset.editmode = true
 		target.classList.add('edit-mode')
 		target.classList.remove('animate-transition')
