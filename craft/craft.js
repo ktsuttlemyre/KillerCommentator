@@ -209,7 +209,7 @@ let craft = function(target, mediaElem, zone, options) {
 	if(!options.noFrame){
 		target.classList.add('frame')
 	}
-	target.dataset.title=options.title
+	target.dataset.title=options.title||''
 	
 	let initGestDist = 0
 	let dropSnapRange = 100
