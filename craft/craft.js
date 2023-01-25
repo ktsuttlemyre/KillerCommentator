@@ -209,7 +209,7 @@ let craft = function(target, mediaElem, zone, options) {
 	if(!options.noFrame){
 		target.classList.add('frame')
 	}
-	target.dataset.title=options.title||''
+	target.dataset.title=(options.title==null)?'':options.title;
 	
 	let initGestDist = 0
 	let dropSnapRange = 100
@@ -716,18 +716,33 @@ let craft = function(target, mediaElem, zone, options) {
 			mediaElem.classList.add('animate-transition')
 			options.associateCallback && options.associateCallback.call(instance,instance,zoneInstance)
 			if(instance.assZone){
+				
+				if(instance.assZone.id.match(/team/gi)){
+					target.classList.remove('tab')
+				}else{
+					target.classList.add('tab')
+				}
 				if(instance.assZone.id.match(/blue/gi)){
 					target.classList.add('blue')
 					target.classList.remove('gold')
+					target.classList.add('frame')
 				}
 				if(instance.assZone.id.match(/gold/gi)){
 					target.classList.add('gold')
 					target.classList.remove('blue')
+					target.classList.add('frame')
 				}
-				if(instance.assZone.id.match(/commentary/gi)){
+				if(instance.assZone.id.match(/commentator/gi)){
 					target.classList.remove('gold')
 					target.classList.remove('blue')
+					target.classList.add('frame')
 					target.dataset.title='Commentator Cam'
+				}
+				if(instance.assZone.id.match(/main/gi)){
+					target.classList.remove('gold')
+					target.classList.remove('blue')
+					target.classList.remove('frame')
+		
 				}
 			}
 			
