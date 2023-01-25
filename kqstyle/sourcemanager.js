@@ -346,7 +346,7 @@ function getPlaceholder(){
 				top:'380px',
 				left:'1575px',
 				width:'335px',
-				height:'360px',
+				height:'560px',
 				className:'',
 			},
 		},
@@ -442,6 +442,7 @@ function getPlaceholder(){
 			delete style.id 
 			var zone = craftZone(id,style)
 			zone.elem.className='kc-zone'
+			zone.elem.dataset['kqstyle-geometry']=JSON.stringify(style)
 			appendTo(inner,zone.elem)
 			
 			if(zone.enhance){
