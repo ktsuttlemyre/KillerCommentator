@@ -854,6 +854,16 @@ let craft = function(target, mediaElem, zone, options) {
 	let locked = false
 	let id=target.id
 	
+	Object.entries(options.style||{}).forEach(function(entry){
+		const [key,value]=entry
+		target.style[key]=value
+	})
+	Object.entries(options.mediaStyle||{}).forEach(function(entry){
+		const [key,value]=entry
+		mediaElem[key]=value
+	})
+	
+	
 	let editModeCover = document.createElement('div')
 	editModeCover.className='edit-cover'
 	editModeCover.style.display='none';
