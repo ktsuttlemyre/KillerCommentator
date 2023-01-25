@@ -11,7 +11,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 			(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
 		}
 		window.SVGScribble.toolbar=function(opt){
-			if(opt=='hide'{
+			if(opt=='hide'){
 				document.querySelector('#drawing-box').style.display='none'
 			}else{
 				document.querySelector('#drawing-box').style.display='block'
