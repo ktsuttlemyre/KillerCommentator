@@ -206,6 +206,8 @@ let craft = function(target, mediaElem, zone, options) {
 		//constrainMedia:'width' or height or auto
 	}, options || {})
 	
+	target.classList.add('frame')
+	
 	let initGestDist = 0
 	let dropSnapRange = 100
 	let editDebounceId = null;
@@ -686,16 +688,6 @@ let craft = function(target, mediaElem, zone, options) {
 					//free them
 					zone.assCraft.assZone= null
 					zone.assCraft= null
-
-				//	reflow({
-				//		emulateDrop: false
-				//	})
-				//      interactable.fire({
-				//        type: 'dragstart',
-				//        target: element,
-				//        dx: 20,
-				//        dy: 20,
-				//      });
 				}
 			}
 
@@ -719,6 +711,16 @@ let craft = function(target, mediaElem, zone, options) {
 			//so add them after
 			target.classList.add('animate-transition')
 			mediaElem.classList.add('animate-transition')
+			if(instance.assZone && instance.assZone.id.match(/blue/gi)){
+				target.classList.add('blue')
+			}else{
+				target.classList.remove('blue')
+			}
+			if(instance.assZone && instance.assZone.id.match(/gold/gi)){
+				target.classList.add('gold')
+			}else{
+				target.classList.remove('gold')
+			}
 			
 		}
 		//TODO have a window size event update this object but i really don't need that type of trouble right now
