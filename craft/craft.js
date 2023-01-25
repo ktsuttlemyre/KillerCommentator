@@ -231,7 +231,7 @@ let craft = function(target, mediaElem, zone, options) {
 	let endEditMode = function() {
 		resetDebounceCustom = 0
 		clearTimeout(editDebounceId)
-		editMode = false
+		instance.editMode = false
 		target.dataset.editmode = false
 		target.classList.remove('edit-mode')
 		target.classList.add('animate-transition')
@@ -240,7 +240,7 @@ let craft = function(target, mediaElem, zone, options) {
 	}
 	let startEditMode = function(inital) {
 		resetDebounceCustom = inital
-		editMode = true
+		instance.editMode = true
 		editDebounceId = setTimeout(endEditMode, resetDebounceCustom || resetDebounce)
 		target.dataset.editmode = true
 		target.classList.add('edit-mode')
@@ -248,7 +248,7 @@ let craft = function(target, mediaElem, zone, options) {
 		mediaElem.classList.remove('animate-transition')
 		videoGhost.classList.remove('d-none')
 		let updateGhost = function() {
-			if (!editMode) {
+			if (!instance.editMode) {
 				return
 			}
 			let box = interact.getElementRect(mediaElem)
@@ -365,7 +365,7 @@ let craft = function(target, mediaElem, zone, options) {
 			//         listeners: {
 			//           start:startFn,
 			//           move (event) {
-			//             if(!editMode){
+			//             if(!instance.editMode){
 			//               return
 			//             }
 			//             var x = (parseFloat(target.getAttribute('data-x')) || 0)
@@ -422,7 +422,7 @@ let craft = function(target, mediaElem, zone, options) {
 				listeners: {
 					start: startFn,
 					move(event) {
-						if (!editMode) {
+						if (!instance.editMode) {
 							return
 						}
 						var x = (parseFloat(target.getAttribute('data-x')) || 0)
@@ -470,13 +470,13 @@ let craft = function(target, mediaElem, zone, options) {
 				listeners: {
 					start: function(event) {
 						savedStart=event
-						if (!editMode) {
+						if (!instance.editMode) {
 							return
 						}
 						startFn(event)
 					},
 					move: function(event) {
-						if (!editMode) {
+						if (!instance.editMode) {
 							return
 						}
 						console.debug('dragmove',event.x0,event.y0,event.dx,event.dy,event)
@@ -501,7 +501,7 @@ let craft = function(target, mediaElem, zone, options) {
 						dragMoveFn(target, event)
 					},
 					end: function(event) {
-						if (!editMode) {
+						if (!instance.editMode) {
 							return
 						}
 						endFn(event)
@@ -573,7 +573,7 @@ let craft = function(target, mediaElem, zone, options) {
 						}
 					},
 					move(event) {
-						if (!editMode) {
+						if (!instance.editMode) {
 							return
 						}
 						let style = mediaElem.style
@@ -825,7 +825,6 @@ let craft = function(target, mediaElem, zone, options) {
 	}
 	target.classList.add('events-none')
 	target.classList.add('craft')
-	let editMode = false
 	let locked = false
 	let id=target.id
 	
