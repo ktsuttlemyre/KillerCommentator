@@ -781,12 +781,12 @@ function getPlaceholder(){
 		appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
 			initStages()
 			//SourceManager.cmd("twitch")
-			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize'})
+			SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat'})
 			
 			ajax(KillerCommentator.base_site+"carousel_partners.html",function(html){
 				let dom=domParse(html);
 				//prependTo(document.body,dom);
-				craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height'});
+				craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height',noFrame:true,title:'Partners'});
 				const carousel = new bootstrap.Carousel('#carousel_partners', {touch:false,interval:60000})
 			});
 
