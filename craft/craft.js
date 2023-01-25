@@ -724,6 +724,11 @@ let craft = function(target, mediaElem, zone, options) {
 					target.classList.add('gold')
 					target.classList.remove('blue')
 				}
+				if(instance.assZone.id.match(/commentary/gi)){
+					target.classList.remove('gold')
+					target.classList.remove('blue')
+					target.dataset.title='Commentator Cam'
+				}
 			}
 			
 		}
