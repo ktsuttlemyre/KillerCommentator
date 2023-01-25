@@ -136,7 +136,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
  const isVideoPlaying = video => !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);								  
 	let main = function(){
 		
-		initStages()
+		SourceManager.initStages()
 		//SourceManager.cmd("twitch")
 		SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat',ride:true,style:{background:'#0d1117'}})
 		window.scroll(0,0) //in case you somehow scroll away
