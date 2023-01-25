@@ -455,10 +455,10 @@ function getPlaceholder(){
 		Object.entries(craftZone.instances).forEach(function(entry){
 			const [id, zone] = entry;
 			if(id.match(/advert|chat|comment/ig)){return}
-			if(id.match(/roster_blue/ig){
+			if(id.match(/roster_blue/ig)){
 				(zone.elem||zone).classList.add('frame','blue')
 			}
-			if(id.match(/roster_gold/ig){
+			if(id.match(/roster_gold/ig)){
 				(zone.elem||zone).classList.add('frame','blue')
 			}
 			const background = getPlaceholder()
