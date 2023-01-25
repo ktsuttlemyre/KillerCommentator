@@ -37,7 +37,7 @@
 	border: 4px solid #737373;
 }
 .craft.frame::before {
-	content: attr(data-content);
+	content: attr(data-title);
 	font-weight:bold;
 	line-height: 1.75rem;
 	color:white;
