@@ -12,24 +12,45 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
 		//platform plugin ready to use
 		include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",
-			"https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js",
+			"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js",
 			base_site+"svgscribble.js",
 			base_site+"kqstyle/sourcemanager.js",
 			base_site+"craft/craft.js",
 			base_site+"speechcommands.js",function(){
-			//add logo and activate
 			//add scribble toolbar
 			ajax(base_site+"toolbar.html",function(html){
 				appendTo(document.body,domParse(html))
-				startScribble()
+				//add logo and activate
 				ajax(base_site+"logo/index.html",function(html){
 					let logo=domParse(html);
 					prependTo(document.body,logo);
-					window.scroll(0,0) //in case you somehow scroll away
-					main()
+					
+					//add carosule
+					ajax(KillerCommentator.base_site+"carousel_partners.html",function(html){
+						let dom=domParse(html);
+						
+						//source manager
+						appendTo(document.body,inject('script',{src:"https://unpkg.com/@ungap/custom-elements-builtin"},function(){
+							appendTo(document.body,inject('script',{src:"https://unpkg.com/x-frame-bypass", type:"module"},function(){
+								main()
+								craft(document.createElement('div'),dom,'stage_advert',{constrainMedia:'height',noFrame:true,title:'Partners'});
+								const carousel = new bootstrap.Carousel('#carousel_partners', {touch:false,interval:60000,ride:"carousel"})
+							}));
+						}));
+
+					});
+					
 				});
 			});
 		})
+		
+
+
+		
+		
+		//add bootstrap
+		appendTo('head',inject('meta',{name:"viewport", content:"width=device-width, initial-scale=1"}));
+		appendTo('head',inject('link',{href:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel:"stylesheet", integrity:"sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin:"anonymous"}))
 
 		//inject fontawesome
 		//appendTo(document.body,inject('script',{src:"https://kit.fontawesome.com/48764efa36.js", crossorigin:"anonymous"},function(){}));
@@ -114,6 +135,13 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 
  const isVideoPlaying = video => !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);								  
 	let main = function(){
+		
+		initStages()
+		//SourceManager.cmd("twitch")
+		SourceManager.load(config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat',ride:true,style:{background:'#0d1117'}})
+		window.scroll(0,0) //in case you somehow scroll away
+		startScribble()
+		
 		//add speech commands 
 		interact('.killer-commentator')
 		  .on('tap', function (event) {
