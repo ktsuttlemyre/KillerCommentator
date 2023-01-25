@@ -10,7 +10,14 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		window.SVGScribble.clear=function(){
 			(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
 		}
-		window.SVGScribble.hide=function(){
+		window.SVGScribble.toolbar=function(opt){
+			if(opt=='hide'{
+				document.querySelector('#drawing-box').style.display='none'
+			}else{
+				document.querySelector('#drawing-box').style.display='block'
+			}
+		}
+		window.SVGScribble.close=function(){
 				document.body.setAttribute('data-drawing', false);
 				state.drawing = false;
 		}
@@ -138,7 +145,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		// Closes the drawing box and sets 'data-drawing' on the body element to false
 		// Along with state.drawing to false.
 		document.querySelector('#drawing-box .close').addEventListener('mousedown', function(e) {
-			SVGScribble.hide()
+			SVGScribble.close()
 		})
 		document.querySelector('#drawing-box .trash').addEventListener('pointerdown', function(e) {
 			e.target.releasePointerCapture(e.pointerId);
