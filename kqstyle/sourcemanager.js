@@ -442,7 +442,7 @@ function getPlaceholder(){
 			delete style.id 
 			var zone = craftZone(id,style)
 			zone.elem.className='kc-zone'
-			zone.elem.dataset['kqstyle-geometry']=JSON.stringify(style)
+			zone.elem.dataset['unscaledgeometry']=JSON.stringify(style)
 			appendTo(inner,zone.elem)
 			
 			if(zone.enhance){
