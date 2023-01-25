@@ -238,7 +238,7 @@
   transition: background-color 0.3s;
 }
 
-.active {
+.kc-zone.active {
   /*animation: bounce 1.5s ease infinite;*/
   animation: glow 1.5s ease infinite;
 }
