@@ -253,9 +253,6 @@ let craft = function(target, mediaElem, zone, options) {
 		mediaElem.classList.remove('animate-transition')
 		videoGhost.classList.remove('d-none')
 		let updateGhost = function() {
-			if (!instance.editMode) {
-				return
-			}
 			let box = interact.getElementRect(mediaElem)
 			if(!box){
 				return
@@ -425,9 +422,14 @@ let craft = function(target, mediaElem, zone, options) {
 				},
 
 				listeners: {
-					start: startFn,
+					start: function(event){
+						if (!event.isReflow && !instance.editMode) {
+							return
+						}
+						startFn(event)
+					},
 					move(event) {
-						if (!instance.editMode) {
+						if (!event.isReflow && !instance.editMode) {
 							return
 						}
 						var x = (parseFloat(target.getAttribute('data-x')) || 0)
@@ -460,6 +462,9 @@ let craft = function(target, mediaElem, zone, options) {
 
 					},
 					end: function(event) {
+						if (!event.isReflow && !instance.editMode) {
+							return
+						}
 						let zone = getZone();
 						if (zone) {
 							zone.saveGeoMods()
@@ -475,13 +480,13 @@ let craft = function(target, mediaElem, zone, options) {
 				listeners: {
 					start: function(event) {
 						savedStart=event
-						if (!instance.editMode) {
+						if (!event.isReflow && !instance.editMode) {
 							return
 						}
 						startFn(event)
 					},
 					move: function(event) {
-						if (!instance.editMode) {
+						if (!event.isReflow && !instance.editMode) {
 							return
 						}
 						console.debug('dragmove',event.x0,event.y0,event.dx,event.dy,event)
@@ -506,7 +511,7 @@ let craft = function(target, mediaElem, zone, options) {
 						dragMoveFn(target, event)
 					},
 					end: function(event) {
-						if (!instance.editMode) {
+						if (!event.isReflow && !instance.editMode) {
 							return
 						}
 						endFn(event)
@@ -563,6 +568,9 @@ let craft = function(target, mediaElem, zone, options) {
 			.gesturable({
 				listeners: {
 					start: function(event) {
+						if (!event.isReflow && !instance.editMode) {
+							return
+						}
 						let box1 = interact.getElementRect(target)
 						let box2 = interact.getElementRect(mediaElem)
 						mediaPos.width = box2.width || mediaElem.videoWidth || 0
@@ -578,7 +586,7 @@ let craft = function(target, mediaElem, zone, options) {
 						}
 					},
 					move(event) {
-						if (!instance.editMode) {
+						if (!event.isReflow && !instance.editMode) {
 							return
 						}
 						let style = mediaElem.style
@@ -613,7 +621,10 @@ let craft = function(target, mediaElem, zone, options) {
 							resizeTo(interact.getElementRect(mediaElem))
 						}
 					},
-					end: function() {
+					end: function(event) {
+						if (!event.isReflow && !instance.editMode) {
+							return
+						}
 						resizeCropWithMedia = false
 
 						// start a resize action and wait for inertia to finish
@@ -675,6 +686,7 @@ let craft = function(target, mediaElem, zone, options) {
 					type: `resize${action}`,
 					target: target,
 					matchRect:matchRect,
+					isReflow:true,
 				}
 				interactable.fire(obj);
 			})
