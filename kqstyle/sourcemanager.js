@@ -237,7 +237,7 @@ function getPlaceholder(){
 		{
 			id:'stage_cam_team_blue',
 			top:'881px',
-			left:'10px',
+			left:'5px',
 			width:'348px',
 			height:'193px',
 			className:'',
@@ -299,7 +299,7 @@ function getPlaceholder(){
 			top:'440px',
 			left:'1579px',
 			width:'335px',
-			height:'181px',
+			height:'185px',
 			className:'',
 			enhance:{
 				top:'0px',
@@ -311,10 +311,10 @@ function getPlaceholder(){
 		},
 		{
 			id:'stage_roster_gold',
-			top:'629px',
+			top:'637px',
 			left:'1579px',
 			width:'335px',
-			height:'195px',
+			height:'185px',
 			className:'',
 			enhance:{
 				top:'0px',
@@ -329,7 +329,7 @@ function getPlaceholder(){
 			top:'875px',
 			left:'1579px',
 			width:'335px',
-			height:'195px',
+			height:'200px',
 			className:'',
 			enhance:{
 				top:'380px',
