@@ -237,7 +237,7 @@ function getPlaceholder(){
 		{
 			id:'stage_cam_team_blue',
 			top:'881px',
-			left:'20px',
+			left:'15px',
 			width:'348px',
 			height:'193px',
 			className:'',
@@ -311,10 +311,10 @@ function getPlaceholder(){
 		},
 		{
 			id:'stage_roster_gold',
-			top:'648px',
-			left:'1577px',
+			top:'629px',
+			left:'1579px',
 			width:'335px',
-			height:'181px',
+			height:'195px',
 			className:'',
 			enhance:{
 				top:'0px',
