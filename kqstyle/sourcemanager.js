@@ -237,7 +237,7 @@ function getPlaceholder(){
 		{
 			id:'stage_cam_team_blue',
 			top:'881px',
-			left:'5px',
+			left:'30px',
 			width:'348px',
 			height:'193px',
 			className:'',
@@ -252,7 +252,7 @@ function getPlaceholder(){
 		{
 			id:'stage_cam_team_gold',
 			top:'881px',
-			left:'1208px',
+			left:'2208px',
 			width:'348px',
 			height:'193px',
 			className:'',
@@ -267,7 +267,7 @@ function getPlaceholder(){
 		{
 			id:'stage_advert',
 			top:'0px',
-			left:'1580px',
+			left:'1780px',
 			width:'335px',
 			height:'181px',
 			className:'',
@@ -281,8 +281,8 @@ function getPlaceholder(){
 		},
 		{ //aspect ratio 1.86111111111
 			id:'stage_cam_commentator',
-			top:'185px',
-			left:'1580px',
+			top:'200px',
+			left:'1700px',
 			width:'335px',
 			height:'181px',
 			className:'',
@@ -297,7 +297,7 @@ function getPlaceholder(){
 		{
 			id:'stage_roster_blue',
 			top:'430px',
-			left:'1580px',
+			left:'1800px',
 			width:'335px',
 			height:'181px',
 			className:'',
@@ -312,7 +312,7 @@ function getPlaceholder(){
 		{
 			id:'stage_roster_gold',
 			top:'630px',
-			left:'1580px',
+			left:'1900px',
 			width:'335px',
 			height:'181px',
 			className:'',
@@ -327,7 +327,7 @@ function getPlaceholder(){
 		{
 			id:'stage_chat',
 			top:'881px',
-			left:'1575px',
+			left:'1850px',
 			width:'335px',
 			height:'181px',
 			className:'',
