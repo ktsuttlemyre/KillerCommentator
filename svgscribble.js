@@ -5,36 +5,40 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 	      }));
 
 
-	SVGScribble.state=false;
 	SVGScribble.init=function(parent){
-		parent = parent || document.body;
-		window.SVGScribble.clear=function(){
-			(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
-		}
-		window.SVGScribble.toolbar=function(opt){
-			if(opt=='hide'){
-				document.querySelector('#drawing-box').style.display='none'
-			}else{
-				document.querySelector('#drawing-box').style.display='block'
-			}
-		}
-		window.SVGScribble.close=function(){
+		let instance = {
+			state:false,
+			clear:function(){
+				(document.querySelectorAll("#drawing-box-${id} .drawing-el")||[]).forEach(function (elem) {elem.remove()});
+			},
+			toolbar:function(opt){
+				if(opt=='hide'){
+					document.querySelector(`#drawing-box-${id}`).style.display='none'
+				}else{
+					document.querySelector(`#drawing-box-${id}`).style.display='block'
+				}
+			},
+			close:function(){
 				document.body.setAttribute('data-drawing', false);
 				state.drawing = false;
-		}
-		window.SVGScribble.show=function(){
+			},
+			show:function(){
 				document.body.setAttribute('data-drawing', true);
 				state.drawing = true;
+			},
+			toggle:function(){
+				// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
+				// Also sets config.drawing to true or false.
+				let drawing = state.drawing;
+				state.drawing = !drawing;
+				document.body.setAttribute('data-drawing', !drawing)
+			}		
 		}
-		window.SVGScribble.toggle=function(){
-			// Set the body attribute 'data-drawing' to true or false, based on if the user clicks the 'Start Drawing' button
-			// Also sets config.drawing to true or false.
-			let drawing = state.drawing;
-			state.drawing = !drawing;
-			document.body.setAttribute('data-drawing', !drawing)
-		}
+		let id = instance.id = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + Date.now();
+		parent = parent || document.body;
+		
 		var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
-		setPoint=function(e){
+		let setPoint=function(e){
 			if(!paths[e.pointerId]){return}
 			let point={}
 			for(var i=0,l=pointAttrs.length;i<l;i++){
@@ -51,13 +55,13 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		    return Math.sqrt(x * x + y * y);
 		}
 		
-		SVGScribble.state='initializing'
+		instance.state='initializing'
 		// Ensure drawing layer is at root
 		var drawing_layer = document.createElement('div')
-		drawing_layer.id="drawing-layer"
+		drawing_layer.id=`drawing-layer-${id}`
 		parent.appendChild(drawing_layer);
 		var drawing_cover = document.createElement('div')
-		drawing_cover.id="drawing-cover"
+		drawing_cover.id=`drawing-cover-${id}`
 		parent.appendChild(drawing_cover);
 
 		// Manage Main UI
@@ -145,12 +149,12 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 
 		// Closes the drawing box and sets 'data-drawing' on the body element to false
 		// Along with state.drawing to false.
-		document.querySelector('#drawing-box .close').addEventListener('mousedown', function(e) {
-			SVGScribble.close()
+		document.querySelector(`#drawing-box-${id} .close`).addEventListener('mousedown', function(e) {
+			instance.close()
 		})
-		document.querySelector('#drawing-box .trash').addEventListener('pointerdown', function(e) {
+		document.querySelector(`#drawing-box-${id} .trash`).addEventListener('pointerdown', function(e) {
 			e.target.releasePointerCapture(e.pointerId);
-			SVGScribble.clear();
+			instance.clear();
 		})
 
 		drawing_cover.addEventListener('pointerdown', function(e) {
@@ -159,7 +163,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 			if(!state.pointerTypes[e.pointerType]){ return }
 			
 			//filters out other div layers we dont want to draw on due to event bubbling 
-	// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+	// 		if(helper.parent(e.target, `#drawing-box-${id}`, 1) !== null && helper.parent(e.target, `#drawing-box-${id}`, 1).matches(``#drawing-box-${id}`)) {
 	// 			return false;
 	// 		}
 			console.log("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
@@ -179,7 +183,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 			if(!state.pointerTypes[e.pointerType]){ return }
 			
 			//filters out other div layers we dont want to draw on due to event bubbling 
-	// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+	// 		if(helper.parent(e.target, `#drawing-box-${id}`, 1) !== null && helper.parent(e.target, `#drawing-box-${id}`, 1).matches(``#drawing-box-${id}`)) {
 	// 			return false;
 	// 		}
 			
@@ -198,7 +202,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 				if(e.type == 'pointerup' && !state.pointerTypes[e.pointerType]){ return }
 				
 				//filters out other div layers we dont want to draw on due to event bubbling 
-				// 		if(helper.parent(e.target, '#drawing-box', 1) !== null && helper.parent(e.target, '#drawing-box', 1).matches('#drawing-box')) {
+				// 		if(helper.parent(e.target, `#drawing-box-${id}`, 1) !== null && helper.parent(e.target, `#drawing-box-${id}`, 1).matches(`#drawing-box-${id}`)) {
 				// 			return false;
 				// 		}
 
@@ -530,9 +534,10 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 				document.body.setAttribute('data-drawing', false);
 				state.drawing = false;
 			}else if(e.key === "Backspace" || e.key === "Delete" || e.key === "Clear" || e.key === "D" || e.key === "d"){
-				 SVGScribble.clear()
+				 instance.clear()
 		}});
-		SVGScribble.state='init'
+		instance.state='init'
+		return instance
 	}
 	return SVGScribble;
 })(document,{},plugin_platform());
