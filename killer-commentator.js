@@ -19,7 +19,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 			base_site+"speechcommands.js",function(){
 			//add scribble toolbar
 			ajax(base_site+"toolbar.html",function(html){
-				KillerCommentator.toolbar = domParse(html)
+				KillerCommentator.drawingBar = domParse(html)
 				
 				//add logo and activate
 				ajax(base_site+"logo/index.html",function(html){
