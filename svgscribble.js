@@ -6,6 +6,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 
 
 	SVGScribble.init=function(parent){
+		appendTo(document.body,domParse(KillerCommentator.drawingBar))
+
 		let instance = {
 			state:false,
 			clear:function(){
