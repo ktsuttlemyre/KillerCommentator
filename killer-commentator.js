@@ -73,12 +73,6 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 	//this is the call for entry point where we set up base envrionment
 	include.apply(include,callArgs);
 	 
-	let startScribble=function(){
-		SVGScribble.init();
-		SVGScribble.toggle();
-		SVGScribble.toolbar('hide')
-	}
-
 	function selectColor(number,alpha) {
 		const hue = number * 137.508; // use golden angle approximation
 		if(alpha){
@@ -150,9 +144,6 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		//SourceManager.cmd("twitch")
 		SourceManager.load(SourceManager.config.chat,'stage_chat',SourceManager.players.iframe,{resizeMode:'resize',title:'Chat',ride:true,style:{background:'#0d1117'}})
 		SourceManager.discoverComponents()
-
-
-		startScribble()
 		
 		//add speech commands 
 		interact('.killer-commentator')
