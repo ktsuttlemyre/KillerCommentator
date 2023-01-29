@@ -6,7 +6,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 
 
 	SVGScribble.state=false;
-	SVGScribble.init=function(){
+	SVGScribble.init=function(parent){
+		parent = parent || document.body;
 		window.SVGScribble.clear=function(){
 			(document.querySelectorAll(".drawing-el")||[]).forEach(function (elem) {elem.remove()});
 		}
@@ -54,10 +55,10 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		// Ensure drawing layer is at root
 		var drawing_layer = document.createElement('div')
 		drawing_layer.id="drawing-layer"
-		document.body.appendChild(drawing_layer);
+		parent.appendChild(drawing_layer);
 		var drawing_cover = document.createElement('div')
 		drawing_cover.id="drawing-cover"
-		document.body.appendChild(drawing_cover);
+		parent.appendChild(drawing_cover);
 
 		// Manage Main UI
 		// Add a pointerdown event for each color and tool.
