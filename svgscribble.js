@@ -220,7 +220,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 						if(arrow.pointerIds && arrow.pointerIds.length==1){
 							console.log('clicked')
 							//pass the original event
-							document.getElementById('drawing-layer').click(events[e.pointerId][0]);
+							document.getElementById(`drawing-layer-${id}`).click(events[e.pointerId][0]);
 							//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
 							arrow={}
 						}else{
@@ -233,7 +233,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 					}else{
 						console.log('clicked')
 						//pass the original event
-						document.getElementById('drawing-layer').click(events[e.pointerId][0]);
+						document.getElementById(`drawing-layer-${id}`).click(events[e.pointerId][0]);
 						//todo if this is networked then this is where you tell the sever to delete the last elemen6 c
 					}
 				}else{
@@ -263,9 +263,9 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 
 			drawing_layer.appendChild(wrapper.firstChild);
 
-			arrow.pathElems=document.querySelectorAll(`#drawing-layer .arrow.current-item.pointerId-${e2.pointerId} path.arrow-line`);
-			arrow.domElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e2.pointerId}`);
-			arrow.svgElem=document.querySelector(`#drawing-layer .arrow.current-item.pointerId-${e2.pointerId} svg`);
+			arrow.pathElems=document.querySelectorAll(`#drawing-layer-${id} .arrow.current-item.pointerId-${e2.pointerId} path.arrow-line`);
+			arrow.domElem=document.querySelector(`#drawing-layer-${id} .arrow.current-item.pointerId-${e2.pointerId}`);
+			arrow.svgElem=document.querySelector(`#drawing-layer-${id} .arrow.current-item.pointerId-${e2.pointerId} svg`);
 		}
 		paintArrowEnd=function(arrow,config){
 			let history = arrow.pointers[arrow.pointerIds[0]]
@@ -356,8 +356,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 				wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`)
 				
 				drawing_layer.appendChild(wrapper.firstChild);
-				freeHand[e.pointerId].pathElems=document.querySelectorAll(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId} svg path`);
-				freeHand[e.pointerId].domElem=document.querySelector(`#drawing-layer .free-hand.current-item.pointerId-${e.pointerId}`);
+				freeHand[e.pointerId].pathElems=document.querySelectorAll(`#drawing-layer-${id} .free-hand.current-item.pointerId-${e.pointerId} svg path`);
+				freeHand[e.pointerId].domElem=document.querySelector(`#drawing-layer-${id} .free-hand.current-item.pointerId-${e.pointerId}`);
 			} 
 			else if(config.tool == 'eraser') {
 				// Check if user has clicked on an svg
@@ -370,7 +370,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		};
 		let paintMove = function(e,config){
 		// Assuming there is a current item to in the drawing layer
-			if(document.querySelector('#drawing-layer .current-item') !== null) { 
+			if(document.querySelector(`#drawing-layer-${id} .current-item`) !== null) { 
 				// If we are using the arrow tool
 				if(config.tool == 'arrow' || config.tool=='commentator') {
 					let history = arrow.pointers[e.pointerId]
@@ -414,7 +414,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		};
 		let paintEnd = function(e,config){
 				// Remove current-item class from all elements, and give all SVG elements pointer-events
-				document.querySelectorAll('#drawing-layer > div').forEach(function(item) {
+				document.querySelectorAll(`#drawing-layer-${id} > div`).forEach(function(item) {
 					item.style.pointerEvent = 'all';
 					if(item.classList.contains(`pointerId-${e.pointerId}`)){
 						//should this be perminant or fade away
