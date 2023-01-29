@@ -6,8 +6,6 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 
 
 	SVGScribble.init=function(parent){
-		appendTo(document.body,domParse(KillerCommentator.drawingBar))
-
 		let instance = {
 			state:false,
 			clear:function(){
@@ -38,6 +36,10 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		}
 		let id = instance.id = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + Date.now();
 		parent = parent || document.body;
+
+		let bar = KillerCommentator.drawingBar.cloneNode(true)
+		bar.id = id
+		appendTo(document.body,bar)
 		
 		var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
 		let setPoint=function(e){
