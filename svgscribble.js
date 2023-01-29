@@ -38,7 +38,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		parent = parent || document.body;
 
 		let bar = KillerCommentator.drawingBar.cloneNode(true)
-		bar.id = id
+		bar.id = `drawing-box-${id}`
+		bar.className='drawing-box'
 		appendTo(document.body,bar)
 		
 		var pointAttrs='pageX,pageY,timeStamp,pointerId'.split(',')
@@ -63,9 +64,11 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		// Ensure drawing layer is at root
 		var drawing_layer = document.createElement('div')
 		drawing_layer.id=`drawing-layer-${id}`
+		drawing_layer.className='drawing-layer'
 		parent.appendChild(drawing_layer);
 		var drawing_cover = document.createElement('div')
 		drawing_cover.id=`drawing-cover-${id}`
+		drawing_cover.className='drawing-cover'
 		parent.appendChild(drawing_cover);
 
 		// Manage Main UI
