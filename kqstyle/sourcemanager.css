@@ -38,3 +38,9 @@
    pointer-events:all;
 }
 
+.flip-horizontal{
+  transform: scaleX(-1);
+}
+.flip-vertical{
+  transform: rotate(180deg)
+}
