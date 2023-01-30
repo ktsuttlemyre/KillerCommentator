@@ -859,6 +859,7 @@ let craft = function(target, mediaElem, zone, options, callback) {
 		//resizeTo(instance.asIcon(true))
 		//let promise=new Promise()
 		//return promise
+		callback && setTimeout(function(){callback(instance)},1)
 
 	}
 
@@ -898,7 +899,6 @@ let craft = function(target, mediaElem, zone, options, callback) {
 			if (!mediaElem.videoWidth || mediaElem.videoWidth == null) {
 				mediaElem.addEventListener("loadedmetadata", function(e) {
 					init(false)
-					callback && callback(instance)
 				})
 			}else{
 				init(false)
@@ -912,7 +912,6 @@ let craft = function(target, mediaElem, zone, options, callback) {
 			init(true)
 	}
 	
-	callback && setTimeout(function(){callback(instance)},1)
 }
 craft.instances = {}
 
