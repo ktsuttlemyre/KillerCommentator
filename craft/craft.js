@@ -289,6 +289,8 @@ let craft = function(target, mediaElem, zone, options, callback) {
 		mt: 'circle',
 		mb: 'circle',
 		mc: 'cross',
+		tl: 'horizontal',
+		tr: 'vertical',
 		'transition-indicator': 'cross'
 	}
 
@@ -340,6 +342,11 @@ let craft = function(target, mediaElem, zone, options, callback) {
 		//add handles
 		Object.keys(handles).forEach(function(key) {
 			let elem = document.createElement('div')
+			if(key == 'horizontal'){
+				elem.innerHTML='<i class="fa-solid fa-left-right"></i>'
+			}else if(key == 'vertical'){
+				elem.innerHTML='<i class="fa-solid fa-up-down"></i>'
+			}
 			elem.className = 'handle ' + ((key || '').trim() + ' ' + (handles[key] || '').trim()).trim()
 			if(key=='transition-indicator'){
 				target.firstChild.appendChild(elem)
