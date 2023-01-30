@@ -356,11 +356,13 @@ let craft = function(target, mediaElem, zone, options, callback) {
 			handles[key] = elem;
 		})
 		handles.tl.onclick=function(event){
-			event.stopPropagation()
+			event.stopImmediatePropagation()
+			event.preventDefault()
 			mediaElem.classList.toggle('flip-horizontal')
 		}
 		handles.tr.onclick=function(event){
-			event.stopPropagation()
+			event.stopImmediatePropagation()
+			event.preventDefault()
 			mediaElem.classList.toggle('flip-vertical')
 		}
 		let savedStart=null;
