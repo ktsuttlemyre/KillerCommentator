@@ -854,10 +854,7 @@ let craft = function(target, mediaElem, zone, options) {
 			resizeTo:resizeTo,
 		}
 		craft.instances[target.id] = instance
-		startEditMode(10000)
-		if(zone){
-			console.error('implement assoicate zone please')
-		}		      
+		startEditMode(10000) 
 		zone && associate(zone)
 		//resizeTo(instance.asIcon(true))
 		//let promise=new Promise()
