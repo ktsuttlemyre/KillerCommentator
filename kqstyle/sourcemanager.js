@@ -682,7 +682,7 @@ function getPlaceholder(){
 	SourceManager.autoCroppingCraft=function(container,child,stage,options){
 		let win= craft(container,child,stage,options)
 		
-		let instance = SVGScribble.init(win);
+		let instance = SVGScribble.init(win.elem);
 		instance.toggle();
 		instance.toolbar('hide')
 	}
