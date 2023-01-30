@@ -607,6 +607,7 @@ function getPlaceholder(){
 		let returnList=[]
 		for(var i=0,l=list.length;i<l;i++){
 			let item = list[i]
+			if(item == null){continue}
 			console.log('found item',item)
 			
 			//dont duplicate inputs
@@ -614,6 +615,14 @@ function getPlaceholder(){
 				return
 			}
 			returnList.push(item)
+			if(item.kind=='audioinput'){
+				let group = returnList.find(element => element == item.groupId);
+				if(group){
+					return
+				}
+				
+				
+			}
 			if(item.kind=='videoinput'){
 				let stream = null;
 				try{
@@ -629,6 +638,14 @@ function getPlaceholder(){
 					callback && callback(null,err)
 				}
 				if(!stream){continue}
+				
+				//find audio
+				let audio = returnList.find(element => element == item.groupId && item.kind=='audioinput');
+				let rogueAudio 
+				if(audio){
+					rogueAudio = RogueAudio(audio)
+				}
+
 
 				// quick note about archeteture design
 				// stages are designate parking spaces for crafts
