@@ -680,11 +680,11 @@ function getPlaceholder(){
 	}
 	
 	SourceManager.autoCroppingCraft=function(container,child,stage,options){
-		let win= craft(container,child,stage,options)
-		
-		let instance = SVGScribble.init(win.elem);
-		instance.toggle();
-		instance.toolbar('hide')
+		craft(container,child,stage,options,function(win){
+			let instance = SVGScribble.init(win.elem);
+			instance.toggle();
+			instance.toolbar('hide')
+		})
 	}
 					  
 	SourceManager.draggableCraft=function(container,child,aspectRatio){
