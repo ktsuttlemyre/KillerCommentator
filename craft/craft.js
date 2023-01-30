@@ -913,6 +913,7 @@ let craft = function(target, mediaElem, zone, options) {
 		default:
 			init(true)
 	}
+	return instance
 }
 craft.instances = {}
 
