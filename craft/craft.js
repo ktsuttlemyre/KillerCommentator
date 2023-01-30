@@ -199,7 +199,7 @@ function getDistance(x1, y1, x2, y2){
     return Math.sqrt(x * x + y * y);
 }
 
-let craft = function(target, mediaElem, zone, options) {
+let craft = function(target, mediaElem, zone, options, callback) {
 	options = Object.assign({
 		gesturePans: false,
 		resizeMode:'crop' //crop or resize
@@ -898,6 +898,7 @@ let craft = function(target, mediaElem, zone, options) {
 			if (!mediaElem.videoWidth || mediaElem.videoWidth == null) {
 				mediaElem.addEventListener("loadedmetadata", function(e) {
 					init(false)
+					callback && callback(instance)
 				})
 			}else{
 				init(false)
@@ -910,7 +911,8 @@ let craft = function(target, mediaElem, zone, options) {
 		default:
 			init(true)
 	}
-	return instance
+	
+	callback && setTimeout(function(){callback(instance)},1)
 }
 craft.instances = {}
 
