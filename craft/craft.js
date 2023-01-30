@@ -355,6 +355,12 @@ let craft = function(target, mediaElem, zone, options, callback) {
 			}
 			handles[key] = elem;
 		})
+		handles.tl.onclick(function(){
+			mediaElem.classList.toggle('flip-horizontal')
+		})
+		handles.tr.onclick(function(){
+			mediaElem.classList.toggle('flip-vertical')
+		})
 		let savedStart=null;
 		let zones = []
 		let startPos = null
