@@ -159,6 +159,10 @@ html, body {
         transition: all 0.3s ease-out;
         width: 100%;
         height: 100%;
+	/*i dont understand why I need to set this but it fixes cropping*/
+	object-fit: contain;
+	overflow-clip-margin: content-box;
+	overflow: clip;
     }
     [data-drawing="true"] .drawing-layer {
 	/*background: rgba(0,0,0,0);*/
