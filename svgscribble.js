@@ -197,7 +197,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 	// 			return false;
 	// 		}
 			
-			console.degug('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
+			console.debug('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
 			
 			let point = setPoint(e)
 			paintMove(e,config,point)	
