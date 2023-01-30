@@ -414,7 +414,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 		};
 		let paintEnd = function(e,config){
 				// Remove current-item class from all elements, and give all SVG elements pointer-events
-				drawing_layer.querySelectorAll('> div').forEach(function(item) {
+				(drawing_layer.childNodes || []).forEach(function(item) {
 					item.style.pointerEvent = 'all';
 					if(item.classList.contains(`pointerId-${e.pointerId}`)){
 						//should this be perminant or fade away
