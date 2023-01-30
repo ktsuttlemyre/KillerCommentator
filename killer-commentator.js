@@ -14,6 +14,7 @@ window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, ap
 		include("https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js",
 			"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js",
 			base_site+"svgscribble.js",
+			base_site+"rogue-audio.js",
 			base_site+"kqstyle/sourcemanager.js",
 			base_site+"craft/craft.js",
 			base_site+"speechcommands.js",function(){
