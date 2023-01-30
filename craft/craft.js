@@ -560,7 +560,7 @@ let craft = function(target, mediaElem, zone, options, callback) {
 				]
 			})
 			.on('tap', function(event) {
-				if(target.className.matches(/tr|tl/)){
+				if(target.className.match(/tr|tl/)){
 					return
 				}
 				console.debug('enhance swap', event)
@@ -573,7 +573,7 @@ let craft = function(target, mediaElem, zone, options, callback) {
 				}
 			})
 			.on('doubletap', function(event) {
-				if(target.className.matches(/tr|tl/)){
+				if(target.className.match(/tr|tl/)){
 					return
 				}
 				console.debug('main swap')
@@ -586,7 +586,7 @@ let craft = function(target, mediaElem, zone, options, callback) {
 				}
 			})
 			.on('hold', function(event) {
-				if(target.className.matches(/tr|tl/)){
+				if(target.className.match(/tr|tl/)){
 					return
 				}
 				startEditMode()
