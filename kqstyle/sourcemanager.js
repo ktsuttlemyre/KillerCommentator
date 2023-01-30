@@ -656,7 +656,8 @@ function getPlaceholder(){
 				button.onclick=function(){video.play();button.parentNode.removeChild(button)}
 				
 				prependTo(div,button)
-				SourceManager.autoCroppingCraft(div,video)
+				
+				SourceManager.autoCroppingCraft(div,video,undefined,undefined,true)
 
 				video.srcObject = stream
 				//video.autoplay=true
@@ -679,8 +680,10 @@ function getPlaceholder(){
 		}
 	}
 	
-	SourceManager.autoCroppingCraft=function(container,child,stage,options){
+	SourceManager.autoCroppingCraft=function(container,child,stage,options,addScribble){
+		
 		craft(container,child,stage,options,function(win){
+			if(!addScribble){return}
 			let instance = SVGScribble.init(win.elem.querySelector('.craft-viewport'));
 			instance.toggle();
 			instance.toolbar('hide')
