@@ -560,6 +560,9 @@ let craft = function(target, mediaElem, zone, options, callback) {
 				]
 			})
 			.on('tap', function(event) {
+				if(target.className.matches(/tr|tl/)){
+					return
+				}
 				console.debug('enhance swap', event)
 				let zoneInstance = instance.assZone
 				if(!zoneInstance){return}
@@ -570,6 +573,9 @@ let craft = function(target, mediaElem, zone, options, callback) {
 				}
 			})
 			.on('doubletap', function(event) {
+				if(target.className.matches(/tr|tl/)){
+					return
+				}
 				console.debug('main swap')
 				let zoneInstance = instance.assZone
 				if(!zoneInstance){return}
@@ -580,6 +586,9 @@ let craft = function(target, mediaElem, zone, options, callback) {
 				}
 			})
 			.on('hold', function(event) {
+				if(target.className.matches(/tr|tl/)){
+					return
+				}
 				startEditMode()
 			})
 			.gesturable({
