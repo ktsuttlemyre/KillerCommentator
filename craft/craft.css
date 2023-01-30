@@ -160,12 +160,14 @@
 .craft .tl{
   border-top: 25px solid #29e;
   border-right: 25px solid transparent;
-  top:0;
-  left:0;
+  top:2px;
+  left:2px;
 }
 .craft .tr{
-  top:5px;
-  right:5px;
+  border-top: 25px solid #29e;
+  border-left: 25px solid transparent;
+  top:2px;
+  right:2px;
 }
 .craft .bl{
   bottom:5px;
