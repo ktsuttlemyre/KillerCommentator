@@ -49,6 +49,9 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 			for(var i=0,l=pointAttrs.length;i<l;i++){
 				point[pointAttrs[i]]=e[pointAttrs[i]]
 			}
+			let bounds = drawing_layer.getBoundingClientRect();
+			point.relativeX=e.clientX - bounds.left;
+			point.relativeY=e.clientY - bounds.top;
 			paths[e.pointerId].push(point)
 			events[e.pointerId].push(e)
 			return point
@@ -173,7 +176,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 	// 		if(helper.parent(e.target, `#drawing-box-${id}`, 1) !== null && helper.parent(e.target, `#drawing-box-${id}`, 1).matches(``#drawing-box-${id}`)) {
 	// 			return false;
 	// 		}
-			console.log("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
+			console.debug("pointer down on draw layer",e.pageX,e.pageY,e.target,e)
 			// Generate id for each element
 			let id = helper.generateId();
 			
@@ -194,7 +197,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 	// 			return false;
 	// 		}
 			
-			console.log('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
+			console.degug('pointermove on draw layer',e.pageX,e.pageY,e.target,e)
 			
 			setPoint(e)
 			paintMove(e,config)	
@@ -213,7 +216,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 				// 			return false;
 				// 		}
 
-				console.log('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
+				console.debug('pointerup/mouseleave',e.pageX,e.pageY,e.target,e)
 				
 				if(paths[e.pointerId] && paths[e.pointerId].length<=state.deadZone){
 					if(config.tool == 'commentator'){
@@ -255,7 +258,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 			
 			// Add element to drawing layer
 			var wrapper= document.createElement('div');
-			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX /*+ window.scrollX*/, arrow.startY /*+ window.scrollY*/ ], [  e.pageX, e.pageX ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], arrow.id );
+			wrapper.innerHTML= svgEl.arrowPath(  [ arrow.startX /*+ window.scrollX*/, arrow.startY /*+ window.scrollY*/ ], [  e.relativeX, e.relativeY ], `M0 0 L0 0`, 'arrow-item', arrow.arrowClasses[3], [ 0, 0 ], 0, [ 0, 0, 0 ], arrow.id );
 			wrapper.firstChild.classList.add('current-item');
 	// 		if(config.tool=='commentator'){
 	// 		wrapper.firstChild.classList.add('d-none');
@@ -282,8 +285,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 			// And a default direction of 'south east'
 			let arrowClass = arrow.arrowClasses[3];
 			// Calculate how far the user has moved their mouse from the original position
-			let endX = e.pageX - startX// - window.scrollX;
-			let endY = e.pageY - startY// - window.scrollY;
+			let endX = e.relativeX - startX// - window.scrollX;
+			let endY = e.relativeY - startY// - window.scrollY;
 
 			// And using that info, calculate the arrow's angle
 			helper.calculateArrowLineAngle(endX, endY);
@@ -309,8 +312,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 			if(config.tool == 'arrow' || config.tool=='commentator') {
 				if(!arrow.pointerIds){
 					arrow={// startX, startY, and stopX, stopY store information on the arrows top and bottom ends
-						startX: e.pageX,
-						startY: e.pageY,
+						startX: e.relativeX,
+						startY: e.relativeY,
 						stopX: null,      
 						stopY: null,          
 						activeDirection: 'se',                    // This is the current direction of the arrow, i.e. south-east
@@ -340,8 +343,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 
 				freeHand[e.pointerId]={
 					currentPathText: `M${window.scrollX} ${window.scrollY} `,      // This is the current path of the pencil line, in text
-					startX: e.pageX,                       // The starting X coordinate
-					startY: e.pageY,                       // The starting Y coordinate
+					startX: e.relativeX,                       // The starting X coordinate
+					startY: e.relativeY,                       // The starting Y coordinate
 					lastMousePoints: [[ window.scrollX, window.scrollY ]],   // This is the current path of the pencil line, in array
 					domElem:null,
 					pathElems:null,
@@ -351,7 +354,7 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 				
 				// Add element to the drawing layer
 				var wrapper= document.createElement('div');
-				wrapper.innerHTML=svgEl.drawPath( [ e.pageX, e.pageY ], [ e.pageX, e.pageY ], ``, id);
+				wrapper.innerHTML=svgEl.drawPath( [ e.relativeX, e.relativeY ], [ e.relativeX, e.relativeY ], ``, id);
 				wrapper.firstChild.classList.add('current-item')
 				wrapper.firstChild.classList.add(`pointerId-${e.pointerId}`)
 				
@@ -382,8 +385,8 @@ window.SVGScribble=(function(document,SVGScribble,pp){let inject=pp.inject, appe
 				
 				if(config.tool == 'freeHand' || config.tool=='commentator') {
 					// Similar to arrows, calculate the user's end position
-					let endX = e.pageX - freeHand[e.pointerId].startX;
-					let endY = e.pageY - freeHand[e.pointerId].startY;
+					let endX = e.relativeX - freeHand[e.pointerId].startX;
+					let endY = e.relativeY - freeHand[e.pointerId].startY;
 					
 					// And push these new coordinates to our config
 					let newCoordinates = [ endX, endY ];
