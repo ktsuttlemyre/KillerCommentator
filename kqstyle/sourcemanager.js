@@ -604,7 +604,7 @@ function getPlaceholder(){
 			return
 		}
 		
-		let returnList=[]
+		
 		for(var i=0,l=list.length;i<l;i++){
 			let item = list[i]
 			if(item == null){continue}
@@ -614,9 +614,9 @@ function getPlaceholder(){
 			if(document.getElementById(`device-${item.deviceId}`)){
 				return
 			}
-			returnList.push(item)
+			
 			if(item.kind=='audioinput'){
-				let group = returnList.find(element => element == item.groupId);
+				let group = list.find(element => element == item.groupId);
 				if(group){
 					return
 				}
@@ -640,7 +640,7 @@ function getPlaceholder(){
 				if(!stream){continue}
 				
 				//find audio
-				let audio = returnList.find(element => element == item.groupId && item.kind=='audioinput');
+				let audio = list.find(element => element == item.groupId && item.kind=='audioinput');
 				let rogueAudio 
 				if(audio){
 					rogueAudio = RogueAudio(audio)
