@@ -1,7 +1,7 @@
 window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
 	let config=null
 		try{
-			config=SourceManager.config=JSON.parse(localStorage.getItem('KillerCommentator.config'))
+			config=JSON.parse(localStorage.getItem('KillerCommentator.config'))
 		}catch(e){
 			alert('error parsing config')
 		}
@@ -37,7 +37,7 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
 		//localStorage.setItem('KillerCommentator.config',JSON.stringify(config))
 
 	}
-	
+SourceManager.config=config
 	
 let placeholders=[
 "https://kqsfl.com/wp-content/uploads/2022/11/DALL·E-2022-11-15-18.50.30-A-synthwave-miami-vice-style-digital-art-of-a-futuristic-female-warrior-in-golden-cybernetic-bee-themed-armor-with-vibrant-neon-colors.png",
