@@ -1,7 +1,31 @@
 window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
 	let config=SourceManager.config=JSON.parse(localStorage.getItem('KillerCommentator.config'))
 	if(!config){
-		config=SourceManager.config=showOpenFilePicker()
+		alert('using default config')
+		config={
+    "urls": {
+        "challonge": [
+            "HCC_2022"
+        ]
+    },
+    "twitch": {
+        "video": "1686476519",
+        "channel": "kqsfl"
+    },
+    "backgrounds": {
+        "stage_main": {
+            "player": "backgroundVideo",
+            "source": "https://kqsfl.com/wp-content/uploads/2023/01/hotline_background.mp4"
+        }
+    },
+    "chat": "https://nightdev.com/hosted/obschat/?theme=dark&channel=kqsfl&fade=false&bot_activity=false",
+    "liveOnLocation": {
+        "guest": "",
+        "scene": "https://vdo.ninja/?view=PRubKX4&solo&room=liveonlocation1",
+        "host": "https://vdo.ninja/?push=PRubKX4_hostlink&view=PRubKX4&ssid&room=liveonlocation1&quality=1&bitrate=500"
+    }
+}
+		//config=SourceManager.config=showOpenFilePicker()
 		localStorage.setItem('KillerCommentator.config',config)
 	}
 	
