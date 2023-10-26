@@ -1,7 +1,10 @@
 window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, appendTo=pp.appendTo, prependTo=pp.prependTo, ajax=pp.ajax, domParse=pp.domParse;
 	let config=SourceManager.config=JSON.parse(localStorage.getItem('KillerCommentator.config'))
 	if(!config){
+		//config=SourceManager.config=showOpenFilePicker()
+		//localStorage.setItem('KillerCommentator.config',config)
 		alert('using default config')
+		
 		config={
     "urls": {
         "challonge": [
@@ -25,8 +28,9 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
         "host": "https://vdo.ninja/?push=PRubKX4_hostlink&view=PRubKX4&ssid&room=liveonlocation1&quality=1&bitrate=500"
     }
 }
-		//config=SourceManager.config=showOpenFilePicker()
-		localStorage.setItem('KillerCommentator.config',config)
+				//config=SourceManager.config=showOpenFilePicker()
+		localStorage.setItem('KillerCommentator.config',JSON.stringify(config))
+
 	}
 	
 	
