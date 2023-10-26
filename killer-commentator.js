@@ -2,8 +2,13 @@
 ;(function () {
     var src = '//cdn.jsdelivr.net/npm/eruda';
     if (!/console=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
-    document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
-    document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = src;    
+	document.head.appendChild(script);
+	script = document.createElement("script");
+	script.innerHTML = 'eruda.init();';
+	document.head.appendChild(script);
 })();
 
 window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, appendTo, prependTo, ajax, domParse;
