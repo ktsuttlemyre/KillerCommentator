@@ -7,15 +7,14 @@
 	script.src = src;    
 	document.head.appendChild(script);
 	script = document.createElement("script");
-	script.innerHTML = '
+	script.innerHTML = ```
 		var initErula = setInterval(function(){
 			if(window.eruda){
 				eruda.init();
 				clearInterval(initErula)
 			}
 		),1)
-		
-	';
+		```
 	document.head.appendChild(script);
 })();
 
