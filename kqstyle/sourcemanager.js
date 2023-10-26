@@ -28,8 +28,8 @@ window.SourceManager=(function(document,SourceManager,pp){let inject=pp.inject, 
         "host": "https://vdo.ninja/?push=PRubKX4_hostlink&view=PRubKX4&ssid&room=liveonlocation1&quality=1&bitrate=500"
     }
 }
-				//config=SourceManager.config=showOpenFilePicker()
-		localStorage.setItem('KillerCommentator.config',JSON.stringify(config))
+		//config=SourceManager.config=showOpenFilePicker()
+		//localStorage.setItem('KillerCommentator.config',JSON.stringify(config))
 
 	}
 	
