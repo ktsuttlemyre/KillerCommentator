@@ -25,7 +25,7 @@ window.voice=(function(document,voice,pp){let inject=pp.inject, appendTo=pp.appe
     
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
     var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
-    var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+    var SpeechRecognitionEvent = SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent
 
     //create a cmdSpace array with all possible commands we are looking for
     let commands=[]
