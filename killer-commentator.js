@@ -1,3 +1,11 @@
+//Console for mobile devices
+;(function () {
+    var src = '//cdn.jsdelivr.net/npm/eruda';
+    if (!/console=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
+    document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+})();
+
 window.KillerCommentator=(function(document,KillerCommentator,pp){let inject, appendTo, prependTo, ajax, domParse;
 	var base_site=KillerCommentator.base_site="https://ktsuttlemyre.github.io/KillerCommentator/"
 	//https://github.com/EvanHahn/ScriptInclude
