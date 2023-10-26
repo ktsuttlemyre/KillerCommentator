@@ -13,7 +13,7 @@
 		'		eruda.init();'+
 		'		clearInterval(initErula)'+
 		'	}'+
-		'),1)'
+		'},1)'
 	
 	document.head.appendChild(script);
 })();
