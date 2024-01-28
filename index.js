@@ -7,9 +7,9 @@ if(window.obsstudio){ //if it is a browser source in obs use this
       var js, fjs = d.getElementsByTagName(s)[0];
       js = d.createElement(s); js.id=id;
       if(cb){js.onload = cb;};
-      js.src = "https://ktsuttlemyre.github.io/KillerCommentator/obs-event-driven.js";
+      js.src = "https://ktsuttlemyre.github.io/KillerCommentator/obs/event-driven.js";
       d.getElementsByTagName('head')[0].appendChild(js);
-  })(document, 'script', 'obs-event-driven',_ => console.log('loaded kc'));
+  })(document, 'script', 'obs event driven',_ => console.log('loaded kc'));
 }else{
   (function(d, s, id, cb){ //if it is a browser proper use this
       var js, fjs = d.getElementsByTagName(s)[0];
