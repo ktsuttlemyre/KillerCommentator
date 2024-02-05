@@ -19,7 +19,7 @@ window.onGameEvent=function(event){
     case 'gamestart':
         let [map,goldOnLeft,elapsedTime,attractMode,version] = values
         map.replace('map_','')
-	obsstudio.setCurrentScene('KQSFL'))
+	obsstudio.setCurrentScene('KQSFL')
 	berries = berriesPerMap[map]
       break;
             
