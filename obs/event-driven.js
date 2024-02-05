@@ -16,7 +16,7 @@ window.onGameEvent=function(event){
   
   let values = event.values
   switch(event.event_type){
-    case gamestart:
+    case 'gamestart':
         let [map,goldOnLeft,elapsedTime,attractMode,version] = values
         map.replace('map_','')
 	SourceManager.setLayout('home')
@@ -25,19 +25,19 @@ window.onGameEvent=function(event){
       break;
             
     //case: gameend:
-    case victory:
+    case 'victory':
       const [victor,type] = values
         SourceManager.setLayout(victor.toLowerCase())
 	SourceManager.setAugment()
 	clearTimeout(famineTimer)
 
-    case berryDeposit:
+    case 'berryDeposit':
       if(--berries<=0){
 	//famine start
 	famineTimer=setTimeout(famineEnd,90000)
       }
     break
-    case berryKickIn:
+    case 'berryKickIn':
       if(berries<=0){
 	//famine start
 	famineTimer=setTimeout(famineEnd,90000)
