@@ -19,16 +19,14 @@ window.onGameEvent=function(event){
     case 'gamestart':
         let [map,goldOnLeft,elapsedTime,attractMode,version] = values
         map.replace('map_','')
-	SourceManager.setLayout('home')
-	SourceManager.setAugment(map)
+	obsstudio.setCurrentScene('KQSFL'))
 	berries = berriesPerMap[map]
       break;
             
     //case: gameend:
     case 'victory':
       const [victor,type] = values
-        SourceManager.setLayout(victor.toLowerCase())
-	SourceManager.setAugment()
+        obsstudio.setCurrentScene('KQSFL 2')
 	clearTimeout(famineTimer)
 
     case 'berryDeposit':
