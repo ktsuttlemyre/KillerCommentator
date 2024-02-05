@@ -15,7 +15,7 @@ _onGameEvent=window.onGameEvent
 
 window.onGameEvent=function(event){
   _onGameEvent.call(window,event)
-  console.debug('handling event',event)
+  console.log('handling event',event)
   
   let values = event.values
   switch(event.event_type){
@@ -45,6 +45,6 @@ window.onGameEvent=function(event){
       }
       break
       default:
-        console.debug('unhandled event',event)
+        console.log('unhandled event',event)
   }
 }
