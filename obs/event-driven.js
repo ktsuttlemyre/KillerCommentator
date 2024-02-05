@@ -11,7 +11,10 @@ let famineTimer;
 let famineEnd = function(){
 	
 }
+_onGameEvent=window.onGameEvent
+
 window.onGameEvent=function(event){
+  _onGameEvent.call(window,event)
   console.debug('handling event',event)
   
   let values = event.values
