@@ -11,6 +11,8 @@ let famineTimer;
 let famineEnd = function(){
 	
 }
+
+//https://kqhivemind.com/wiki/Stats_Socket_Events
 _onGameEvent=window.onGameEvent
 
 window.onGameEvent=function(event){
