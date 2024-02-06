@@ -20,7 +20,7 @@ window.onGameEvent=function(event){
   console.log('handling event',event)
   
   let values = event.values
-  switch(event.event_type){
+  switch(event.type){
     case 'gamestart':
         let [map,goldOnLeft,elapsedTime,attractMode,version] = values
         map.replace('map_','')
