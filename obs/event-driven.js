@@ -24,8 +24,7 @@ window.onGameEvent=function(event){
   let values = event.values
   switch(event.type){
     case 'gamestart':
-        let [map,goldOnLeft,elapsedTime,attractMode,version] = values
-        map.replace('map_','')
+	let map=''
 	obsstudio.setCurrentScene('KQSFL')
 	berries = berriesPerMap[map]
 	clearTimeout(end_win_screen)
@@ -38,9 +37,9 @@ window.onGameEvent=function(event){
 	obsstudio.setCurrentScene('KQSFL 2')
 	end_win_screen=setTimeout(function(){
 		obsstudio.getCurrentScene(function(scene) {
-			scene_changed=(current_scene==scene)
-			if(scene_changed){return}
-			obsstudio.setCurrentScene('KQSFL')
+			if(current_scene==scene){
+				obsstudio.setCurrentScene('KQSFL')
+			}
 		})
 	},5000)
 	clearTimeout(famineTimer)
