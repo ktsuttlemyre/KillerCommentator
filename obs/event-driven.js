@@ -34,12 +34,18 @@ window.onGameEvent=function(event){
             
     //case: gameend:
     case 'gameend':
-	obsstudio.setCurrentScene('KQSFL')
-        #obsstudio.setCurrentScene(event.winning_team+' wins')
-	end_win_screen=setTimeout(function(){obsstudio.setCurrentScene('KQSFL')
-},5000)
+	current_scene='KQSFL 2' //event.winning_team+' wins'
+	obsstudio.setCurrentScene('KQSFL 2')
+	end_win_screen=setTimeout(function(){
+		obsstudio.getCurrentScene(function(scene) {
+			scene_changed=(current_scene==scene)
+			if(scene_changed){return}
+			obsstudio.setCurrentScene('KQSFL')
+		})
+	},5000)
 	clearTimeout(famineTimer)
 
+	obsstudio.setCurrentScene('KQSFL')
     case 'berryDeposit':
       if(--berries<=0){
 	//famine start
