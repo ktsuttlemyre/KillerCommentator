@@ -33,22 +33,27 @@ set_scene('KQSFL','force')
 //https://kqhivemind.com/wiki/Stats_Socket_Events
 _onGameEvent=window.onGameEvent
 
-cabient_id=13
-cabient_name='glitch'
-scene_name='sfl'
+var url = new URL(location.href);
+cabient_id=url.searchParams.get("cabient_id")||13
+cabient_name=url.searchParams.get("cabient_name")||'glitch'
+scene_name=url.searchParams.get("scene_name")||'sfl'
 
 window.onGameEvent=function(event){
   _onGameEvent.call(window,event)
-  if(event.cabient_id!=cabient_id && event.cabient_name!=cabient_name && event.scene_name!=scene_name){ //ignore other scene events
-	  return
-  }
+
   // console.log('handling event',event)
 
   switch(event.type){
     case 'gamestart':
+	if(event.cabient_id!=cabient_id && event.cabient_name!=cabient_name && event.scene_name!=scene_name){ //ignore other scene events
+	  return
+	}
 	setScene('KQSFL')
       break;
-    case 'gameend':
+    case 'gameend': 
+	if(event.cabient_id!=cabient_id && event.cabient_name!=cabient_name && event.scene_name!=scene_name){ //ignore other scene events
+	  return
+	}
 	setScene('KQSFL-Attn') //event.winning_team+' wins'
 	clearTimeout(famineTimer)
     case 'berryDeposit':
