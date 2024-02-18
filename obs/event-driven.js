@@ -13,28 +13,13 @@ let famineEnd = function(){
 	
 }
 
-//https://kqhivemind.com/wiki/Stats_Socket_Events
-_onGameEvent=window.onGameEvent
-
-
-window.onGameEvent=function(event){
-  _onGameEvent.call(window,event)
-  console.log('handling event',event)
-  
-  let values = event.values
-  switch(event.type){
-    case 'gamestart':
-	let map=''
-	obsstudio.setCurrentScene('KQSFL')
-	berries = berriesPerMap[map]
+obs_scene='KQSFL'
+let setScene=function(scene,force){
+	if(obs_scene!=scene){
+		&& force
+	if(force
+	obsstudio.setCurrentScene(scene)
 	clearTimeout(end_win_screen)
-	clearTimeout(famineTimer)
-      break;
-            
-    //case: gameend:
-    case 'gameend':
-	current_scene='KQSFL 2' //event.winning_team+' wins'
-	obsstudio.setCurrentScene('KQSFL 2')
 	end_win_screen=setTimeout(function(){
 		obsstudio.getCurrentScene(function(scene) {
 			if(current_scene==scene){
@@ -42,15 +27,43 @@ window.onGameEvent=function(event){
 			}
 		})
 	},5000)
-	clearTimeout(famineTimer)
+}
+set_scene('KQSFL','force')
 
-	obsstudio.setCurrentScene('KQSFL')
+//https://kqhivemind.com/wiki/Stats_Socket_Events
+_onGameEvent=window.onGameEvent
+
+cabient_id=13
+cabient_name='glitch'
+scene_name='sfl'
+
+window.onGameEvent=function(event){
+  _onGameEvent.call(window,event)
+  if(event.cabient_id!=cabient_id && event.cabient_name!=cabient_name && event.scene_name!=scene_name){ //ignore other scene events
+	  return
+  }
+  // console.log('handling event',event)
+
+  switch(event.type){
+    case 'gamestart':
+	setScene('KQSFL')
+      break;
+    case 'gameend':
+	setScene('KQSFL-Attn') //event.winning_team+' wins'
+	clearTimeout(famineTimer)
     case 'berryDeposit':
       if(--berries<=0){
 	//famine start
 	famineTimer=setTimeout(famineEnd,90000)
       }
     break
+	//unhandled event {"event_type":"mapstart","values":["map_day","True","0","False","17.26"],"uuid":"5f11afaa-1700-40ed-941c-39c834771a9f"}
+     case 'mapstart':
+	let map=event.values[0].replace('map_','')
+	berries = berriesPerMap[map]
+	clearTimeout(famineTimer)
+     break
+		  
     case 'berryKickIn':
       if(berries<=0){
 	//famine start
