@@ -13,20 +13,28 @@ let famineEnd = function(){
 	
 }
 
+timeouts={winScreen:{timer_id:0,scene:}}
+
 obs_scene='KQSFL'
 let setScene=function(scene,force){
-	if(obs_scene!=scene){
-		&& force
-	if(force
-	obsstudio.setCurrentScene(scene)
-	clearTimeout(end_win_screen)
-	end_win_screen=setTimeout(function(){
-		obsstudio.getCurrentScene(function(scene) {
-			if(current_scene==scene){
-				obsstudio.setCurrentScene('KQSFL')
-			}
-		})
-	},5000)
+	obsstudio.getCurrentScene(function(scene_now) {
+		if(scene_now!=obs_scene && !force){
+			return
+		}else{
+			obsstudio.setCurrentScene(scene)
+			obs_scene=scene
+		}
+	})
+
+
+	// clearTimeout(end_win_screen)
+	// end_win_screen=setTimeout(function(){
+	// 	obsstudio.getCurrentScene(function(scene) {
+	// 		if(current_scene==scene){
+	// 			obsstudio.setCurrentScene('KQSFL')
+	// 		}
+	// 	})
+	// },5000)
 }
 set_scene('KQSFL','force')
 
