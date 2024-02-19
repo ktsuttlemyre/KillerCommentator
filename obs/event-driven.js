@@ -17,6 +17,7 @@ let timeouts={
 	winScreen:{timer_id:0,scene:0}
 }
 
+
 obs_scene='KQSFL'
 let setScene=function(scene,force){
 	obsstudio.getCurrentScene(function(scene_now) {
@@ -48,6 +49,9 @@ cabient_id=url.searchParams.get("cabient_id")||13
 cabient_name=url.searchParams.get("cabient_name")||'glitch'
 scene_name=url.searchParams.get("scene_name")||'sfl'
 
+is_lobby=url.SearchParams.get("force_lobby")||''
+is_lobby=is_lobby?'-Lobby':'';
+
 window.onGameEvent=function(event){
   _onGameEvent.call(window,event)
 
@@ -58,7 +62,7 @@ window.onGameEvent=function(event){
 	if(event.cabient_id!=cabient_id && event.cabient_name!=cabient_name && event.scene_name!=scene_name){ //ignore other scene events
 	  return
 	}
-	setScene('KQSFL')
+	setScene('KQSFL'+is_lobby)
       break;
     case 'gameend': 
 	if(event.cabient_id!=cabient_id && event.cabient_name!=cabient_name && event.scene_name!=scene_name){ //ignore other scene events
