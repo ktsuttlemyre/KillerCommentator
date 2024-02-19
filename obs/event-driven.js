@@ -78,7 +78,11 @@ window.onGameEvent=function(event){
 	berries = berriesPerMap[map]
 	clearTimeout(famineTimer)
      break
-		  
+	  case 'playernames':
+	  if(event.cabient_id!=cabient_id && event.cabient_name!=cabient_name && event.scene_name!=scene_name){ //ignore other scene events
+	  	return
+	  }
+	break
     case 'berryKickIn':
       if(berries<=0){
 	//famine start
