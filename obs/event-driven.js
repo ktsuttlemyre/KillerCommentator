@@ -38,7 +38,7 @@ let setScene=function(scene,force){
 	// 	})
 	// },5000)
 }
-set_scene('KQSFL','force')
+setScene('KQSFL','force')
 
 //https://kqhivemind.com/wiki/Stats_Socket_Events
 _onGameEvent=window.onGameEvent
