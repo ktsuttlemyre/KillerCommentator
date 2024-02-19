@@ -13,7 +13,9 @@ let famineEnd = function(){
 	
 }
 
-timeouts={winScreen:{timer_id:0,scene:}}
+let timeouts={
+	winScreen:{timer_id:0,scene:0}
+}
 
 obs_scene='KQSFL'
 let setScene=function(scene,force){
